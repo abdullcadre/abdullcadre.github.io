@@ -109,7 +109,7 @@ window.PORTFOLIO_DATA = {
 
   "pt": {
     "brandName": "Abdul Cadre",
-    "brandLocation": "Xai-Xai, Moçambique",
+    "brandLocation": "Moçambique",
 
     "nav": [
       { "id": "hero",      "label": "Início",      "icon": "home" },
