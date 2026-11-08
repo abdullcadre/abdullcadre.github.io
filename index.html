@@ -282,56 +282,56 @@
         .contact-row .contact-sub { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
         /* ============================================================ */
-        /* FADE CONTENT — variantes (sem clip-path, sem cortar)         */
+        /* FADE CONTENT — funciona em mobile e desktop                  */
         /* ============================================================ */
         .fade-content {
             opacity: 0;
-            transform: translateY(30px) scale(0.98);
-            filter: blur(14px);
+            transform: translateY(40px) scale(0.94);
+            filter: blur(16px);
             transition:
-                opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+                opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform, filter;
         }
 
         /* plain — fade simples */
         .fade-content.fade-plain {
-            filter: blur(4px);
-            transform: translateY(24px);
+            filter: blur(6px);
+            transform: translateY(32px);
         }
 
-        /* out of focus — blur forte (era o do hero) */
+        /* out of focus — blur forte */
         .fade-content.fade-blur {
-            filter: blur(14px);
-            transform: translateY(30px) scale(0.98);
+            filter: blur(16px);
+            transform: translateY(40px) scale(0.94);
         }
 
         /* washed-out gray — grayscale + brilho alto */
         .fade-content.fade-gray {
-            filter: grayscale(1) brightness(1.5) contrast(0.7) blur(10px);
-            transform: translateY(28px) scale(0.97);
+            filter: grayscale(1) brightness(1.6) contrast(0.6) blur(12px);
+            transform: translateY(36px) scale(0.95);
         }
 
-        /* grain — grão (contraste baixo, grayscale parcial, blur) */
+        /* grain — grão */
         .fade-content.fade-grain {
-            filter: grayscale(0.8) contrast(0.5) brightness(1.15) blur(12px);
-            transform: translateY(28px) scale(1.02);
+            filter: grayscale(0.9) contrast(0.45) brightness(1.2) blur(14px);
+            transform: translateY(36px) scale(1.02);
         }
 
-        /* mist — névoa (brilho alto + blur muito forte + saturação baixa) */
+        /* mist — névoa */
         .fade-content.fade-mist {
-            filter: brightness(1.5) blur(20px) saturate(0.5);
-            transform: translateY(36px) scale(0.94);
+            filter: brightness(1.6) blur(24px) saturate(0.4);
+            transform: translateY(44px) scale(0.9);
         }
 
-        /* pixel blocks — "pixelizado" só com blur muito forte + scale */
+        /* pixel blocks — pixelizado (sem clip-path para não cortar) */
         .fade-content.fade-pixel {
-            filter: blur(24px) contrast(0.6) brightness(1.2);
-            transform: translateY(30px) scale(0.94);
+            filter: blur(28px) contrast(0.5) brightness(1.3);
+            transform: translateY(38px) scale(0.9);
         }
 
-        /* ESTADO FINAL — visível (overrides com especificidade) */
+        /* ESTADO FINAL — visível (sobrepõe todas as variantes) */
         .fade-content.is-visible,
         .fade-content.fade-plain.is-visible,
         .fade-content.fade-blur.is-visible,
@@ -342,6 +342,23 @@
             opacity: 1;
             transform: translateY(0) scale(1);
             filter: blur(0) grayscale(0) brightness(1) contrast(1) saturate(1);
+        }
+
+        /* Em mobile reforçar ainda mais o efeito (mais próximo visualmente) */
+        @media (max-width: 768px) {
+            .fade-content {
+                transform: translateY(30px) scale(0.96);
+                filter: blur(12px);
+                transition:
+                    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+                    filter 1s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .fade-content.fade-mist   { filter: brightness(1.5) blur(20px) saturate(0.4); }
+            .fade-content.fade-pixel  { filter: blur(22px) contrast(0.5) brightness(1.3); }
+            .fade-content.fade-gray   { filter: grayscale(1) brightness(1.5) contrast(0.6) blur(10px); }
+            .fade-content.fade-grain  { filter: grayscale(0.9) contrast(0.5) brightness(1.15) blur(12px); }
+            .fade-content.fade-blur   { filter: blur(14px); }
         }
 
         /* Reduz movimento */
@@ -411,7 +428,7 @@
 
     <div id="scroller">
 
-        <!-- HERO — fade out of focus no card -->
+        <!-- HERO — fade blur -->
         <section id="hero" class="snap-section blueprint-grid" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="fade-content fade-blur relative rounded-xl p-5 sm:p-10 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
@@ -461,7 +478,7 @@
             </div>
         </section>
 
-        <!-- SKILLS — mist no card -->
+        <!-- SKILLS — mist -->
         <section id="skills" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="fade-content fade-mist rounded-xl p-5 sm:p-8" style="background: var(--surface); border: 1px solid var(--border);">
@@ -484,7 +501,7 @@
             </div>
         </section>
 
-        <!-- PROJECTS — grain no card -->
+        <!-- PROJECTS — grain -->
         <section id="projects" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="fade-content fade-grain rounded-xl p-5 sm:p-8" style="background: var(--surface); border: 1px solid var(--border);">
@@ -517,7 +534,7 @@
             </div>
         </section>
 
-        <!-- EDUCATION — washed-out gray no card -->
+        <!-- EDUCATION — washed-out gray -->
         <section id="education" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="fade-content fade-gray rounded-xl p-5 sm:p-8" style="background: var(--surface); border: 1px solid var(--border);">
@@ -540,7 +557,7 @@
             </div>
         </section>
 
-        <!-- QUOTE — plain no card -->
+        <!-- QUOTE — plain -->
         <section id="quote" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="fade-content fade-plain relative rounded-xl p-6 sm:p-12" style="background: var(--surface); border: 1px solid var(--border);">
@@ -551,7 +568,7 @@
             </div>
         </section>
 
-        <!-- CONTACT — pixel no card -->
+        <!-- CONTACT — pixel -->
         <section id="contact" class="snap-section">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="fade-content fade-pixel relative rounded-xl p-6 sm:p-10" style="background: var(--surface); border: 1px solid var(--border);">
@@ -966,16 +983,27 @@
             }
         }, { passive: true });
 
-        // ============ FADE CONTENT (aplica em cada card, sem cortar) ============
+        // ============================================================
+        // FADE CONTENT — funciona em mobile e desktop
+        // Dispara logo que o card começa a entrar no viewport.
+        // ============================================================
         function initFadeContent() {
             const targets = document.querySelectorAll('.fade-content');
+
+            // Configurar observers separados para mobile e desktop
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+            const options = isMobile
+                ? { threshold: 0.01, rootMargin: '0px 0px -8% 0px' }
+                : { threshold: 0.05, rootMargin: '0px 0px -10% 0px' };
+
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const el = entry.target;
                     if (entry.isIntersecting) {
                         el.classList.add('is-visible');
                     } else {
-                        // só remove se saiu totalmente da viewport
+                        // só remove se o card saiu completamente da viewport
                         const rect = entry.boundingClientRect;
                         const vh = window.innerHeight;
                         if (rect.bottom < 0 || rect.top > vh) {
@@ -983,11 +1011,20 @@
                         }
                     }
                 });
-            }, {
-                threshold: 0.05,
-                rootMargin: '-10% 0px -10% 0px'
-            });
+            }, options);
+
             targets.forEach(t => obs.observe(t));
+
+            // Garantir que o hero (que já está visível no load) dispara imediatamente
+            requestAnimationFrame(() => {
+                targets.forEach(t => {
+                    const rect = t.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        // pequeno delay para a transição ser percebida
+                        setTimeout(() => t.classList.add('is-visible'), 100);
+                    }
+                });
+            });
         }
 
         // ============ THEME ============
