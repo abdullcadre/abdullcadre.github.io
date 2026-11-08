@@ -184,8 +184,25 @@
         .figma-build.is-building .figma-handle { opacity: 1; }
         .figma-dim { position: absolute; top: -30px; left: 0; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 600; padding: 3px 8px; background: var(--figma); color: #FFFFFF; border-radius: 4px; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; z-index: 32; display: inline-flex; align-items: center; gap: 4px; }
         .figma-build.is-building .figma-dim { opacity: 1; }
-        .figma-drag-cursor { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 33; opacity: 0; transition: opacity 0.2s ease; }
-        .figma-build.is-building .figma-drag-cursor { opacity: 1; }
+
+        /* VÁRIOS CURSORES */
+        .figma-drag-cursor,
+        .figma-drag-cursor-2,
+        .figma-drag-cursor-3 {
+            position: absolute;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 33;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+            will-change: transform;
+        }
+        .figma-build.is-building .figma-drag-cursor,
+        .figma-build.is-building .figma-drag-cursor-2,
+        .figma-build.is-building .figma-drag-cursor-3 {
+            opacity: 1;
+        }
+
         .figma-inserting { position: absolute; top: 8px; right: 8px; font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 500; padding: 2px 7px; background: var(--figma-soft); color: var(--figma); border: 1px solid var(--figma-border); border-radius: 3px; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; z-index: 32; display: inline-flex; align-items: center; gap: 3px; }
         .figma-build.is-building .figma-inserting { opacity: 1; }
         .figma-child.building { outline: 1px dashed var(--figma); outline-offset: 3px; }
@@ -212,7 +229,7 @@
         }
         @media (min-width: 769px) { .mobile-nav { display: none; } }
 
-        /* Mobile indicator — VERTICAL (coluna de dots à direita) */
+        /* Mobile indicator VERTICAL */
         #mobile-indicator {
             display: none;
             position: fixed;
@@ -232,21 +249,10 @@
             opacity: 0;
             transition: opacity 0.35s ease;
         }
-        @media (max-width: 768px) {
-            #mobile-indicator { display: flex; }
-        }
+        @media (max-width: 768px) { #mobile-indicator { display: flex; } }
         #mobile-indicator.show { opacity: 1; }
-        #mobile-indicator .mi-dot {
-            width: 6px; height: 6px; border-radius: 50%;
-            background: var(--border);
-            transition: all 0.25s ease;
-        }
-        #mobile-indicator .mi-dot.active {
-            background: var(--accent);
-            height: 18px;
-            border-radius: 3px;
-            width: 6px;
-        }
+        #mobile-indicator .mi-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: all 0.25s ease; }
+        #mobile-indicator .mi-dot.active { background: var(--accent); height: 18px; border-radius: 3px; width: 6px; }
 
         @media (max-width: 768px) {
             .snap-section { padding-top: 64px; padding-bottom: 84px; }
@@ -278,21 +284,14 @@
         .social-pill:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
         .social-pill svg { width: 14px; height: 14px; }
 
-        /* Mobile: redes só ícones circulares */
         @media (max-width: 768px) {
             .socials-icons-mobile { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-            .socials-icons-mobile .social-pill {
-                width: 42px; height: 42px;
-                padding: 0;
-                justify-content: center;
-                border-radius: 12px;
-                font-size: 0;
-            }
+            .socials-icons-mobile .social-pill { width: 42px; height: 42px; padding: 0; justify-content: center; border-radius: 12px; font-size: 0; }
             .socials-icons-mobile .social-pill svg { width: 18px; height: 18px; }
             .socials-icons-mobile .social-pill span { display: none; }
         }
 
-        /* CARROSSEL genérico (usado por skills, projects, education) */
+        /* CARROSSEL */
         .carousel-outer { position: relative; }
         .carousel-track { display: flex; gap: 0.75rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 0.5rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab; }
         .carousel-track:active { cursor: grabbing; }
@@ -311,90 +310,40 @@
         .carousel-dots .c-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: all 0.25s ease; cursor: pointer; border: none; padding: 0; }
         .carousel-dots .c-dot.active { background: var(--accent); width: 20px; border-radius: 3px; }
 
-        /* Timeline-style card (dentro do carrossel de education) */
-        .edu-card {
-            display: flex;
-            flex-direction: column;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 1rem;
-            height: 100%;
-            position: relative;
-            transition: all 0.2s ease;
-        }
+        /* Education card */
+        .edu-card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; height: 100%; position: relative; transition: all 0.2s ease; }
         .edu-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .edu-year {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.02em;
-            margin-bottom: 6px;
-        }
+        .edu-year { font-family: 'JetBrains Mono', monospace; font-size: 1rem; font-weight: 700; color: var(--accent); letter-spacing: 0.02em; margin-bottom: 6px; }
         .edu-level { font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.45rem; }
         .edu-desc { font-size: 0.72rem; line-height: 1.5; color: var(--text-muted); flex: 1; }
-        .edu-rail {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed var(--border);
-        }
+        .edu-rail { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
         .edu-rail .rail-line { flex: 1; height: 2px; background: var(--accent-border); border-radius: 2px; }
-        .edu-rail .rail-dot {
-            width: 10px; height: 10px; border-radius: 50%;
-            background: var(--surface);
-            border: 2.5px solid var(--accent);
-            flex-shrink: 0;
-        }
+        .edu-rail .rail-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2.5px solid var(--accent); flex-shrink: 0; }
 
-        /* CONTACT list */
+        /* Contact */
         .contact-list { display: grid; gap: 10px; }
-        .contact-row {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px 14px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            text-decoration: none;
-            color: var(--text);
-            transition: all 0.2s ease;
-        }
+        .contact-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); transition: all 0.2s ease; }
         .contact-row:hover { border-color: var(--accent); transform: translateY(-1px); }
-        .contact-row .contact-ico {
-            width: 38px; height: 38px; flex-shrink: 0;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 10px;
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
+        .contact-row .contact-ico { width: 38px; height: 38px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 10px; background: var(--accent-soft); color: var(--accent); }
         .contact-row .contact-info { display: flex; flex-direction: column; min-width: 0; }
         .contact-row .contact-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
         .contact-row .contact-val { font-size: 13px; font-weight: 600; word-break: break-all; }
         .contact-row .contact-sub { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
-        /* ============================================================ */
-        /* FADE ON ENTER — SIMPLIFICADO E SEM BUG DE BLUR PERMANENTE     */
-        /* ============================================================ */
+        /* FADE ON ENTER — corrigido */
         .fade-on-enter {
             opacity: 0;
             transform: translateY(20px);
             filter: blur(8px);
-            transition:
-                opacity 0.8s cubic-bezier(0.16,1,0.3,1),
-                transform 0.8s cubic-bezier(0.16,1,0.3,1),
-                filter 0.8s cubic-bezier(0.16,1,0.3,1);
+            transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1);
             will-change: opacity, transform, filter;
         }
-        .fade-on-enter.fade-plain   { filter: blur(4px); transform: translateY(16px); }
-        .fade-on-enter.fade-blur    { filter: blur(10px); transform: translateY(20px); }
-        .fade-on-enter.fade-gray    { filter: grayscale(1) blur(6px); transform: translateY(20px); }
-        .fade-on-enter.fade-mist    { filter: blur(14px) brightness(1.2); transform: translateY(28px) scale(0.97); }
-        .fade-on-enter.fade-grain   { filter: grayscale(1) contrast(0.7) blur(8px); transform: translateY(22px) scale(1.01); }
+        .fade-on-enter.fade-plain { filter: blur(4px); transform: translateY(16px); }
+        .fade-on-enter.fade-blur  { filter: blur(10px); transform: translateY(20px); }
+        .fade-on-enter.fade-gray  { filter: grayscale(1) blur(6px); transform: translateY(20px); }
+        .fade-on-enter.fade-mist  { filter: blur(14px) brightness(1.2); transform: translateY(28px) scale(0.97); }
+        .fade-on-enter.fade-grain { filter: grayscale(1) contrast(0.7) blur(8px); transform: translateY(22px) scale(1.01); }
 
-        /* ESTADO FINAL — precisa de ser o MAIS ESPECÍFICO para ganhar em mobile */
         .fade-on-enter.visible,
         .snap-section.fade-on-enter.visible,
         .snap-section.fade-on-enter.fade-plain.visible,
@@ -407,16 +356,9 @@
             filter: blur(0) grayscale(0) brightness(1) contrast(1);
         }
 
-        /* HERO mobile — centralizado */
         @media (max-width: 768px) {
             .hero-inner { text-align: center; }
-            .hero-cta-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-                width: 100%;
-                justify-content: center;
-            }
+            .hero-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; justify-content: center; }
             .hero-cta-row .cta-btn { justify-content: center; padding: 10px 8px; font-size: 11px; }
             #hero-socials-mobile { justify-content: center; }
         }
@@ -483,8 +425,16 @@
                     <div class="figma-handle" style="bottom: -12px; right: -12px;"></div>
                     <div class="figma-dim"><i data-lucide="ruler" class="w-2.5 h-2.5"></i><span class="figma-dim-text">HERO • 1120 × 520</span></div>
                     <div class="figma-inserting"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-inserting-text">Montando hero...</span></div>
+
+                    <!-- Cursores múltiplos -->
                     <div class="figma-drag-cursor">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
+                    </div>
+                    <div class="figma-drag-cursor-2">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/></svg>
+                    </div>
+                    <div class="figma-drag-cursor-3">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#8250DF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 hero-inner">
@@ -507,7 +457,6 @@
                             <div class="figma-child hidden sm:flex flex-wrap items-center gap-2 pt-1" id="hero-socials"></div>
                         </div>
 
-                        <!-- Inspector — só desktop -->
                         <div class="figma-child hidden lg:block lg:col-span-5 rounded-lg p-4 font-mono text-xs space-y-2.5" style="background: var(--bg); border: 1px solid var(--border);">
                             <div class="flex items-center justify-between pb-2" style="border-bottom: 1px solid var(--border);">
                                 <div class="flex items-center gap-2 text-[10px]" style="color: var(--text-muted);">
@@ -539,9 +488,10 @@
                     <div class="figma-selection"></div>
                     <div class="figma-dim"><i data-lucide="layout-grid" class="w-2.5 h-2.5"></i><span class="figma-dim-text">SKILLS • carousel</span></div>
                     <div class="figma-inserting"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-inserting-text">Montando carrossel...</span></div>
-                    <div class="figma-drag-cursor">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
-                    </div>
+
+                    <div class="figma-drag-cursor"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#8250DF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
 
                     <div class="figma-child max-w-2xl mb-5 sm:mb-8">
                         <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
@@ -569,9 +519,10 @@
                     <div class="figma-selection"></div>
                     <div class="figma-dim"><i data-lucide="layout-grid" class="w-2.5 h-2.5"></i><span class="figma-dim-text">PROJECTS • carousel</span></div>
                     <div class="figma-inserting"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-inserting-text">Montando carrossel...</span></div>
-                    <div class="figma-drag-cursor">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
-                    </div>
+
+                    <div class="figma-drag-cursor"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#8250DF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
 
                     <div class="figma-child flex flex-col md:flex-row md:items-end justify-between mb-5 sm:mb-8 gap-3">
                         <div>
@@ -598,16 +549,17 @@
             </div>
         </section>
 
-        <!-- EDUCATION — agora também como carrossel -->
+        <!-- EDUCATION -->
         <section id="education" class="snap-section fade-on-enter fade-gray" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
                 <div class="figma-build relative" data-figma-label="EDUCATION • carousel" data-figma-text="Montando carrossel...">
                     <div class="figma-selection"></div>
                     <div class="figma-dim"><i data-lucide="graduation-cap" class="w-2.5 h-2.5"></i><span class="figma-dim-text">EDUCATION • carousel</span></div>
                     <div class="figma-inserting"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-inserting-text">Montando carrossel...</span></div>
-                    <div class="figma-drag-cursor">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
-                    </div>
+
+                    <div class="figma-drag-cursor"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#8250DF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
 
                     <div class="figma-child mb-4 sm:mb-5">
                         <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
@@ -635,9 +587,10 @@
                     <div class="figma-selection"></div>
                     <div class="figma-dim"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-dim-text">QUOTE</span></div>
                     <div class="figma-inserting"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-inserting-text">Editando texto...</span></div>
-                    <div class="figma-drag-cursor">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
-                    </div>
+
+                    <div class="figma-drag-cursor"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#8250DF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
 
                     <i class="figma-child inline-block mb-3" data-lucide="quote" style="color: var(--accent); width:22px; height:22px;"></i>
                     <blockquote class="figma-child text-base sm:text-xl font-medium leading-relaxed mb-4" id="quote-text">—</blockquote>
@@ -653,9 +606,10 @@
                     <div class="figma-selection"></div>
                     <div class="figma-dim"><i data-lucide="ruler" class="w-2.5 h-2.5"></i><span class="figma-dim-text">CONTACT</span></div>
                     <div class="figma-inserting"><i data-lucide="type" class="w-2.5 h-2.5"></i><span class="figma-inserting-text">Montando contactos...</span></div>
-                    <div class="figma-drag-cursor">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg>
-                    </div>
+
+                    <div class="figma-drag-cursor"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#0D99FF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#F59E0B" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
+                    <div class="figma-drag-cursor-3"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#8250DF" stroke="#FFFFFF" stroke-width="1.5"/></svg></div>
 
                     <div class="figma-child mb-5">
                         <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
@@ -884,7 +838,7 @@
             catch (e) { console.error('Erro ao fazer parse do JSON inline:', e); return false; }
         }
 
-        // ============ CARROSSEL genérico ============
+        // ============ CARROSSEL ============
         function initCarousel(trackId, dotsId, prevId, nextId) {
             const track = document.getElementById(trackId);
             const dotsWrap = document.getElementById(dotsId);
@@ -994,7 +948,6 @@
                 `<button class="dot-btn" data-nav-jump="${n.id}" data-nav="${n.id}" aria-label="${n.label}" title="${n.label}"></button>`
             ).join('');
 
-            // mobile indicator (vertical)
             document.getElementById('mobile-indicator').innerHTML = t.nav.map((n, i) =>
                 `<span class="mi-dot${i === 0 ? ' active' : ''}" data-mi="${n.id}"></span>`
             ).join('');
@@ -1010,7 +963,6 @@
             setText('inspector-university', t.hero.inspector.university);
             setText('inspector-year', t.hero.inspector.year);
 
-            // socials
             const socialsHtmlDesktop = (t.contact.socials || []).map(s => `
                 <a href="${s.url}" target="_blank" rel="noopener" class="social-pill" data-crosshair="link" title="${s.label}">
                     ${icon(s.icon, 'w-3.5 h-3.5')}
@@ -1029,16 +981,13 @@
             const heroSocialsMobile = document.getElementById('hero-socials-mobile');
             if (heroSocialsMobile) heroSocialsMobile.innerHTML = socialsHtmlMobile;
 
-            // SKILLS
             setText('skills-tag', t.skills.tag);
             setText('skills-title', t.skills.title);
             setText('skills-subtitle', t.skills.subtitle);
             document.getElementById('skills-track').innerHTML = t.skills.list.map(s => `
                 <div class="carousel-item figma-child mounted p-4 rounded-lg card-hover" style="background: var(--bg); border: 1px solid var(--border);">
                     <div class="flex items-center justify-between mb-3">
-                        <div class="w-8 h-8 rounded-md flex items-center justify-center" style="background: var(--accent-soft); color: var(--accent);">
-                            ${icon(s.icon, 'w-4 h-4')}
-                        </div>
+                        <div class="w-8 h-8 rounded-md flex items-center justify-center" style="background: var(--accent-soft); color: var(--accent);">${icon(s.icon, 'w-4 h-4')}</div>
                         <span class="text-[9px] font-mono uppercase tracking-wider" style="color: var(--text-muted);">${s.tag}</span>
                     </div>
                     <h3 class="text-sm font-semibold mb-1.5">${s.title}</h3>
@@ -1047,7 +996,6 @@
             `).join('');
             initCarousel('skills-track', 'skills-dots', 'skills-prev', 'skills-next');
 
-            // PROJECTS
             setText('projects-tag', t.projects.tag);
             setText('projects-title', t.projects.title);
             setText('projects-subtitle', t.projects.subtitle);
@@ -1058,23 +1006,19 @@
                 <div class="carousel-item figma-child mounted rounded-lg p-4 flex flex-col justify-between card-hover" style="background: var(--bg); border: 1px solid var(--border);">
                     <div>
                         <div class="flex justify-between items-center mb-3">
-                            <div class="w-8 h-8 rounded-md flex items-center justify-center" style="background: var(--accent-soft); color: var(--accent);">
-                                ${icon(p.icon, 'w-4 h-4')}
-                            </div>
+                            <div class="w-8 h-8 rounded-md flex items-center justify-center" style="background: var(--accent-soft); color: var(--accent);">${icon(p.icon, 'w-4 h-4')}</div>
                             <span class="text-[9px] font-mono uppercase tracking-wider" style="color: var(--text-muted);">${p.tag}</span>
                         </div>
                         <h3 class="text-sm font-semibold mb-1.5">${p.title}</h3>
                         <p class="text-xs leading-relaxed mb-3" style="color: var(--text-muted);">${p.description}</p>
                     </div>
                     <div class="pt-3 flex items-center justify-between text-[10px] font-mono" style="border-top: 1px solid var(--border); color: var(--text-muted);">
-                        <span>${p.tech}</span>
-                        <span style="color: var(--accent);">${p.status}</span>
+                        <span>${p.tech}</span><span style="color: var(--accent);">${p.status}</span>
                     </div>
                 </div>
             `).join('');
             initCarousel('projects-track', 'projects-dots', 'projects-prev', 'projects-next');
 
-            // EDUCATION — agora como carrossel com cartão tipo timeline
             setText('education-tag', t.education.tag);
             setText('education-title', t.education.title);
             setText('education-subtitle', t.education.subtitle);
@@ -1084,21 +1028,15 @@
                         <div class="edu-year">${e.year}</div>
                         <div class="edu-level">${icon(e.icon, 'w-3.5 h-3.5')} ${e.level}</div>
                         <div class="edu-desc">${e.description}</div>
-                        <div class="edu-rail">
-                            <span class="rail-line"></span>
-                            <span class="rail-dot"></span>
-                            <span class="rail-line"></span>
-                        </div>
+                        <div class="edu-rail"><span class="rail-line"></span><span class="rail-dot"></span><span class="rail-line"></span></div>
                     </div>
                 </div>
             `).join('');
             initCarousel('education-track', 'education-dots', 'education-prev', 'education-next');
 
-            // QUOTE
             setText('quote-text', t.quote.text);
             setText('quote-brand', t.brandName);
 
-            // CONTACT
             setText('contact-tag', t.contact.tag || 'Contactos');
             setText('contact-title', t.contact.title);
             setText('contact-subtitle', t.contact.subtitle);
@@ -1177,7 +1115,6 @@
             });
         }
 
-        // Mobile indicator auto-hide
         let miTimeout = null;
         function showMobileIndicator() {
             const el = document.getElementById('mobile-indicator');
@@ -1187,7 +1124,6 @@
             miTimeout = setTimeout(() => el.classList.remove('show'), 1500);
         }
 
-        // Desktop wheel
         let wheelTimeout = null;
         let wheelAccumulated = 0;
         scroller.addEventListener('wheel', (e) => {
@@ -1202,23 +1138,17 @@
             wheelAccumulated = 0;
         }, { passive: false });
 
-        // Mobile touch: swipe + glow gota
         let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
-
         scroller.addEventListener('touchstart', (e) => {
             const t = e.touches[0];
             touchStartX = t.clientX; touchStartY = t.clientY;
             touchStartTime = Date.now();
         }, { passive: true });
-
         scroller.addEventListener('touchmove', (e) => {
             const t = e.touches[0];
             if (!t) return;
-            if (window.__glowCursor && window.__glowCursor.push) {
-                window.__glowCursor.push(t.clientX, t.clientY);
-            }
+            if (window.__glowCursor && window.__glowCursor.push) window.__glowCursor.push(t.clientX, t.clientY);
         }, { passive: true });
-
         scroller.addEventListener('touchend', (e) => {
             const t = e.changedTouches[0];
             const dx = touchStartX - t.clientX;
@@ -1226,29 +1156,23 @@
             const dt = Date.now() - touchStartTime;
             const vx = Math.abs(dx) / dt;
             const vy = Math.abs(dy) / dt;
-
             const inScroller = e.target.closest('.carousel-track, .mobile-nav');
             if (inScroller) return;
-
             if (Math.abs(dy) > 50 || (vy > 0.5 && Math.abs(dy) > 30)) {
-                if (dy > 0) jumpToIndex(currentIndex + 1);
-                else jumpToIndex(currentIndex - 1);
+                if (dy > 0) jumpToIndex(currentIndex + 1); else jumpToIndex(currentIndex - 1);
                 showMobileIndicator();
                 return;
             }
             if (Math.abs(dx) > 70 && vx > 0.4) {
-                if (dx > 0) jumpToIndex(currentIndex + 1);
-                else jumpToIndex(currentIndex - 1);
+                if (dx > 0) jumpToIndex(currentIndex + 1); else jumpToIndex(currentIndex - 1);
                 showMobileIndicator();
             }
         }, { passive: true });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') {
-                e.preventDefault(); jumpToIndex(currentIndex + 1);
-            } else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') {
-                e.preventDefault(); jumpToIndex(currentIndex - 1);
-            } else if (e.key === 'Home') { e.preventDefault(); jumpToIndex(0); }
+            if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') { e.preventDefault(); jumpToIndex(currentIndex + 1); }
+            else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') { e.preventDefault(); jumpToIndex(currentIndex - 1); }
+            else if (e.key === 'Home') { e.preventDefault(); jumpToIndex(0); }
             else if (e.key === 'End') { e.preventDefault(); jumpToIndex(SECTIONS.length - 1); }
         });
 
@@ -1261,7 +1185,7 @@
             }
         }, { passive: true });
 
-        // ============ FADE ON ENTER — CORRIGIDO ============
+        // ============ FADE ON ENTER ============
         function initFadeOnEnter() {
             const sections = document.querySelectorAll('.fade-on-enter');
             const obs = new IntersectionObserver((entries) => {
@@ -1269,12 +1193,9 @@
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     } else {
-                        // só remove se estiver bem fora do viewport (evita flicker)
                         const rect = entry.boundingClientRect;
                         const vh = window.innerHeight;
-                        if (rect.bottom < 0 || rect.top > vh) {
-                            entry.target.classList.remove('visible');
-                        }
+                        if (rect.bottom < 0 || rect.top > vh) entry.target.classList.remove('visible');
                     }
                 });
             }, { threshold: 0.01, rootMargin: '0px 0px -2% 0px' });
@@ -1293,13 +1214,11 @@
             if (window.__glowCursor) window.__glowCursor.destroy();
             window.__glowCursor = createGlowCursor(state.theme);
         }
-
         document.getElementById('theme-btn').addEventListener('click', () => {
             state.theme = state.theme === 'dark' ? 'light' : 'dark';
             localStorage.setItem('theme', state.theme);
             applyTheme();
         });
-
         document.getElementById('lang-btn').addEventListener('click', () => {
             state.currentLang = state.currentLang === 'pt' ? 'en' : 'pt';
             localStorage.setItem('lang', state.currentLang);
@@ -1307,9 +1226,7 @@
             if (window.lucide) lucide.createIcons();
         });
 
-        function downloadCV() {
-            window.open(CV_URL, '_blank', 'noopener,noreferrer');
-        }
+        function downloadCV() { window.open(CV_URL, '_blank', 'noopener,noreferrer'); }
 
         // ============ GLOW CURSOR ============
         function createGlowCursor(theme) {
@@ -1331,14 +1248,12 @@
             const trail = [];
             let raf = 0;
             function push(x, y) {
-                const dx = x - mouse.px;
-                const dy = y - mouse.py;
+                const dx = x - mouse.px, dy = y - mouse.py;
                 if (Math.hypot(dx, dy) > 3 || trail.length === 0) {
                     trail.push({ x, y, life: 1, r: 22 });
                     if (trail.length > 22) trail.shift();
                 }
-                mouse.px = x; mouse.py = y;
-                mouse.x = x; mouse.y = y;
+                mouse.px = x; mouse.py = y; mouse.x = x; mouse.y = y;
             }
             function frame() {
                 ctx.clearRect(0, 0, W, H);
@@ -1357,8 +1272,7 @@
                     g.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${0.32 * t.life})`);
                     g.addColorStop(0.6, `rgba(${color[0]},${color[1]},${color[2]},${0.12 * t.life})`);
                     g.addColorStop(1, `rgba(${color[0]},${color[1]},${color[2]},0)`);
-                    ctx.fillStyle = g;
-                    ctx.beginPath(); ctx.arc(t.x * dpr, t.y * dpr, r, 0, Math.PI * 2); ctx.fill();
+                    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(t.x * dpr, t.y * dpr, r, 0, Math.PI * 2); ctx.fill();
                 }
                 raf = requestAnimationFrame(frame);
             }
@@ -1506,53 +1420,88 @@
             draw();
         }
 
-        // ============ FIGMA BUILD ============
+        // ============================================================
+        // FIGMA BUILD — CONSTRUÇÃO DE CIMA PARA BAIXO, ELEMENTO POR ELEMENTO
+        // ============================================================
         function initFigmaBuild() {
             const builds = document.querySelectorAll('.figma-build');
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const el = entry.target;
-                    if (entry.isIntersecting && el.dataset.built !== 'true') {
-                        el.dataset.built = 'true';
-                        el.classList.add('is-building');
-                        const cursor = el.querySelector('.figma-drag-cursor');
-                        const dimText = el.querySelector('.figma-dim-text');
-                        const insertText = el.querySelector('.figma-inserting-text');
-                        if (dimText && el.dataset.figmaLabel) dimText.textContent = el.dataset.figmaLabel;
-                        if (insertText && el.dataset.figmaText) insertText.textContent = el.dataset.figmaText;
-                        if (cursor) {
-                            const rect = el.getBoundingClientRect();
-                            const points = [
-                                { x: 10, y: 10 },
-                                { x: rect.width - 40, y: 20 },
-                                { x: rect.width - 30, y: rect.height - 30 },
-                                { x: 40, y: rect.height - 20 },
-                                { x: 10, y: 10 }
-                            ];
-                            let i = 0;
-                            const step = () => {
-                                if (i >= points.length) return;
-                                const p = points[i];
-                                cursor.style.transform = `translate(${p.x}px, ${p.y}px)`;
-                                cursor.style.transition = 'transform 0.4s cubic-bezier(0.16,1,0.3,1)';
-                                i++; setTimeout(step, 160);
-                            };
-                            step();
+                    if (!entry.isIntersecting || el.dataset.built === 'true') return;
+                    el.dataset.built = 'true';
+
+                    // Fase 1: seleção (mostra a caixa azul + handles)
+                    el.classList.add('is-building');
+
+                    const dimText = el.querySelector('.figma-dim-text');
+                    const insertText = el.querySelector('.figma-inserting-text');
+                    if (dimText && el.dataset.figmaLabel) dimText.textContent = el.dataset.figmaLabel;
+                    if (insertText && el.dataset.figmaText) insertText.textContent = el.dataset.figmaText;
+
+                    // Fase 2: percorrer cada .figma-child de cima para baixo com 3 cursores
+                    const children = Array.from(el.querySelectorAll('.figma-child'));
+                    const cursors = [
+                        el.querySelector('.figma-drag-cursor'),
+                        el.querySelector('.figma-drag-cursor-2'),
+                        el.querySelector('.figma-drag-cursor-3')
+                    ].filter(Boolean);
+
+                    const elRect = el.getBoundingClientRect();
+
+                    // calcula pontos (canto superior esquerdo de cada filho, em coords relativas ao .figma-build)
+                    const points = children.map((child) => {
+                        const r = child.getBoundingClientRect();
+                        return {
+                            x: (r.left - elRect.left) + Math.min(40, r.width * 0.25),
+                            y: (r.top - elRect.top) + Math.min(14, r.height * 0.5),
+                            child
+                        };
+                    });
+
+                    // 3 cursores com pequenos offsets
+                    const cursorOffsets = [
+                        { dx: 0,  dy: 0 },
+                        { dx: 14, dy: 10 },
+                        { dx: -10, dy: 16 }
+                    ];
+
+                    let idx = 0;
+                    const stepDelay = 90;      // tempo entre cada elemento
+                    const moveDuration = 320;  // duração do movimento do cursor
+
+                    function step() {
+                        if (idx >= points.length) {
+                            // fim da construção
+                            setTimeout(() => el.classList.remove('is-building'), 400);
+                            return;
                         }
-                        const children = el.querySelectorAll('.figma-child');
-                        const startDelay = 300;
-                        const perChildDelay = 90;
-                        children.forEach((child, i) => {
-                            setTimeout(() => {
-                                child.classList.add('mounted', 'building');
-                                setTimeout(() => child.classList.remove('building'), 250);
-                            }, startDelay + (i * perChildDelay));
+                        const p = points[idx];
+
+                        cursors.forEach((cur, ci) => {
+                            const off = cursorOffsets[ci] || { dx: 0, dy: 0 };
+                            const tx = p.x + off.dx;
+                            const ty = p.y + off.dy;
+                            cur.style.transition = `transform ${moveDuration}ms cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease`;
+                            cur.style.transform = `translate(${tx}px, ${ty}px)`;
                         });
-                        const totalTime = startDelay + (children.length * perChildDelay) + 700;
-                        setTimeout(() => el.classList.remove('is-building'), totalTime);
+
+                        // monta este elemento quando o cursor principal chega
+                        setTimeout(() => {
+                            p.child.classList.add('mounted');
+                            p.child.classList.add('building');
+                            setTimeout(() => p.child.classList.remove('building'), 220);
+                        }, moveDuration * 0.6);
+
+                        idx++;
+                        setTimeout(step, stepDelay + moveDuration * 0.35);
                     }
+
+                    // pequeno delay inicial para a caixa de seleção aparecer
+                    setTimeout(step, 220);
                 });
             }, { threshold: 0.15 });
+
             builds.forEach(el => obs.observe(el));
         }
 
