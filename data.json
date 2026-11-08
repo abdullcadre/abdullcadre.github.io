@@ -1,0 +1,364 @@
+{
+  "meta": {
+    "defaultLang": "pt",
+    "availableLangs": ["pt", "en"]
+  },
+  "pt": {
+    "brandName": "Abdul Cadre",
+    "brandLocation": "Xai-Xai, Moçambique",
+    "nav": [
+      { "id": "hero", "label": "Canvas", "icon": "fa-house" },
+      { "id": "skills", "label": "Habilidades", "icon": "fa-sliders" },
+      { "id": "projects", "label": "Projectos", "icon": "fa-layer-group" },
+      { "id": "education", "label": "Formação", "icon": "fa-graduation-cap" },
+      { "id": "contact", "label": "Contacto", "icon": "fa-envelope" }
+    ],
+    "actions": {
+      "contact": "Entrar em contacto",
+      "downloadCV": "Baixar CV"
+    },
+    "hero": {
+      "status": "Disponível para Projectos & Consultoria",
+      "name": "Abdul Cadre Naimo Hassamo",
+      "subtitle": "Programador de Aplicações Móveis (B4X / Android), Formador em TICs e Técnico de Manutenção de Sistemas Informáticos.",
+      "size": "1120 × 520 px",
+      "inspector": {
+        "location": "Xai-Xai, Gaza, Moçambique",
+        "email": "abdullcadre@gmail.com",
+        "degree": "Licenciatura em Informática",
+        "stack": ["B4X", "Android", "PHP", "SQLite"],
+        "university": "UNIVERSIDADE LICUNGO",
+        "year": "2021"
+      }
+    },
+    "skills": {
+      "tag": "COMPETÊNCIAS TÉCNICAS",
+      "title": "Habilidades & Especialidades",
+      "subtitle": "Conjunto de competências desenvolvidas em contextos académicos e profissionais.",
+      "gridSize": "4 COLUNAS",
+      "list": [
+        {
+          "id": "mobile",
+          "icon": "fa-mobile-screen-button",
+          "tag": "B4X",
+          "color": "accent",
+          "title": "Desenvolvimento Mobile",
+          "description": "Criação de aplicações Android com B4X, focadas em usabilidade e desempenho."
+        },
+        {
+          "id": "hardware",
+          "icon": "fa-wrench",
+          "tag": "HARDWARE",
+          "color": "purple",
+          "title": "Manutenção de Sistemas",
+          "description": "Diagnóstico e reparação de equipamentos e optimização de TI."
+        },
+        {
+          "id": "training",
+          "icon": "fa-chalkboard-user",
+          "tag": "TICs",
+          "color": "green",
+          "title": "Formação em TICs",
+          "description": "Capacitação de alunos e profissionais em tecnologias de informação."
+        },
+        {
+          "id": "software",
+          "icon": "fa-code-merge",
+          "tag": "DEV",
+          "color": "orange",
+          "title": "Engenharia de Software",
+          "description": "Planeamento, desenvolvimento e manutenção de sistemas informáticos."
+        }
+      ]
+    },
+    "projects": {
+      "tag": "PORTFÓLIO DE APLICAÇÕES",
+      "title": "Projectos Desenvolvidos",
+      "subtitle": "Aplicações mobile e soluções multiplataforma focadas em aplicabilidade real, usabilidade e desempenho.",
+      "count": "6 CARTÕES",
+      "list": [
+        {
+          "id": "lablog",
+          "icon": "fa-clock",
+          "color": "accent",
+          "tag": "B4XPages",
+          "title": "LaborLog Lite",
+          "description": "Aplicação Android desenvolvida em B4XPages para registo e consulta de horas de trabalho.",
+          "tech": "Android App",
+          "status": "Produtivo",
+          "statusColor": "green"
+        },
+        {
+          "id": "chatapp",
+          "icon": "fa-comments",
+          "color": "purple",
+          "tag": "Realtime Chat",
+          "title": "ChatApp v1.1",
+          "description": "Aplicação de chat em tempo real desenvolvida com B4A, PHP e MySQL. Ideal para chat simples.",
+          "tech": "B4A + PHP Backend",
+          "status": "Full-Stack",
+          "statusColor": "purple"
+        },
+        {
+          "id": "attendance",
+          "icon": "fa-user-check",
+          "color": "green",
+          "tag": "Presenças & GPS",
+          "title": "Employee Attendance",
+          "description": "Sistema multiplataforma para controlo de presenças com selfies, hora e localização.",
+          "tech": "Multiplataforma",
+          "status": "GPS Tracker",
+          "statusColor": "green"
+        },
+        {
+          "id": "financial",
+          "icon": "fa-wallet",
+          "color": "orange",
+          "tag": "Gestão Financeira",
+          "title": "Financial Mobile App",
+          "description": "Aplicação B4X para Android que permite gerir cartões financeiros e transacções. Utiliza SQLite para db local.",
+          "tech": "B4X + SQLite",
+          "status": "Offline-First",
+          "statusColor": "orange"
+        },
+        {
+          "id": "gpt3",
+          "icon": "fa-robot",
+          "color": "accent",
+          "tag": "Integração de IA",
+          "title": "Integrating GPT-3 API",
+          "description": "Demonstração de como integrar a API GPT-3 em apps Android usando B4X. Permite criar apps com geração de texto.",
+          "tech": "OpenAI API",
+          "status": "AI Engine",
+          "statusColor": "accent"
+        },
+        {
+          "id": "bulksms",
+          "icon": "fa-paper-plane",
+          "color": "amber",
+          "tag": "Envio em Massa",
+          "title": "Bulk SMS in B4A",
+          "description": "Aplicação Android desenvolvida para envio de SMS em massa a múltiplos destinatários.",
+          "tech": "Telecom Utility",
+          "status": "SMS Gateway",
+          "statusColor": "amber"
+        }
+      ]
+    },
+    "education": {
+      "tag": "FORMAÇÃO ACADÉMICA",
+      "title": "Histórico Académico",
+      "subtitle": "Formação académica orientada para as tecnologias de informação, com base sólida em engenharia, sistemas e ensino.",
+      "size": "890 × 210 px",
+      "list": [
+        {
+          "degree": "Licenciatura em Informática",
+          "year": "Concluído em 2021",
+          "university": "Faculdade de Ciência e Tecnologia — Universidade Licungo",
+          "description": "Concluí o ensino Superior na faculdade de Ciência e tecnologia da Universidade Licungo no curso de Licenciatura em Informática, com nota final de 14 valores."
+        }
+      ]
+    },
+    "quote": {
+      "text": "\"Todos têm uma meta. Nunca desistas antes de alcançar a tua. Não me digas que o céu é o limite, porque há pegadas na lua.\""
+    },
+    "contact": {
+      "title": "Entrar em Contacto",
+      "subtitle": "Localização: Xai-Xai, Gaza, Moçambique | Email: abdullcadre@gmail.com",
+      "size": "840 × 510 px",
+      "lblLocation": "LOCALIZAÇÃO",
+      "location": "Xai-Xai, Gaza, Moçambique",
+      "email": "abdullcadre@gmail.com",
+      "form": {
+        "name": "Nome",
+        "email": "Email",
+        "message": "Mensagem",
+        "submit": "SUBMETER MENSAGEM",
+        "toast": "Mensagem enviada com sucesso!"
+      }
+    },
+    "footer": {
+      "rights": "Todos os direitos reservados.",
+      "tag": "Moçambique • B4X Mobile Developer • Help Desk"
+    }
+  },
+  "en": {
+    "brandName": "Abdul Cadre",
+    "brandLocation": "Xai-Xai, Mozambique",
+    "nav": [
+      { "id": "hero", "label": "Canvas", "icon": "fa-house" },
+      { "id": "skills", "label": "Skills", "icon": "fa-sliders" },
+      { "id": "projects", "label": "Projects", "icon": "fa-layer-group" },
+      { "id": "education", "label": "Education", "icon": "fa-graduation-cap" },
+      { "id": "contact", "label": "Contact", "icon": "fa-envelope" }
+    ],
+    "actions": {
+      "contact": "Get in Touch",
+      "downloadCV": "Download CV"
+    },
+    "hero": {
+      "status": "Available for Projects & Consulting",
+      "name": "Abdul Cadre Naimo Hassamo",
+      "subtitle": "Mobile Application Developer (B4X / Android), ICT Trainer, and Systems Maintenance Technician.",
+      "size": "1120 × 520 px",
+      "inspector": {
+        "location": "Xai-Xai, Gaza, Mozambique",
+        "email": "abdullcadre@gmail.com",
+        "degree": "BSc in Computer Science",
+        "stack": ["B4X", "Android", "PHP", "SQLite"],
+        "university": "LICUNGO UNIVERSITY",
+        "year": "2021"
+      }
+    },
+    "skills": {
+      "tag": "TECHNICAL COMPETENCIES",
+      "title": "Skills & Specialties",
+      "subtitle": "Set of competencies developed in academic and professional contexts.",
+      "gridSize": "4 COLUMNS",
+      "list": [
+        {
+          "id": "mobile",
+          "icon": "fa-mobile-screen-button",
+          "tag": "B4X",
+          "color": "accent",
+          "title": "Mobile Development",
+          "description": "Building Android apps with B4X focused on usability and performance."
+        },
+        {
+          "id": "hardware",
+          "icon": "fa-wrench",
+          "tag": "HARDWARE",
+          "color": "purple",
+          "title": "Systems Maintenance",
+          "description": "Equipment diagnostics, hardware repair, and IT optimization."
+        },
+        {
+          "id": "training",
+          "icon": "fa-chalkboard-user",
+          "tag": "ICT",
+          "color": "green",
+          "title": "ICT Training",
+          "description": "Training students and professionals in Information Technologies."
+        },
+        {
+          "id": "software",
+          "icon": "fa-code-merge",
+          "tag": "DEV",
+          "color": "orange",
+          "title": "Software Engineering",
+          "description": "Planning, developing, and maintaining software systems."
+        }
+      ]
+    },
+    "projects": {
+      "tag": "APPLICATION PORTFOLIO",
+      "title": "Featured Projects",
+      "subtitle": "Mobile applications and cross-platform solutions focused on real-world applicability.",
+      "count": "6 CARDS",
+      "list": [
+        {
+          "id": "lablog",
+          "icon": "fa-clock",
+          "color": "accent",
+          "tag": "B4XPages",
+          "title": "LaborLog Lite",
+          "description": "Android app built with B4XPages for logging and consulting work hours.",
+          "tech": "Android App",
+          "status": "Productive",
+          "statusColor": "green"
+        },
+        {
+          "id": "chatapp",
+          "icon": "fa-comments",
+          "color": "purple",
+          "tag": "Realtime Chat",
+          "title": "ChatApp v1.1",
+          "description": "Real-time chat app developed with B4A, PHP backend, and MySQL database.",
+          "tech": "B4A + PHP Backend",
+          "status": "Full-Stack",
+          "statusColor": "purple"
+        },
+        {
+          "id": "attendance",
+          "icon": "fa-user-check",
+          "color": "green",
+          "tag": "Attendance & GPS",
+          "title": "Employee Attendance",
+          "description": "Cross-platform attendance tracking system with selfie capture and GPS location.",
+          "tech": "Cross-platform",
+          "status": "GPS Tracker",
+          "statusColor": "green"
+        },
+        {
+          "id": "financial",
+          "icon": "fa-wallet",
+          "color": "orange",
+          "tag": "Financial Management",
+          "title": "Financial Mobile App",
+          "description": "B4X Android app for managing financial cards and transactions using local SQLite.",
+          "tech": "B4X + SQLite",
+          "status": "Offline-First",
+          "statusColor": "orange"
+        },
+        {
+          "id": "gpt3",
+          "icon": "fa-robot",
+          "color": "accent",
+          "tag": "AI Integration",
+          "title": "Integrating GPT-3 API",
+          "description": "Demonstration of integrating GPT-3 AI API into Android apps via B4X for text generation.",
+          "tech": "OpenAI API",
+          "status": "AI Engine",
+          "statusColor": "accent"
+        },
+        {
+          "id": "bulksms",
+          "icon": "fa-paper-plane",
+          "color": "amber",
+          "tag": "Bulk Messaging",
+          "title": "Bulk SMS in B4A",
+          "description": "Android app engineered for sending bulk SMS messages to multiple recipients.",
+          "tech": "Telecom Utility",
+          "status": "SMS Gateway",
+          "statusColor": "amber"
+        }
+      ]
+    },
+    "education": {
+      "tag": "ACADEMIC BACKGROUND",
+      "title": "Education",
+      "subtitle": "Education oriented towards IT systems, software engineering, and network technology.",
+      "size": "890 × 210 px",
+      "list": [
+        {
+          "degree": "Bachelor's Degree in Computer Science",
+          "year": "Graduated in 2021",
+          "university": "Faculty of Science and Technology — Licungo University",
+          "description": "Graduated in Computer Science with a final grade of 14/20, focusing on software development and database systems."
+        }
+      ]
+    },
+    "quote": {
+      "text": "\"Everyone has a goal. Never give up before reaching yours. Don't tell me the sky is the limit, because there are footprints on the moon.\""
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "subtitle": "Location: Xai-Xai, Gaza, Mozambique | Email: abdullcadre@gmail.com",
+      "size": "840 × 510 px",
+      "lblLocation": "LOCATION",
+      "location": "Xai-Xai, Gaza, Mozambique",
+      "email": "abdullcadre@gmail.com",
+      "form": {
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "submit": "SUBMIT MESSAGE",
+        "toast": "Message sent successfully!"
+      }
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "tag": "Mozambique • B4X Mobile Developer • Help Desk"
+    }
+  }
+}
