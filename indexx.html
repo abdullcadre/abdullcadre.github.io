@@ -527,6 +527,9 @@
 
     <nav class="mobile-nav" id="mobile-nav"></nav>
 
+    <!-- FONTE ÚNICA DE DADOS (funciona em file:// e http) -->
+    <script src="data.js"></script>
+
     <script>
         // ============ STATE ============
         const state = {
@@ -551,17 +554,14 @@
         }
         function setText(id, value) { const el = document.getElementById(id); if (el) el.textContent = value; }
 
-        // ============ LOAD DATA — fetch do data.json ============
-        async function loadData() {
-            try {
-                const res = await fetch('data.json', { cache: 'no-cache' });
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                state.data = await res.json();
-                return true;
-            } catch (e) {
-                console.error('Falha ao carregar data.json:', e);
+        // ============ LOAD DATA — via window.PORTFOLIO_DATA (data.js) ============
+        function loadData() {
+            if (!window.PORTFOLIO_DATA) {
+                console.error('data.js não foi carregado. Verifica se o ficheiro está na mesma pasta do index.html.');
                 return false;
             }
+            state.data = window.PORTFOLIO_DATA;
+            return true;
         }
 
         // ============ CARROSSEL ============
@@ -953,7 +953,7 @@
             if (window.lucide) lucide.createIcons();
         });
 
-        // CV URL vem do JSON
+        // CV URL vem do JSON (data.js)
         function downloadCV() {
             const t = state.data[state.currentLang];
             const url = (t.actions && t.actions.cvUrl) || '#';
@@ -1153,9 +1153,9 @@
         }
 
         // ============ INIT ============
-        window.addEventListener('load', async () => {
-            if (!(await loadData())) {
-                console.error('Não foi possível carregar data.json. Verifica se estás a servir via http(s).');
+        window.addEventListener('load', () => {
+            if (!loadData()) {
+                console.error('Não foi possível carregar os dados. Verifica se data.js está na mesma pasta do index.html.');
                 return;
             }
 
