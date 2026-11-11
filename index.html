@@ -37,17 +37,31 @@
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
     <style>
+        /* ============================================================ */
+        /* PALETA — inspirada no cartão: azul-violeta + cinzas suaves    */
+        /* ============================================================ */
         :root {
-            --bg: #FFFFFF; --surface: #F8FAFC; --border: #E2E8F0;
-            --text: #0F172A; --text-muted: #64748B;
-            --accent: #2563EB; --accent-soft: rgba(37, 99, 235, 0.08); --accent-border: rgba(37, 99, 235, 0.25);
-            --crosshair: #0D99FF;
+            /* Light */
+            --bg: #F3F4F6; 
+            --surface: #FFFFFF; 
+            --border: #E5E7EB;
+            --text: #111827; 
+            --text-muted: #6B7280;
+            --accent: #4F46E5; /* Azul-violeta do cartão */
+            --accent-soft: rgba(79, 70, 229, 0.08); 
+            --accent-border: rgba(79, 70, 229, 0.25);
+            --crosshair: #4F46E5;
         }
         .dark {
-            --bg: #0B0F14; --surface: #111827; --border: #1F2937;
-            --text: #E5E7EB; --text-muted: #9CA3AF;
-            --accent: #60A5FA; --accent-soft: rgba(96, 165, 250, 0.10); --accent-border: rgba(96, 165, 250, 0.25);
-            --crosshair: #60A5FA;
+            --bg: #0B0F14; 
+            --surface: #161B22; 
+            --border: #21262D;
+            --text: #F3F4F6; 
+            --text-muted: #9CA3AF;
+            --accent: #818CF8; /* Violeta claro para brilhar no escuro */
+            --accent-soft: rgba(129, 140, 248, 0.10); 
+            --accent-border: rgba(129, 140, 248, 0.25);
+            --crosshair: #818CF8;
         }
 
         html, body {
@@ -74,8 +88,8 @@
             position: relative; overflow: hidden;
         }
 
-        .dark .blueprint-grid { background-color: #0B0F14; background-image: radial-gradient(#1F2937 1px, transparent 1px); background-size: 24px 24px; }
-        .light .blueprint-grid { background-color: #F8FAFC; background-image: radial-gradient(#E2E8F0 1px, transparent 1px); background-size: 24px 24px; }
+        .dark .blueprint-grid { background-color: #0B0F14; background-image: radial-gradient(#21262D 1px, transparent 1px); background-size: 24px 24px; }
+        .light .blueprint-grid { background-color: #F3F4F6; background-image: radial-gradient(#E5E7EB 1px, transparent 1px); background-size: 24px 24px; }
 
         #noise-overlay {
             position: fixed; inset: 0; pointer-events: none; z-index: 55;
@@ -135,8 +149,7 @@
         .star-border::after { content: ''; position: absolute; inset: 1.5px; background: inherit; border-radius: inherit; z-index: -1; }
         @keyframes rotateStar { 0%{transform:rotate(0)} 100%{transform:rotate(360deg)} }
 
-        .ripple-wrapper { position: relative; overflow: hidden; }
-        .ripple-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+        .panel { position: relative; overflow: hidden; }
 
         #dots { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); z-index: 44; display: flex; flex-direction: column; gap: 10px; align-items: center; }
         @media (max-width: 768px) { #dots { display: none; } }
@@ -144,7 +157,7 @@
         .dot-btn.active { background: var(--accent); height: 22px; border-radius: 4px; }
 
         @media (max-width: 768px) {
-            .mobile-nav { position: fixed; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 8px); left: 50%; transform: translateX(-50%); z-index: 45; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px; display: flex; gap: 2px; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+            .mobile-nav { position: fixed; bottom: calc(max(12px, env(safe-area-inset-bottom)) + 8px); left: 50%; transform: translateX(-50%); z-index: 45; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px; display: flex; gap: 2px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
             .mobile-nav a { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); border-radius: 999px; transition: all 0.2s ease; }
             .mobile-nav a.active { background: var(--accent-soft); color: var(--accent); }
         }
@@ -169,8 +182,8 @@
             #footer { display: none !important; }
         }
 
-        .card-hover { transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
-        .card-hover:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-border); }
+        .card-hover { transition: border-color 0.2s ease, transform 0.2s ease; }
+        .card-hover:hover { border-color: var(--accent); transform: translateY(-2px); }
 
         .nav-link { transition: color 0.2s ease; }
         .nav-link.active { color: var(--accent); }
@@ -227,7 +240,7 @@
         .contact-row .contact-val { font-size: 13px; font-weight: 600; word-break: break-all; }
         .contact-row .contact-sub { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
-        /* Fade-content — suave */
+        /* Fade ao abrir secção */
         .fade-content {
             opacity: 0;
             transform: translateY(28px) scale(0.97);
@@ -249,14 +262,13 @@
             #hero-socials-mobile { justify-content: center; }
         }
 
-        /* TextType (typewriter) */
+        /* TextType */
         .text-type { position: relative; display: inline; white-space: pre-wrap; }
         .text-type__char { display: inline; opacity: 0; animation: textTypeFade 0.32s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes textTypeFade { to { opacity: 1; } }
         .text-type__cursor {
             display: inline-block;
-            width: 2px;
-            height: 1em;
+            width: 2px; height: 1em;
             vertical-align: -0.12em;
             margin-left: 2px;
             background-color: var(--accent);
@@ -275,10 +287,10 @@
         .modal-overlay.open { pointer-events: auto; }
         .modal-backdrop {
             position: absolute; inset: 0;
-            background: color-mix(in srgb, #000 55%, transparent);
-            backdrop-filter: blur(18px) saturate(120%);
-            -webkit-backdrop-filter: blur(18px) saturate(120%);
-            opacity: 0; transition: opacity 0.32s ease;
+            background: color-mix(in srgb, #000 45%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease;
         }
         .modal-overlay.open .modal-backdrop { opacity: 1; }
         .modal-overlay.closing .modal-backdrop { opacity: 0; }
@@ -293,19 +305,16 @@
             overflow-y: auto;
             padding: 28px;
             opacity: 0;
-            transform: translateY(24px) scale(0.96);
-            transition: opacity 0.32s ease, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow:
-                0 32px 80px rgba(0,0,0,0.45),
-                0 0 0 1px var(--accent-border) inset,
-                0 0 60px -20px var(--accent);
+            transform: translateY(20px) scale(0.97);
+            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.4);
             scrollbar-width: thin;
             scrollbar-color: var(--border) transparent;
         }
         .modal-panel::-webkit-scrollbar { width: 6px; }
         .modal-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         .modal-overlay.open .modal-panel { opacity: 1; transform: translateY(0) scale(1); }
-        .modal-overlay.closing .modal-panel { opacity: 0; transform: translateY(16px) scale(0.98); }
+        .modal-overlay.closing .modal-panel { opacity: 0; transform: translateY(14px) scale(0.98); }
 
         .modal-close {
             position: absolute; top: 14px; right: 14px;
@@ -413,15 +422,12 @@
         <!-- HERO -->
         <section id="hero" class="snap-section blueprint-grid" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
-                <div class="fade-content relative rounded-xl p-5 sm:p-10 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
+                <div class="fade-content panel rounded-xl p-5 sm:p-10" style="background: var(--surface); border: 1px solid var(--border);">
                     <div class="section-noise" aria-hidden="true"></div>
-                    <canvas class="ripple-canvas" data-ripple></canvas>
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 hero-inner">
                         <div class="lg:col-span-7 space-y-4 sm:space-y-5">
                             <h1 class="text-2xl sm:text-5xl font-bold tracking-tight leading-[1.1]" id="hero-name">Abdul Cadre</h1>
-                            <p class="text-xs sm:text-base leading-relaxed min-h-[2.6em] sm:min-h-[2.4em]" style="color: var(--text-muted);" id="hero-subtitle">
-                                <span id="hero-typer"></span>
-                            </p>
+                            <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.</p>
                             <div class="hero-cta-row pt-1 flex sm:flex-nowrap items-center gap-2 sm:gap-3">
                                 <a href="#contact" data-nav-jump="contact" class="cta-btn px-4 py-2 rounded-lg text-white text-xs font-semibold shadow-lg flex items-center gap-2 star-border" style="background: var(--accent); box-shadow: 0 4px 14px var(--accent-border);">
                                     <i data-lucide="send" class="w-3.5 h-3.5"></i>
@@ -444,10 +450,10 @@
                                 <span class="text-[9px] px-1.5 py-0.5 rounded font-bold" style="background: rgba(34,197,94,0.15); color: #22c55e;">READY</span>
                             </div>
                             <div class="space-y-1 text-[11px]">
-                                <p><span style="color: #8250DF;">location:</span> "<span id="inspector-location">Mozambique</span>";</p>
-                                <p><span style="color: #8250DF;">email:</span> "<span id="inspector-email">abdullcadre@gmail.com</span>";</p>
-                                <p><span style="color: #8250DF;">degree:</span> "<span id="inspector-degree">BSc Computer Science</span>";</p>
-                                <p><span style="color: #8250DF;">stack:</span> <span id="inspector-stack">["B4X","Android","PHP","SQLite"]</span>;</p>
+                                <p><span style="color: var(--accent);">location:</span> "<span id="inspector-location">Mozambique</span>";</p>
+                                <p><span style="color: var(--accent);">email:</span> "<span id="inspector-email">abdullcadre@gmail.com</span>";</p>
+                                <p><span style="color: var(--accent);">degree:</span> "<span id="inspector-degree">BSc Computer Science</span>";</p>
+                                <p><span style="color: var(--accent);">stack:</span> <span id="inspector-stack">["B4X","Android","PHP","SQLite"]</span>;</p>
                             </div>
                             <div class="pt-2 flex items-center justify-between text-[10px]" style="border-top: 1px solid var(--border); color: var(--text-muted);">
                                 <span id="inspector-university">LICUNGO UNIVERSITY</span>
@@ -462,9 +468,8 @@
         <!-- SKILLS -->
         <section id="skills" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
-                <div class="fade-content relative rounded-xl p-5 sm:p-10 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
+                <div class="fade-content panel rounded-xl p-5 sm:p-10" style="background: var(--surface); border: 1px solid var(--border);">
                     <div class="section-noise" aria-hidden="true"></div>
-                    <canvas class="ripple-canvas" data-ripple></canvas>
                     <div class="relative z-10">
                         <div class="mb-5 sm:mb-8">
                             <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
@@ -488,13 +493,12 @@
         <!-- PROJECTS -->
         <section id="projects" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
-                <div class="fade-content relative rounded-xl p-5 sm:p-10 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
+                <div class="fade-content panel rounded-xl p-5 sm:p-10" style="background: var(--surface); border: 1px solid var(--border);">
                     <div class="section-noise" aria-hidden="true"></div>
-                    <canvas class="ripple-canvas" data-ripple></canvas>
                     <div class="relative z-10">
                         <div class="flex flex-col md:flex-row md:items-end justify-between mb-5 sm:mb-8 gap-3">
                             <div>
-                                <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: #8250DF;">
+                                <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
                                     <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
                                     <span id="projects-tag">Portfolio</span>
                                 </div>
@@ -524,9 +528,8 @@
         <!-- EDUCATION -->
         <section id="education" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
-                <div class="fade-content relative rounded-xl p-5 sm:p-10 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
+                <div class="fade-content panel rounded-xl p-5 sm:p-10" style="background: var(--surface); border: 1px solid var(--border);">
                     <div class="section-noise" aria-hidden="true"></div>
-                    <canvas class="ripple-canvas" data-ripple></canvas>
                     <div class="relative z-10">
                         <div class="mb-4 sm:mb-5">
                             <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
@@ -550,12 +553,13 @@
         <!-- QUOTE -->
         <section id="quote" class="snap-section" style="border-bottom: 1px solid var(--border);">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
-                <div class="fade-content relative rounded-xl p-6 sm:p-12 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
+                <div class="fade-content panel rounded-xl p-6 sm:p-12" style="background: var(--surface); border: 1px solid var(--border);">
                     <div class="section-noise" aria-hidden="true"></div>
-                    <canvas class="ripple-canvas" data-ripple></canvas>
                     <div class="relative z-10">
                         <i class="inline-block mb-3" data-lucide="quote" style="color: var(--accent); width:22px; height:22px;"></i>
-                        <blockquote class="text-base sm:text-xl font-medium leading-relaxed mb-4" id="quote-text">—</blockquote>
+                        <blockquote class="text-base sm:text-xl font-medium leading-relaxed mb-4 min-h-[4em]" id="quote-text">
+                            <span id="quote-typer"></span>
+                        </blockquote>
                         <div class="text-xs font-mono" style="color: var(--accent);">— <span id="quote-brand">Abdul Cadre</span></div>
                     </div>
                 </div>
@@ -565,9 +569,8 @@
         <!-- CONTACT -->
         <section id="contact" class="snap-section">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
-                <div class="fade-content relative rounded-xl p-6 sm:p-10 ripple-wrapper" style="background: var(--surface); border: 1px solid var(--border);">
+                <div class="fade-content panel rounded-xl p-6 sm:p-10" style="background: var(--surface); border: 1px solid var(--border);">
                     <div class="section-noise" aria-hidden="true"></div>
-                    <canvas class="ripple-canvas" data-ripple></canvas>
                     <div class="relative z-10">
                         <div class="mb-5">
                             <div class="inline-flex items-center gap-2 text-xs font-mono mb-2" style="color: var(--accent);">
@@ -652,14 +655,14 @@
     }
 
     // ============================================================
-    // TEXT TYPE (typewriter, vanilla)
+    // TEXT TYPE (typewriter)
     // ============================================================
     function createTyper(el, sentences, opts = {}) {
-        if (!el || !sentences || !sentences.length) return;
+        if (!el || !sentences || !sentences.length) return null;
         const typingSpeed = opts.typingSpeed ?? 45;
         const deletingSpeed = opts.deletingSpeed ?? 22;
         const pause = opts.pause ?? 1800;
-        const initialDelay = opts.initialDelay ?? 400;
+        const initialDelay = opts.initialDelay ?? 300;
 
         let idx = 0, count = 0, deleting = false, timer = null;
         let chars = Array.from(sentences[0]);
@@ -805,7 +808,7 @@
     // ============================================================
     // RENDER
     // ============================================================
-    let heroTyper = null;
+    let quoteTyper = null;
 
     function render() {
         const t = state.data[state.currentLang];
@@ -832,6 +835,7 @@
         ).join('');
 
         setText('hero-name', t.hero.name);
+        setText('hero-subtitle', t.hero.subtitle);
         setText('btn-contact', t.actions.contact);
         setText('btn-cv', t.actions.downloadCV);
         setText('inspector-location', t.hero.inspector.location);
@@ -840,22 +844,6 @@
         document.getElementById('inspector-stack').textContent = JSON.stringify(t.hero.inspector.stack);
         setText('inspector-university', t.hero.inspector.university);
         setText('inspector-year', t.hero.inspector.year);
-
-        // Hero typewriter
-        const typerEl = document.getElementById('hero-typer');
-        if (typerEl) {
-            const phrases = state.currentLang === 'pt' ? [
-                'Programador de aplicações móveis (B4X / Android).',
-                'Docente e formador em TICs em Moçambique.',
-                'A construir soluções reais com PHP, SQLite e IA.'
-            ] : [
-                'Mobile developer (B4X / Android).',
-                'Lecturer and ICT trainer in Mozambique.',
-                'Building real-world solutions with PHP, SQLite and AI.'
-            ];
-            if (heroTyper) heroTyper.restart(phrases);
-            else heroTyper = createTyper(typerEl, phrases, { typingSpeed: 38, deletingSpeed: 20, pause: 2000, initialDelay: 500 });
-        }
 
         const socialsDesktop = (t.contact.socials || []).map(s => `
             <a href="${s.url}" target="_blank" rel="noopener" class="social-pill" title="${s.label}">${icon(s.icon, 'w-3.5 h-3.5')}<span>${s.label}</span></a>
@@ -928,8 +916,20 @@
         `).join('');
         initCarousel('education-track', 'education-dots', 'education-prev', 'education-next');
 
-        setText('quote-text', t.quote.text);
+        // QUOTE
         setText('quote-brand', t.brandName);
+        const typerEl = document.getElementById('quote-typer');
+        if (typerEl) {
+            const sentence = t.quote.text || '';
+            if (quoteTyper) quoteTyper.restart([sentence]);
+            else quoteTyper = createTyper(typerEl, [sentence], {
+                typingSpeed: 32,
+                deletingSpeed: 14,
+                pause: 3200,
+                initialDelay: 300
+            });
+        }
+
         setText('contact-tag', t.contact.tag || 'Contacts');
         setText('contact-title', t.contact.title);
 
@@ -957,7 +957,6 @@
 
         updateActiveNav();
         initFadeContent();
-        initRippleDistortion();
     }
 
     function navJumpHandler(e) { e.preventDefault(); jumpToSection(this.getAttribute('data-nav-jump')); }
@@ -1159,7 +1158,6 @@
         });
         metaEl.style.display = metaRows.length ? 'grid' : 'none';
 
-        // Only Google Play button (close was removed)
         const actionsEl = document.getElementById('modal-actions');
         actionsEl.innerHTML = '';
         if (data.storeUrl) {
@@ -1187,7 +1185,7 @@
             overlay.classList.remove('open', 'closing');
             overlay.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('modal-open');
-        }, 320);
+        }, 300);
     }
 
     document.addEventListener('click', (e) => {
@@ -1254,17 +1252,17 @@
         resize();
         window.addEventListener('resize', resize);
         const sparks = [];
-        const COLORS = ['#60A5FA', '#2563EB', '#0D99FF', '#8250DF', '#F59E0B', '#22c55e'];
+        const COLORS = ['#818CF8', '#4F46E5', '#6D28D9', '#A78BFA', '#F59E0B', '#22c55e'];
         function createSpark(x, y) {
-            const count = 12 + Math.floor(Math.random() * 5);
+            const count = 10 + Math.floor(Math.random() * 4);
             for (let i = 0; i < count; i++) {
                 const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
                 const speed = 3 + Math.random() * 4;
                 sparks.push({
                     x: x * dpr, y: y * dpr,
                     vx: Math.cos(angle) * speed * dpr, vy: Math.sin(angle) * speed * dpr,
-                    life: 1, decay: 0.02 + Math.random() * 0.01,
-                    size: (2 + Math.random() * 2.5) * dpr,
+                    life: 1, decay: 0.025 + Math.random() * 0.012,
+                    size: (2 + Math.random() * 2) * dpr,
                     color: COLORS[Math.floor(Math.random() * COLORS.length)],
                     rotation: Math.random() * Math.PI * 2
                 });
@@ -1299,42 +1297,7 @@
     }
 
     // ============================================================
-    // RIPPLE
-    // ============================================================
-    function initRippleDistortion() {
-        document.querySelectorAll('[data-ripple]').forEach(canvas => {
-            if (canvas.dataset.rippleInit === 'true') return;
-            canvas.dataset.rippleInit = 'true';
-            const ctx = canvas.getContext('2d');
-            const parent = canvas.parentElement;
-            let w, h;
-            const resize = () => { w = parent.clientWidth; h = parent.clientHeight; canvas.width = w; canvas.height = h; };
-            resize();
-            window.addEventListener('resize', resize);
-            const ripples = [];
-            parent.addEventListener('mousemove', (e) => {
-                const rect = parent.getBoundingClientRect();
-                ripples.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, r: 0, maxR: 130, opacity: 0.45 });
-                if (ripples.length > 20) ripples.shift();
-            });
-            function draw() {
-                ctx.clearRect(0, 0, w, h);
-                for (let i = ripples.length - 1; i >= 0; i--) {
-                    const r = ripples[i];
-                    r.r += 1.8; r.opacity *= 0.965;
-                    if (r.opacity < 0.01 || r.r > r.maxR) { ripples.splice(i, 1); continue; }
-                    ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
-                    ctx.strokeStyle = `rgba(96,165,250,${r.opacity})`;
-                    ctx.lineWidth = 1.5; ctx.stroke();
-                }
-                requestAnimationFrame(draw);
-            }
-            draw();
-        });
-    }
-
-    // ============================================================
-    // GLOW CURSOR — WebGL2 Fluid Simulation (with mobile touch support)
+    // GLOW CURSOR
     // ============================================================
     const GLOW_VERTEX = `#version 300 es
     in vec2 aPosition;
@@ -1609,7 +1572,7 @@
 
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
         const settings = {
-            color: '#5f8bff',
+            color: '#818CF8', /* Cor do glow a condizer com o acento */
             secondaryColor: '',
             intensity: 1.3,
             trailWidth: 3,
@@ -2026,7 +1989,6 @@
         }
         function wake() { if (!raf && alive && visible && !document.hidden) raf = requestAnimationFrame(frame); }
 
-        // ---------- Pointer helpers ----------
         const updatePointerFromClient = (clientX, clientY) => {
             const rect = container.getBoundingClientRect();
             const x = clientX - rect.left;
@@ -2048,12 +2010,12 @@
         };
 
         const onPointerMove = (event) => {
-            if (event.pointerType === 'touch') return; // handled by touch events
+            if (event.pointerType === 'touch') return;
             updatePointerFromClient(event.clientX, event.clientY);
         };
         const onPointerDown = (event) => {
             if (!settings.clickBurst || !settings.enabled) return;
-            if (event.pointerType === 'touch') return; // handled by touchstart
+            if (event.pointerType === 'touch') return;
             const rect = container.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
@@ -2063,7 +2025,6 @@
         };
         const onPointerLeave = () => { S.pointer.inside = false; S.ready = false; wake(); };
 
-        // ---------- TOUCH: emite durante o swipe, limpa no touchend ----------
         const onTouchStart = (e) => {
             const t = e.touches[0];
             if (!t) return;
@@ -2081,11 +2042,9 @@
         const onTouchMove = (e) => {
             const t = e.touches[0];
             if (!t) return;
-            // Não chamar preventDefault — permite scroll normal da página
             updatePointerFromClient(t.clientX, t.clientY);
         };
         const onTouchEnd = () => {
-            // Para de emitir e limpa o rasto restante
             S.pointer.inside = false;
             S.ready = false;
             last = 0;
@@ -2106,8 +2065,6 @@
         window.addEventListener('pointerdown', onPointerDown, { passive: true });
         document.documentElement.addEventListener('pointerleave', onPointerLeave);
         document.addEventListener('visibilitychange', onVisibility);
-
-        // Touch listeners ligados ao container (não capturam o scroll da página)
         container.addEventListener('touchstart', onTouchStart, { passive: true });
         container.addEventListener('touchmove', onTouchMove, { passive: true });
         container.addEventListener('touchend', onTouchEnd, { passive: true });
@@ -2160,7 +2117,6 @@
         render();
         if (window.lucide) lucide.createIcons();
 
-        initRippleDistortion();
         initClickSpark();
         initCrosshair();
 
