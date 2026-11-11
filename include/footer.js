@@ -1,0 +1,7 @@
+window.INCLUDE_FOOTER = `<footer id="footer" style="background: color-mix(in srgb, var(--bg) 88%, transparent); border-top: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto w-full h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between text-[11px] font-mono" style="color: var(--text-muted);">
+        <span>© 2026 <span id="footer-brand">Abdul Cadre</span></span>
+        <span class="hidden sm:inline" id="footer-rights">All rights reserved</span>
+        <span class="hidden md:inline opacity-70" id="footer-tag">B4X · Lecturer · Help Desk</span>
+    </div>
+</footer>`;

@@ -1,0 +1,212 @@
+window.PORTFOLIO_DATA = {
+  "meta": {
+    "defaultLang": "en",
+    "availableLangs": ["pt", "en"]
+  },
+
+  "en": {
+    "brandName": "Abdul Cadre",
+    "brandLocation": "Mozambique",
+
+    "nav": [
+      { "id": "hero",      "label": "Home",      "icon": "home" },
+      { "id": "skills",    "label": "Skills",    "icon": "layers" },
+      { "id": "projects",  "label": "Projects",  "icon": "folder-git-2" },
+      { "id": "education", "label": "Education", "icon": "graduation-cap" },
+      { "id": "quote",     "label": "Quote",     "icon": "quote" },
+      { "id": "contact",   "label": "Contact",   "icon": "mail" }
+    ],
+
+    "actions": {
+      "contact": "Get in touch",
+      "downloadCV": "Download CV",
+      "cvUrl": "https://drive.google.com/file/d/1k19gc77YrECmLnP6qAKEe-o22ovPdIRk/view?usp=drive_link"
+    },
+
+    "hero": {
+      "name": "Abdul Cadre",
+      "subtitle": "Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.",
+      "inspector": {
+        "location": "Mozambique",
+        "email": "abdullcadre@gmail.com",
+        "degree": "BSc Computer Science",
+        "stack": ["B4X", "Android", "PHP", "SQLite"],
+        "university": "LICUNGO UNIVERSITY",
+        "year": "2021"
+      }
+    },
+
+    "skills": {
+      "tag": "Technical skills",
+      "title": "Skills & Specialties",
+      "subtitle": "Competencies developed in academic and professional contexts.",
+      "list": [
+        { "icon": "smartphone", "tag": "B4X", "title": "Mobile development", "description": "Android apps with B4X, focused on usability and performance." },
+        { "icon": "wrench", "tag": "Hardware", "title": "Systems maintenance", "description": "Equipment diagnostics, repair, and IT optimization." },
+        { "icon": "users", "tag": "Training", "title": "Teaching & ICT training", "description": "Training students and professionals in information technology." },
+        { "icon": "git-merge", "tag": "Software", "title": "Software engineering", "description": "Planning, developing, and maintaining software systems." }
+      ]
+    },
+
+    "projects": {
+      "tag": "Portfolio",
+      "title": "Featured Projects",
+      "subtitle": "Mobile apps and cross-platform solutions focused on real-world applicability.",
+      "b4xLink": "View all B4X work",
+      "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
+      "storeLink": "View my Google Play store",
+      "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
+      "list": [
+        { "icon": "bot", "tag": "ABC Moz", "title": "ABC Moz", "description": "Educational app for literacy in Mozambique, published on Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
+        { "icon": "clock", "tag": "B4XPages", "title": "LaborLog Lite", "description": "Work-hours logging and lookup, Android with B4XPages.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+        { "icon": "message-square", "tag": "Quotey", "title": "Quotey", "description": "Quotes and phrases app for Android, published on Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+        { "icon": "message-square", "tag": "Realtime Chat", "title": "ChatApp v1.1", "description": "Real-time chat with B4A, PHP and MySQL. Ideal for simple conversations.", "tech": "B4A + PHP", "status": "Full-Stack" },
+        { "icon": "user-check", "tag": "Attendance", "title": "Employee Attendance", "description": "Attendance tracking with selfie, time and location.", "tech": "Cross-platform", "status": "GPS Tracker" },
+        { "icon": "wallet", "tag": "Finance", "title": "Financial Mobile App", "description": "Card and transaction management with local SQLite.", "tech": "B4X + SQLite", "status": "Offline-First" },
+        { "icon": "bot", "tag": "AI", "title": "Integrating GPT-3 API", "description": "GPT-3 API integration in Android apps via B4X.", "tech": "OpenAI", "status": "AI Engine" },
+        { "icon": "send", "tag": "SMS", "title": "Bulk SMS in B4A", "description": "Bulk SMS sending to multiple recipients.", "tech": "B4A", "status": "Telecom" }
+      ]
+    },
+
+    "education": {
+      "tag": "Academic background",
+      "title": "Education",
+      "subtitle": "Academic background oriented towards Information Technologies.",
+      "list": [
+        { "year": "2021", "level": "Higher Education", "icon": "graduation-cap", "description": "BSc in Computer Science at Licungo University, final grade 14/20." },
+        { "year": "2016", "level": "High School", "icon": "book-open", "description": "12th grade at Hamdan Bin Rashid Pre-University School." },
+        { "year": "2014", "level": "Secondary Education", "icon": "school", "description": "10th grade at Chimundo Secondary School." },
+        { "year": "2011", "level": "Primary Education", "icon": "pencil", "description": "7th grade at Macunene Complete Primary School." }
+      ]
+    },
+
+    "quote": {
+      "text": "\"Everyone has a goal. Never give up before reaching yours. Don't tell me the sky is the limit, because there are footprints on the moon.\""
+    },
+
+    "contact": {
+      "tag": "Contacts",
+      "title": "Get in Touch",
+      "subtitle": "",
+      "items": [
+        { "icon": "mail",  "label": "Email",           "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com", "sub": "Reply within 24h" },
+        { "icon": "phone", "label": "Call / WhatsApp", "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758",  "sub": "Call or send a message" },
+        { "icon": "phone", "label": "Call",            "value": "+258 86 812 2758",      "url": "tel:+258868122758",           "sub": "Call" }
+      ],
+      "socials": [
+        { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
+        { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
+        { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
+        { "icon": "code-2",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+      ]
+    },
+
+    "footer": {
+      "rights": "All rights reserved",
+      "tag": "B4X · Lecturer · Help Desk"
+    }
+  },
+
+  "pt": {
+    "brandName": "Abdul Cadre",
+    "brandLocation": "Moçambique",
+
+    "nav": [
+      { "id": "hero",      "label": "Início",      "icon": "home" },
+      { "id": "skills",    "label": "Habilidades", "icon": "layers" },
+      { "id": "projects",  "label": "Projectos",   "icon": "folder-git-2" },
+      { "id": "education", "label": "Formação",    "icon": "graduation-cap" },
+      { "id": "quote",     "label": "Frase",       "icon": "quote" },
+      { "id": "contact",   "label": "Contacto",    "icon": "mail" }
+    ],
+
+    "actions": {
+      "contact": "Entrar em contacto",
+      "downloadCV": "Baixar CV",
+      "cvUrl": "https://drive.google.com/file/d/1k19gc77YrECmLnP6qAKEe-o22ovPdIRk/view?usp=drive_link"
+    },
+
+    "hero": {
+      "name": "Abdul Cadre",
+      "subtitle": "Programador de aplicações móveis (B4X / Android), docente e formador em TICs em Moçambique.",
+      "inspector": {
+        "location": "Moçambique",
+        "email": "abdullcadre@gmail.com",
+        "degree": "Licenciatura em Informática",
+        "stack": ["B4X", "Android", "PHP", "SQLite"],
+        "university": "UNIVERSIDADE LICUNGO",
+        "year": "2021"
+      }
+    },
+
+    "skills": {
+      "tag": "Competências técnicas",
+      "title": "Habilidades & Especialidades",
+      "subtitle": "Conjunto de competências desenvolvidas em contextos académicos e profissionais.",
+      "list": [
+        { "icon": "smartphone", "tag": "B4X", "title": "Desenvolvimento mobile", "description": "Aplicações Android com B4X, focadas em usabilidade e desempenho." },
+        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico, reparação de equipamentos e optimização de TI." },
+        { "icon": "users", "tag": "Formação", "title": "Docência & Formação em TICs", "description": "Capacitação de alunos e profissionais em tecnologias de informação." },
+        { "icon": "git-merge", "tag": "Software", "title": "Engenharia de software", "description": "Planeamento, desenvolvimento e manutenção de sistemas informáticos." }
+      ]
+    },
+
+    "projects": {
+      "tag": "Portfólio",
+      "title": "Projectos Desenvolvidos",
+      "subtitle": "Aplicações mobile e soluções multiplataforma focadas em aplicabilidade real.",
+      "b4xLink": "Ver todos os trabalhos B4X",
+      "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
+      "storeLink": "Ver a minha loja na Google Play",
+      "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
+      "list": [
+        { "icon": "bot", "tag": "ABC Moz", "title": "ABC Moz", "description": "Aplicação educativa para alfabetização em Moçambique, publicada na Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
+        { "icon": "clock", "tag": "B4XPages", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho, Android com B4XPages.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+        { "icon": "message-square", "tag": "Quotey", "title": "Quotey", "description": "Aplicação de citações e frases para Android, publicada na Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+        { "icon": "message-square", "tag": "Realtime Chat", "title": "ChatApp v1.1", "description": "Chat em tempo real com B4A, PHP e MySQL. Ideal para conversas simples.", "tech": "B4A + PHP", "status": "Full-Stack" },
+        { "icon": "user-check", "tag": "Presenças", "title": "Employee Attendance", "description": "Controlo de presenças com selfie, hora e localização.", "tech": "Cross-platform", "status": "GPS Tracker" },
+        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transacções com SQLite local.", "tech": "B4X + SQLite", "status": "Offline-First" },
+        { "icon": "bot", "tag": "IA", "title": "Integrating GPT-3 API", "description": "Integração da API GPT-3 em apps Android via B4X.", "tech": "OpenAI", "status": "AI Engine" },
+        { "icon": "send", "tag": "SMS", "title": "Bulk SMS in B4A", "description": "Envio de SMS em massa a múltiplos destinatários.", "tech": "B4A", "status": "Telecom" }
+      ]
+    },
+
+    "education": {
+      "tag": "Formação académica",
+      "title": "Histórico Académico",
+      "subtitle": "Formação académica orientada para as Tecnologias de Informação.",
+      "list": [
+        { "year": "2021", "level": "Ensino Superior", "icon": "graduation-cap", "description": "Licenciatura em Informática na Faculdade de Ciência e Tecnologia da Universidade Licungo, nota final 14 valores." },
+        { "year": "2016", "level": "Nível Médio", "icon": "book-open", "description": "12ª Classe na Escola Pré-universitária Hamdan Bin Rashid." },
+        { "year": "2014", "level": "Ensino Secundário", "icon": "school", "description": "10ª Classe na Escola Secundária de Chimundo." },
+        { "year": "2011", "level": "Ensino Primário", "icon": "pencil", "description": "7ª Classe na Escola Primária Completa de Macunene." }
+      ]
+    },
+
+    "quote": {
+      "text": "\"Todos têm uma meta. Nunca desistas antes de alcançar a tua. Não me digas que o céu é o limite, porque há pegadas na lua.\""
+    },
+
+    "contact": {
+      "tag": "Contactos",
+      "title": "Entrar em Contacto",
+      "subtitle": "",
+      "items": [
+        { "icon": "mail",  "label": "Email",              "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com", "sub": "Resposta em 24h" },
+        { "icon": "phone", "label": "Chamada / WhatsApp", "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758",  "sub": "Ligar ou enviar mensagem" },
+        { "icon": "phone", "label": "Chamada",            "value": "+258 86 812 2758",      "url": "tel:+258868122758",           "sub": "Ligar" }
+      ],
+      "socials": [
+        { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
+        { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
+        { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
+        { "icon": "code-2",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+      ]
+    },
+
+    "footer": {
+      "rights": "Todos os direitos reservados",
+      "tag": "B4X · Docente · Help Desk"
+    }
+  }
+};

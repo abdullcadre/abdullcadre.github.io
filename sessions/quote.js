@@ -1,0 +1,15 @@
+window.SESSION_quote = `<!-- QUOTE -->
+<section id="quote" class="snap-section" style="border-bottom: 1px solid var(--border);">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
+        <div class="fade-content panel rounded-xl p-6 sm:p-12" style="background: var(--surface); border: 1px solid var(--border);">
+            <div class="section-noise" aria-hidden="true"></div>
+            <div class="relative z-10">
+                <i class="inline-block mb-3" data-lucide="quote" style="color: var(--accent); width:22px; height:22px;"></i>
+                <blockquote class="text-base sm:text-xl font-medium leading-relaxed mb-4 min-h-[4em]" id="quote-text">
+                    <span id="quote-typer"></span>
+                </blockquote>
+                <div class="text-xs font-mono" style="color: var(--accent);">— <span id="quote-brand">Abdul Cadre</span></div>
+            </div>
+        </div>
+    </div>
+</section>`;
