@@ -65,7 +65,6 @@
             -webkit-overflow-scrolling: touch; scrollbar-width: none;
         }
         #scroller::-webkit-scrollbar { display: none; }
-
         body.modal-open #scroller { overflow: hidden; }
 
         .snap-section {
@@ -111,15 +110,9 @@
         }
         @media (prefers-reduced-motion: reduce) { .section-noise { animation: none; } }
 
-        /* === GLOW CURSOR (WebGL fluid) === */
-        #glow-cursor-root {
-            position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden;
-        }
-        #glow-canvas {
-            position: absolute; inset: 0; display: block;
-            width: 100%; height: 100%; pointer-events: none;
-            mix-blend-mode: screen;
-        }
+        /* Glow Cursor */
+        #glow-cursor-root { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+        #glow-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
         .light #glow-canvas { mix-blend-mode: normal; }
 
         #spark-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 62; }
@@ -225,9 +218,6 @@
         .edu-level { font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.45rem; }
         .edu-desc { font-size: 0.72rem; line-height: 1.5; color: var(--text-muted); flex: 1; }
 
-        .project-card-link { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--accent); text-decoration: none; margin-top: 6px; }
-        .project-card-link:hover { text-decoration: underline; }
-
         .contact-list { display: grid; gap: 10px; }
         .contact-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); transition: all 0.2s ease; }
         .contact-row:hover { border-color: var(--accent); transform: translateY(-1px); }
@@ -237,76 +227,20 @@
         .contact-row .contact-val { font-size: 13px; font-weight: 600; word-break: break-all; }
         .contact-row .contact-sub { font-size: 10px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
-        /* === FADE CONTENT === */
+        /* Fade-content — suave */
         .fade-content {
             opacity: 0;
-            transform: translateY(40px) scale(0.94);
-            filter: blur(18px);
+            transform: translateY(28px) scale(0.97);
+            filter: blur(12px);
             transition:
-                opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+                opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 1s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: opacity, transform, filter;
         }
-        .fade-content.is-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            filter: blur(0);
-        }
-
-        /* === SWEEP SHINE (revelação da seção) === */
-        .fade-content::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 20;
-            border-radius: inherit;
-            background: linear-gradient(100deg, transparent 35%, color-mix(in srgb, var(--accent) 28%, transparent) 50%, transparent 65%);
-            background-size: 60% 100%;
-            background-repeat: no-repeat;
-            background-position: -150% 0;
-            opacity: 0;
-        }
-        .fade-content.is-visible::after {
-            animation: revealSweep 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-        }
-        @keyframes revealSweep {
-            0%   { opacity: 0; background-position: -150% 0; }
-            20%  { opacity: 1; }
-            100% { opacity: 0; background-position: 250% 0; }
-        }
-
-        /* === STAGGER dos cards ao entrar a seção === */
-        .snap-section .carousel-track .carousel-item {
-            opacity: 1;
-        }
-        .snap-section.is-active .carousel-track .carousel-item {
-            animation: cardStaggerIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-        }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(1) { animation-delay: 0.18s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(2) { animation-delay: 0.26s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(3) { animation-delay: 0.34s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(4) { animation-delay: 0.42s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(5) { animation-delay: 0.50s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(6) { animation-delay: 0.58s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(7) { animation-delay: 0.66s; }
-        .snap-section.is-active .carousel-track .carousel-item:nth-child(8) { animation-delay: 0.74s; }
-
-        @keyframes cardStaggerIn {
-            from { opacity: 0; transform: translateY(24px) scale(0.92); filter: blur(10px); }
-            to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
-
-        @media (max-width: 768px) {
-            .fade-content { transform: translateY(28px) scale(0.96); filter: blur(14px); transition: opacity 1s, transform 1s, filter 1s; }
-            .fade-content.is-visible { transform: translateY(0) scale(1); filter: blur(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-            .fade-content { transition: none; opacity: 1; transform: none; filter: none; }
-            .fade-content::after { display: none; }
-            .snap-section.is-active .carousel-track .carousel-item { animation: none; }
-        }
+        .fade-content.is-visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        @media (max-width: 768px) { .fade-content { transform: translateY(20px) scale(0.98); filter: blur(8px); } }
+        @media (prefers-reduced-motion: reduce) { .fade-content { transition: none; opacity: 1; transform: none; filter: none; } }
 
         @media (max-width: 768px) {
             .hero-inner { text-align: center; }
@@ -315,23 +249,36 @@
             #hero-socials-mobile { justify-content: center; }
         }
 
-        /* ============================================================ */
-        /* MODAL                                                        */
-        /* ============================================================ */
-        .modal-overlay {
-            position: fixed; inset: 0; z-index: 200;
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            pointer-events: none;
+        /* TextType (typewriter) */
+        .text-type { position: relative; display: inline; white-space: pre-wrap; }
+        .text-type__char { display: inline; opacity: 0; animation: textTypeFade 0.32s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes textTypeFade { to { opacity: 1; } }
+        .text-type__cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            vertical-align: -0.12em;
+            margin-left: 2px;
+            background-color: var(--accent);
+            border-radius: 1px;
+            animation: textTypeBlink 1s steps(2, start) infinite;
+            opacity: 0.9;
         }
+        @keyframes textTypeBlink { 0%, 50% { opacity: 0.9; } 51%, 100% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+            .text-type__char { opacity: 1; animation: none; }
+            .text-type__cursor { animation: none; }
+        }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; pointer-events: none; }
         .modal-overlay.open { pointer-events: auto; }
         .modal-backdrop {
             position: absolute; inset: 0;
             background: color-mix(in srgb, #000 55%, transparent);
             backdrop-filter: blur(18px) saturate(120%);
             -webkit-backdrop-filter: blur(18px) saturate(120%);
-            opacity: 0;
-            transition: opacity 0.32s ease;
+            opacity: 0; transition: opacity 0.32s ease;
         }
         .modal-overlay.open .modal-backdrop { opacity: 1; }
         .modal-overlay.closing .modal-backdrop { opacity: 0; }
@@ -341,14 +288,12 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 18px;
-            max-width: 560px;
-            width: 100%;
-            max-height: 85vh;
+            max-width: 560px; width: 100%;
             max-height: 85dvh;
             overflow-y: auto;
             padding: 28px;
             opacity: 0;
-            transform: translateY(30px) scale(0.92);
+            transform: translateY(24px) scale(0.96);
             transition: opacity 0.32s ease, transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow:
                 0 32px 80px rgba(0,0,0,0.45),
@@ -360,7 +305,7 @@
         .modal-panel::-webkit-scrollbar { width: 6px; }
         .modal-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         .modal-overlay.open .modal-panel { opacity: 1; transform: translateY(0) scale(1); }
-        .modal-overlay.closing .modal-panel { opacity: 0; transform: translateY(20px) scale(0.96); }
+        .modal-overlay.closing .modal-panel { opacity: 0; transform: translateY(16px) scale(0.98); }
 
         .modal-close {
             position: absolute; top: 14px; right: 14px;
@@ -385,22 +330,10 @@
             font-size: 10px; font-weight: 600; text-transform: uppercase;
             letter-spacing: 0.1em; color: var(--accent); margin-bottom: 3px;
         }
-        .modal-title {
-            font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em;
-            color: var(--text); line-height: 1.2;
-        }
-        .modal-desc {
-            font-size: 0.88rem; line-height: 1.65; color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-        .modal-meta {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px; margin-bottom: 18px;
-        }
-        .modal-meta-cell {
-            padding: 10px 12px; border-radius: 10px;
-            background: var(--bg); border: 1px solid var(--border);
-        }
+        .modal-title { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.2; }
+        .modal-desc { font-size: 0.88rem; line-height: 1.65; color: var(--text-muted); margin-bottom: 20px; }
+        .modal-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 18px; }
+        .modal-meta-cell { padding: 10px 12px; border-radius: 10px; background: var(--bg); border: 1px solid var(--border); }
         .modal-meta-cell .meta-lbl {
             font-family: 'JetBrains Mono', monospace;
             font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em;
@@ -432,11 +365,9 @@
 
     <div id="noise-overlay" aria-hidden="true"></div>
 
-    <!-- GLOW CURSOR — WebGL2 fluid simulation -->
     <div id="glow-cursor-root" aria-hidden="true">
         <canvas id="glow-canvas"></canvas>
     </div>
-
     <canvas id="spark-canvas" aria-hidden="true"></canvas>
 
     <div id="crosshair">
@@ -488,7 +419,9 @@
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 hero-inner">
                         <div class="lg:col-span-7 space-y-4 sm:space-y-5">
                             <h1 class="text-2xl sm:text-5xl font-bold tracking-tight leading-[1.1]" id="hero-name">Abdul Cadre</h1>
-                            <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.</p>
+                            <p class="text-xs sm:text-base leading-relaxed min-h-[2.6em] sm:min-h-[2.4em]" style="color: var(--text-muted);" id="hero-subtitle">
+                                <span id="hero-typer"></span>
+                            </p>
                             <div class="hero-cta-row pt-1 flex sm:flex-nowrap items-center gap-2 sm:gap-3">
                                 <a href="#contact" data-nav-jump="contact" class="cta-btn px-4 py-2 rounded-lg text-white text-xs font-semibold shadow-lg flex items-center gap-2 star-border" style="background: var(--accent); box-shadow: 0 4px 14px var(--accent-border);">
                                     <i data-lucide="send" class="w-3.5 h-3.5"></i>
@@ -662,9 +595,7 @@
 
     <nav class="mobile-nav" id="mobile-nav"></nav>
 
-    <!-- ============================================================ -->
-    <!-- MODAL                                                        -->
-    <!-- ============================================================ -->
+    <!-- MODAL -->
     <div id="modal-overlay" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-backdrop" data-modal-close></div>
         <div class="modal-panel" role="document">
@@ -721,6 +652,76 @@
     }
 
     // ============================================================
+    // TEXT TYPE (typewriter, vanilla)
+    // ============================================================
+    function createTyper(el, sentences, opts = {}) {
+        if (!el || !sentences || !sentences.length) return;
+        const typingSpeed = opts.typingSpeed ?? 45;
+        const deletingSpeed = opts.deletingSpeed ?? 22;
+        const pause = opts.pause ?? 1800;
+        const initialDelay = opts.initialDelay ?? 400;
+
+        let idx = 0, count = 0, deleting = false, timer = null;
+        let chars = Array.from(sentences[0]);
+
+        const cursor = document.createElement('span');
+        cursor.className = 'text-type__cursor';
+        cursor.setAttribute('aria-hidden', 'true');
+
+        const render = () => {
+            el.innerHTML = '';
+            const frag = document.createDocumentFragment();
+            for (let i = 0; i < count; i++) {
+                const span = document.createElement('span');
+                span.className = 'text-type__char';
+                span.textContent = chars[i];
+                frag.appendChild(span);
+            }
+            el.appendChild(frag);
+            el.appendChild(cursor);
+        };
+
+        const tick = () => {
+            if (!deleting) {
+                if (count < chars.length) {
+                    count++;
+                    render();
+                    const char = chars[count - 1] || '';
+                    const delay = /[.,;!?]/.test(char) ? typingSpeed * 4 : typingSpeed;
+                    timer = setTimeout(tick, delay);
+                } else {
+                    timer = setTimeout(() => { deleting = true; tick(); }, pause);
+                }
+            } else {
+                if (count > 0) {
+                    count--;
+                    render();
+                    timer = setTimeout(tick, deletingSpeed);
+                } else {
+                    deleting = false;
+                    idx = (idx + 1) % sentences.length;
+                    chars = Array.from(sentences[idx]);
+                    timer = setTimeout(tick, 320);
+                }
+            }
+        };
+
+        setTimeout(() => { render(); tick(); }, initialDelay);
+
+        return {
+            stop() { if (timer) clearTimeout(timer); },
+            restart(newSentences) {
+                if (timer) clearTimeout(timer);
+                sentences = newSentences;
+                idx = 0; count = 0; deleting = false;
+                chars = Array.from(sentences[0]);
+                render();
+                tick();
+            }
+        };
+    }
+
+    // ============================================================
     // CARROSSEL
     // ============================================================
     function initCarousel(trackId, dotsId, prevId, nextId) {
@@ -768,8 +769,7 @@
         function updateArrows() {
             if (!prevBtn || !nextBtn) return;
             const maxScroll = track.scrollWidth - track.clientWidth - 4;
-            const noScroll = maxScroll <= 4;
-            if (noScroll) { prevBtn.classList.add('hidden-btn'); nextBtn.classList.add('hidden-btn'); return; }
+            if (maxScroll <= 4) { prevBtn.classList.add('hidden-btn'); nextBtn.classList.add('hidden-btn'); return; }
             prevBtn.classList.toggle('hidden-btn', track.scrollLeft <= 4);
             nextBtn.classList.toggle('hidden-btn', track.scrollLeft >= maxScroll);
         }
@@ -788,16 +788,14 @@
             scrollTimeout = setTimeout(updateDots, 60);
         }, { passive: true });
 
-        let isDown = false, startX, scrollStart, moved = false;
-        track.addEventListener('mousedown', (e) => { isDown = true; moved = false; startX = e.pageX; scrollStart = track.scrollLeft; track.style.cursor = 'grabbing'; });
+        let isDown = false, startX, scrollStart;
+        track.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX; scrollStart = track.scrollLeft; track.style.cursor = 'grabbing'; });
         track.addEventListener('mouseleave', () => { isDown = false; track.style.cursor = 'grab'; });
         track.addEventListener('mouseup', () => { isDown = false; track.style.cursor = 'grab'; });
         track.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
-            const walk = (e.pageX - startX) * 1.5;
-            if (Math.abs(walk) > 5) moved = true;
-            track.scrollLeft = scrollStart - walk;
+            track.scrollLeft = scrollStart - (e.pageX - startX) * 1.5;
         });
 
         window.addEventListener('resize', () => { rebuildDots(); updateDots(); });
@@ -807,6 +805,8 @@
     // ============================================================
     // RENDER
     // ============================================================
+    let heroTyper = null;
+
     function render() {
         const t = state.data[state.currentLang];
         document.documentElement.lang = state.currentLang;
@@ -832,7 +832,6 @@
         ).join('');
 
         setText('hero-name', t.hero.name);
-        setText('hero-subtitle', t.hero.subtitle);
         setText('btn-contact', t.actions.contact);
         setText('btn-cv', t.actions.downloadCV);
         setText('inspector-location', t.hero.inspector.location);
@@ -841,6 +840,22 @@
         document.getElementById('inspector-stack').textContent = JSON.stringify(t.hero.inspector.stack);
         setText('inspector-university', t.hero.inspector.university);
         setText('inspector-year', t.hero.inspector.year);
+
+        // Hero typewriter
+        const typerEl = document.getElementById('hero-typer');
+        if (typerEl) {
+            const phrases = state.currentLang === 'pt' ? [
+                'Programador de aplicações móveis (B4X / Android).',
+                'Docente e formador em TICs em Moçambique.',
+                'A construir soluções reais com PHP, SQLite e IA.'
+            ] : [
+                'Mobile developer (B4X / Android).',
+                'Lecturer and ICT trainer in Mozambique.',
+                'Building real-world solutions with PHP, SQLite and AI.'
+            ];
+            if (heroTyper) heroTyper.restart(phrases);
+            else heroTyper = createTyper(typerEl, phrases, { typingSpeed: 38, deletingSpeed: 20, pause: 2000, initialDelay: 500 });
+        }
 
         const socialsDesktop = (t.contact.socials || []).map(s => `
             <a href="${s.url}" target="_blank" rel="noopener" class="social-pill" title="${s.label}">${icon(s.icon, 'w-3.5 h-3.5')}<span>${s.label}</span></a>
@@ -982,9 +997,6 @@
         document.querySelectorAll('#mobile-indicator .mi-dot').forEach(d => {
             d.classList.toggle('active', d.getAttribute('data-mi') === activeId);
         });
-        document.querySelectorAll('.snap-section').forEach(s => {
-            s.classList.toggle('is-active', s.id === activeId);
-        });
     }
     let miTimeout = null;
     function showMobileIndicator() {
@@ -1077,7 +1089,7 @@
             targets.forEach(t => {
                 const rect = t.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    setTimeout(() => t.classList.add('is-visible'), 100);
+                    setTimeout(() => t.classList.add('is-visible'), 80);
                 }
             });
         });
@@ -1147,6 +1159,7 @@
         });
         metaEl.style.display = metaRows.length ? 'grid' : 'none';
 
+        // Only Google Play button (close was removed)
         const actionsEl = document.getElementById('modal-actions');
         actionsEl.innerHTML = '';
         if (data.storeUrl) {
@@ -1156,12 +1169,7 @@
             a.innerHTML = `${icon('external-link','w-3.5 h-3.5')} Google Play`;
             actionsEl.appendChild(a);
         }
-        const closeBtn = document.createElement('button');
-        closeBtn.className = 'modal-btn';
-        closeBtn.type = 'button';
-        closeBtn.setAttribute('data-modal-close', '');
-        closeBtn.innerHTML = `${icon('x','w-3.5 h-3.5')} Close`;
-        actionsEl.appendChild(closeBtn);
+        actionsEl.style.display = actionsEl.children.length ? 'flex' : 'none';
 
         if (window.lucide) lucide.createIcons();
 
@@ -1196,9 +1204,7 @@
     });
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && document.body.classList.contains('modal-open')) {
-            closeModal();
-        }
+        if (e.key === 'Escape' && document.body.classList.contains('modal-open')) closeModal();
     });
 
     // ============================================================
@@ -1221,8 +1227,7 @@
                 box.style.left = rect.left + 'px'; box.style.top = rect.top + 'px';
                 box.style.width = rect.width + 'px'; box.style.height = rect.height + 'px';
                 box.classList.add('active');
-                const w = Math.round(rect.width), h = Math.round(rect.height);
-                label.textContent = `${target.tagName.toLowerCase()} • ${w}×${h}`;
+                label.textContent = `${target.tagName.toLowerCase()} • ${Math.round(rect.width)}×${Math.round(rect.height)}`;
             } else if (currentTarget) {
                 currentTarget = null; box.classList.remove('active');
             }
@@ -1294,7 +1299,7 @@
     }
 
     // ============================================================
-    // RIPPLE (nos painéis)
+    // RIPPLE
     // ============================================================
     function initRippleDistortion() {
         document.querySelectorAll('[data-ripple]').forEach(canvas => {
@@ -1329,8 +1334,7 @@
     }
 
     // ============================================================
-    // GLOW CURSOR — WebGL2 Fluid Simulation
-    // Ported from React Bits GlowCursor
+    // GLOW CURSOR — WebGL2 Fluid Simulation (with mobile touch support)
     // ============================================================
     const GLOW_VERTEX = `#version 300 es
     in vec2 aPosition;
@@ -1452,9 +1456,7 @@
     const GLOW_SCALE = `${GLOW_HEADER}
     uniform sampler2D uSource;
     uniform float uValue;
-    void main() {
-      outColor = texture(uSource, vUv) * uValue;
-    }`;
+    void main() { outColor = texture(uSource, vUv) * uValue; }`;
     const GLOW_PRESSURE = `${GLOW_HEADER}
     uniform sampler2D uPressure;
     uniform sampler2D uDivergence;
@@ -1570,7 +1572,6 @@
     const GLOW_PRESSURE_STEPS = 20;
     const GLOW_FLOW = 0.75;
     const GLOW_BLOOM_LEVELS = 5;
-    const clamp = (v, mn, mx) => Math.min(mx, Math.max(mn, v));
 
     function compileShader(gl, type, source) {
         const shader = gl.createShader(type);
@@ -1626,7 +1627,7 @@
 
         const gl = canvas.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false });
         if (!gl || !gl.getExtension('EXT_color_buffer_float')) {
-            console.warn('GlowCursor: WebGL2/EXT_color_buffer_float não disponível. Glow desativado.');
+            console.warn('GlowCursor: WebGL2/EXT_color_buffer_float não disponível.');
             return;
         }
 
@@ -1653,17 +1654,10 @@
         }
 
         const passes = {
-            splat: build(GLOW_SPLAT),
-            advect: build(GLOW_ADVECT),
-            maccormack: build(GLOW_MACCORMACK),
-            divergence: build(GLOW_DIVERGENCE),
-            scale: build(GLOW_SCALE),
-            pressure: build(GLOW_PRESSURE),
-            gradient: build(GLOW_GRADIENT),
-            prefilter: build(GLOW_PREFILTER),
-            down: build(GLOW_DOWN),
-            up: build(GLOW_UP),
-            display: build(GLOW_DISPLAY)
+            splat: build(GLOW_SPLAT), advect: build(GLOW_ADVECT), maccormack: build(GLOW_MACCORMACK),
+            divergence: build(GLOW_DIVERGENCE), scale: build(GLOW_SCALE), pressure: build(GLOW_PRESSURE),
+            gradient: build(GLOW_GRADIENT), prefilter: build(GLOW_PREFILTER), down: build(GLOW_DOWN),
+            up: build(GLOW_UP), display: build(GLOW_DISPLAY)
         };
         if (Object.values(passes).some(p => !p)) return;
 
@@ -1717,7 +1711,6 @@
                 S.secondary = fromHsv(h + 8, Math.min(1, s * 1.1 + 0.05), v);
             }
         }
-
         function createTarget(w, h, internalFormat, format, filter) {
             const texture = gl.createTexture();
             gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -2033,14 +2026,15 @@
         }
         function wake() { if (!raf && alive && visible && !document.hidden) raf = requestAnimationFrame(frame); }
 
-        const onPointerMove = (event) => {
+        // ---------- Pointer helpers ----------
+        const updatePointerFromClient = (clientX, clientY) => {
             const rect = container.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
             const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
             if (!inside) {
                 if (S.pointer.inside) { S.pointer.inside = false; S.ready = false; wake(); }
-                return;
+                return false;
             }
             if (!S.ready) {
                 S.emitter.x = x; S.emitter.y = y;
@@ -2050,9 +2044,16 @@
             }
             S.pointer.x = x; S.pointer.y = y; S.pointer.inside = true;
             wake();
+            return true;
+        };
+
+        const onPointerMove = (event) => {
+            if (event.pointerType === 'touch') return; // handled by touch events
+            updatePointerFromClient(event.clientX, event.clientY);
         };
         const onPointerDown = (event) => {
             if (!settings.clickBurst || !settings.enabled) return;
+            if (event.pointerType === 'touch') return; // handled by touchstart
             const rect = container.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
@@ -2061,9 +2062,37 @@
             wake();
         };
         const onPointerLeave = () => { S.pointer.inside = false; S.ready = false; wake(); };
+
+        // ---------- TOUCH: emite durante o swipe, limpa no touchend ----------
+        const onTouchStart = (e) => {
+            const t = e.touches[0];
+            if (!t) return;
+            updatePointerFromClient(t.clientX, t.clientY);
+            if (settings.clickBurst && settings.enabled) {
+                const rect = container.getBoundingClientRect();
+                const x = t.clientX - rect.left;
+                const y = t.clientY - rect.top;
+                if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
+                    S.bursts.push([x, y]);
+                    wake();
+                }
+            }
+        };
+        const onTouchMove = (e) => {
+            const t = e.touches[0];
+            if (!t) return;
+            // Não chamar preventDefault — permite scroll normal da página
+            updatePointerFromClient(t.clientX, t.clientY);
+        };
+        const onTouchEnd = () => {
+            // Para de emitir e limpa o rasto restante
+            S.pointer.inside = false;
+            S.ready = false;
+            last = 0;
+            wake();
+        };
+
         const onVisibility = () => { last = 0; wake(); };
-        // FIX mobile: quando o dedo levanta, para de emitir e limpa estado
-        const stopEmitter = () => { S.pointer.inside = false; S.ready = false; last = 0; wake(); };
 
         const resizeObs = new ResizeObserver(() => { resize(); wake(); });
         resizeObs.observe(container);
@@ -2077,13 +2106,16 @@
         window.addEventListener('pointerdown', onPointerDown, { passive: true });
         document.documentElement.addEventListener('pointerleave', onPointerLeave);
         document.addEventListener('visibilitychange', onVisibility);
-        window.addEventListener('touchend', stopEmitter, { passive: true });
-        window.addEventListener('touchcancel', stopEmitter, { passive: true });
+
+        // Touch listeners ligados ao container (não capturam o scroll da página)
+        container.addEventListener('touchstart', onTouchStart, { passive: true });
+        container.addEventListener('touchmove', onTouchMove, { passive: true });
+        container.addEventListener('touchend', onTouchEnd, { passive: true });
+        container.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
         resize();
         blank();
 
-        // Controller público
         window.__glowCursor = {
             setTheme(theme) {
                 settings.theme = theme;
@@ -2099,8 +2131,10 @@
                 window.removeEventListener('pointerdown', onPointerDown);
                 document.documentElement.removeEventListener('pointerleave', onPointerLeave);
                 document.removeEventListener('visibilitychange', onVisibility);
-                window.removeEventListener('touchend', stopEmitter);
-                window.removeEventListener('touchcancel', stopEmitter);
+                container.removeEventListener('touchstart', onTouchStart);
+                container.removeEventListener('touchmove', onTouchMove);
+                container.removeEventListener('touchend', onTouchEnd);
+                container.removeEventListener('touchcancel', onTouchEnd);
                 release();
                 Object.values(passes).forEach(p => gl.deleteProgram(p.program));
                 gl.deleteShader(vertexShader);
@@ -2108,7 +2142,6 @@
                 gl.deleteVertexArray(vao);
             }
         };
-        // Aplica mix-blend-mode inicial
         canvas.style.mixBlendMode = settings.theme === 'light' ? 'normal' : 'screen';
     }
 
@@ -2131,10 +2164,8 @@
         initClickSpark();
         initCrosshair();
 
-        // Ativa a classe is-active na seção inicial para o stagger dos cards
         requestAnimationFrame(() => updateActiveNav());
 
-        // Inicializa o Glow Cursor (WebGL fluid)
         try { initGlowCursor(); } catch (err) { console.warn('GlowCursor init failed:', err); }
 
         const hint = document.getElementById('scroll-hint');
