@@ -6,7 +6,7 @@ window.SESSION_hero = `<!-- HERO -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 hero-inner">
                 <div class="lg:col-span-7 space-y-4 sm:space-y-5">
                     <h1 class="text-2xl sm:text-5xl font-bold tracking-tight leading-[1.1]" id="hero-name">Abdul Cadre</h1>
-                    <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.</p>
+                    <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer specialized in B4X and Android, with experience in lecturing and ICT training in Mozambique.</p>
                     <div class="hero-cta-row pt-1 flex sm:flex-nowrap items-center gap-2 sm:gap-3">
                         <a href="#contact" data-nav-jump="contact" class="cta-btn px-4 py-2 rounded-lg text-white text-xs font-semibold shadow-lg flex items-center gap-2 star-border" style="background: var(--accent); box-shadow: 0 4px 14px var(--accent-border);">
                             <i data-lucide="send" class="w-3.5 h-3.5"></i>

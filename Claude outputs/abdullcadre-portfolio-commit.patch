@@ -1,0 +1,3438 @@
+From 45dc1b0561cf8e76d528831ce429ed53570eaf0d Mon Sep 17 00:00:00 2001
+From: Abdul Cadre <abdullcadre@gmail.com>
+Date: Sun, 22 Nov 2026 15:44:15 +0200
+Subject: [PATCH] Refine portfolio for a professional presentation
+
+- Content: tighten EN/PT copy, translate remaining English titles in the
+  PT version, use consistent project categories, drop the motivational
+  quote section and the unverifiable response-time promise
+- Remove decorative effects (crosshair, click sparks, WebGL glow cursor)
+  and the continuously animating noise overlay
+- Compile Tailwind CSS instead of the CDN play script; pin Lucide to
+  1.77.0; update renamed icons (house, code-xml)
+- SEO: correct title, Open Graph/Twitter image, JSON-LD Person data,
+  remove hreflang links to an unsupported ?lang parameter; add favicon
+- Remove unused files (root data.js, sessions/quote.*)
+
+Co-Authored-By: Claude Haiku 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01FGxibBZptpQiP8RLrvc9Di
+---
+ .gitignore           |   1 +
+ css/style.css        |   3 +-
+ css/tailwind.css     |   1 +
+ css/tailwind.src.css |   3 +
+ data.js              | 212 ---------
+ favicon.svg          |   1 +
+ index.html           |  55 +--
+ js/app.js            | 990 +-----------------------------------------
+ js/data.js           | 134 +++---
+ og-image.png         | Bin 0 -> 33012 bytes
+ package-lock.json    | 999 +++++++++++++++++++++++++++++++++++++++++++
+ package.json         |  12 +
+ sessions/hero.html   |   2 +-
+ sessions/hero.js     |   2 +-
+ sessions/quote.html  |  16 -
+ sessions/quote.js    |  15 -
+ tailwind.config.js   |  20 +
+ 17 files changed, 1132 insertions(+), 1334 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 css/tailwind.css
+ create mode 100644 css/tailwind.src.css
+ delete mode 100644 data.js
+ create mode 100644 favicon.svg
+ create mode 100644 og-image.png
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ delete mode 100644 sessions/quote.html
+ delete mode 100644 sessions/quote.js
+ create mode 100644 tailwind.config.js
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..c2658d7
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1 @@
++node_modules/
+diff --git a/css/style.css b/css/style.css
+index 3bee7c2..16e325c 100644
+--- a/css/style.css
++++ b/css/style.css
+@@ -56,7 +56,7 @@ body.modal-open #scroller { overflow: hidden; }
+     position: fixed; inset: 0; pointer-events: none; z-index: 55;
+     opacity: 0.06; mix-blend-mode: overlay;
+     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+-    background-size: 200px 200px; animation: noiseShift 0.8s steps(6) infinite;
++    background-size: 200px 200px;
+ }
+ .light #noise-overlay { opacity: 0.04; }
+ @keyframes noiseShift {
+@@ -71,7 +71,6 @@ body.modal-open #scroller { overflow: hidden; }
+     border-radius: inherit; opacity: 0.09; mix-blend-mode: overlay;
+     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='sn'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23sn)'/%3E%3C/svg%3E");
+     background-size: 180px 180px;
+-    animation: sectionNoiseShift 1.1s steps(6) infinite;
+ }
+ .light .section-noise { opacity: 0.07; mix-blend-mode: multiply; }
+ @keyframes sectionNoiseShift {
+diff --git a/css/tailwind.css b/css/tailwind.css
+new file mode 100644
+index 0000000..8d773cd
+--- /dev/null
++++ b/css/tailwind.css
+@@ -0,0 +1 @@
++*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:Inter,system-ui,sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:JetBrains Mono,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.z-10{z-index:10}.mx-auto{margin-left:auto;margin-right:auto}.my-auto{margin-top:auto;margin-bottom:auto}.mb-1\.5{margin-bottom:.375rem}.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mr-3{margin-right:.75rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-3{height:.75rem}.h-3\.5{height:.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-full{height:100%}.min-h-\[4em\]{min-height:4em}.w-3{width:.75rem}.w-3\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-full{width:100%}.max-w-6xl{max-width:72rem}.max-w-md{max-width:28rem}.resize{resize:both}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:.25rem}.gap-1\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-8{gap:2rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-2\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.rounded{border-radius:.25rem}.rounded-lg{border-radius:.5rem}.rounded-md{border-radius:.375rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.p-1{padding:.25rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-1\.5{padding-left:.375rem;padding-right:.375rem}.px-2\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2{padding-top:.5rem}.pb-2,.py-2{padding-bottom:.5rem}.pt-1{padding-top:.25rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.font-mono{font-family:JetBrains Mono,monospace}.font-sans{font-family:Inter,system-ui,sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[9px\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-.025em}.tracking-wider{letter-spacing:.05em}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-70{opacity:.7}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}@media (min-width:640px){.sm\:mb-5{margin-bottom:1.25rem}.sm\:mb-8{margin-bottom:2rem}.sm\:inline{display:inline}.sm\:flex{display:flex}.sm\:hidden{display:none}.sm\:flex-nowrap{flex-wrap:nowrap}.sm\:gap-3{gap:.75rem}.sm\:space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.sm\:p-10{padding:2.5rem}.sm\:p-12{padding:3rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-5xl{font-size:3rem;line-height:1}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:.875rem;line-height:1.25rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width:768px){.md\:inline{display:inline}.md\:flex{display:flex}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}}@media (min-width:1024px){.lg\:col-span-5{grid-column:span 5/span 5}.lg\:col-span-7{grid-column:span 7/span 7}.lg\:block{display:block}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}
+\ No newline at end of file
+diff --git a/css/tailwind.src.css b/css/tailwind.src.css
+new file mode 100644
+index 0000000..b5c61c9
+--- /dev/null
++++ b/css/tailwind.src.css
+@@ -0,0 +1,3 @@
++@tailwind base;
++@tailwind components;
++@tailwind utilities;
+diff --git a/data.js b/data.js
+deleted file mode 100644
+index ef97b07..0000000
+--- a/data.js
++++ /dev/null
+@@ -1,212 +0,0 @@
+-window.PORTFOLIO_DATA = {
+-  "meta": {
+-    "defaultLang": "en",
+-    "availableLangs": ["pt", "en"]
+-  },
+-
+-  "en": {
+-    "brandName": "Abdul Cadre",
+-    "brandLocation": "Mozambique",
+-
+-    "nav": [
+-      { "id": "hero",      "label": "Home",      "icon": "home" },
+-      { "id": "skills",    "label": "Skills",    "icon": "layers" },
+-      { "id": "projects",  "label": "Projects",  "icon": "folder-git-2" },
+-      { "id": "education", "label": "Education", "icon": "graduation-cap" },
+-      { "id": "quote",     "label": "Quote",     "icon": "quote" },
+-      { "id": "contact",   "label": "Contact",   "icon": "mail" }
+-    ],
+-
+-    "actions": {
+-      "contact": "Get in touch",
+-      "downloadCV": "Download CV",
+-      "cvUrl": "https://drive.google.com/file/d/1k19gc77YrECmLnP6qAKEe-o22ovPdIRk/view?usp=drive_link"
+-    },
+-
+-    "hero": {
+-      "name": "Abdul Cadre",
+-      "subtitle": "Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.",
+-      "inspector": {
+-        "location": "Mozambique",
+-        "email": "abdullcadre@gmail.com",
+-        "degree": "BSc Computer Science",
+-        "stack": ["B4X", "Android", "PHP", "SQLite"],
+-        "university": "LICUNGO UNIVERSITY",
+-        "year": "2021"
+-      }
+-    },
+-
+-    "skills": {
+-      "tag": "Technical skills",
+-      "title": "Skills & Specialties",
+-      "subtitle": "Competencies developed in academic and professional contexts.",
+-      "list": [
+-        { "icon": "smartphone", "tag": "B4X", "title": "Mobile development", "description": "Android apps with B4X, focused on usability and performance." },
+-        { "icon": "wrench", "tag": "Hardware", "title": "Systems maintenance", "description": "Equipment diagnostics, repair, and IT optimization." },
+-        { "icon": "users", "tag": "Training", "title": "Teaching & ICT training", "description": "Training students and professionals in information technology." },
+-        { "icon": "git-merge", "tag": "Software", "title": "Software engineering", "description": "Planning, developing, and maintaining software systems." }
+-      ]
+-    },
+-
+-    "projects": {
+-      "tag": "Portfolio",
+-      "title": "Featured Projects",
+-      "subtitle": "Mobile apps and cross-platform solutions focused on real-world applicability.",
+-      "b4xLink": "View all B4X work",
+-      "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
+-      "storeLink": "View my Google Play store",
+-      "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
+-      "list": [
+-        { "icon": "bot", "tag": "ABC Moz", "title": "ABC Moz", "description": "Educational app for literacy in Mozambique, published on Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
+-        { "icon": "clock", "tag": "B4XPages", "title": "LaborLog Lite", "description": "Work-hours logging and lookup, Android with B4XPages.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+-        { "icon": "message-square", "tag": "Quotey", "title": "Quotey", "description": "Quotes and phrases app for Android, published on Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+-        { "icon": "message-square", "tag": "Realtime Chat", "title": "ChatApp v1.1", "description": "Real-time chat with B4A, PHP and MySQL. Ideal for simple conversations.", "tech": "B4A + PHP", "status": "Full-Stack" },
+-        { "icon": "user-check", "tag": "Attendance", "title": "Employee Attendance", "description": "Attendance tracking with selfie, time and location.", "tech": "Cross-platform", "status": "GPS Tracker" },
+-        { "icon": "wallet", "tag": "Finance", "title": "Financial Mobile App", "description": "Card and transaction management with local SQLite.", "tech": "B4X + SQLite", "status": "Offline-First" },
+-        { "icon": "bot", "tag": "AI", "title": "Integrating GPT-3 API", "description": "GPT-3 API integration in Android apps via B4X.", "tech": "OpenAI", "status": "AI Engine" },
+-        { "icon": "send", "tag": "SMS", "title": "Bulk SMS in B4A", "description": "Bulk SMS sending to multiple recipients.", "tech": "B4A", "status": "Telecom" }
+-      ]
+-    },
+-
+-    "education": {
+-      "tag": "Academic background",
+-      "title": "Education",
+-      "subtitle": "Academic background oriented towards Information Technologies.",
+-      "list": [
+-        { "year": "2021", "level": "Higher Education", "icon": "graduation-cap", "description": "BSc in Computer Science at Licungo University, final grade 14/20." },
+-        { "year": "2016", "level": "High School", "icon": "book-open", "description": "12th grade at Hamdan Bin Rashid Pre-University School." },
+-        { "year": "2014", "level": "Secondary Education", "icon": "school", "description": "10th grade at Chimundo Secondary School." },
+-        { "year": "2011", "level": "Primary Education", "icon": "pencil", "description": "7th grade at Macunene Complete Primary School." }
+-      ]
+-    },
+-
+-    "quote": {
+-      "text": "\"Everyone has a goal. Never give up before reaching yours. Don't tell me the sky is the limit, because there are footprints on the moon.\""
+-    },
+-
+-    "contact": {
+-      "tag": "Contacts",
+-      "title": "Get in Touch",
+-      "subtitle": "",
+-      "items": [
+-        { "icon": "mail",  "label": "Email",           "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com", "sub": "Reply within 24h" },
+-        { "icon": "phone", "label": "Call / WhatsApp", "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758",  "sub": "Call or send a message" },
+-        { "icon": "phone", "label": "Call",            "value": "+258 86 812 2758",      "url": "tel:+258868122758",           "sub": "Call" }
+-      ],
+-      "socials": [
+-        { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
+-        { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
+-        { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
+-        { "icon": "code-2",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+-      ]
+-    },
+-
+-    "footer": {
+-      "rights": "All rights reserved",
+-      "tag": "B4X · Lecturer · Help Desk"
+-    }
+-  },
+-
+-  "pt": {
+-    "brandName": "Abdul Cadre",
+-    "brandLocation": "Moçambique",
+-
+-    "nav": [
+-      { "id": "hero",      "label": "Início",      "icon": "home" },
+-      { "id": "skills",    "label": "Habilidades", "icon": "layers" },
+-      { "id": "projects",  "label": "Projectos",   "icon": "folder-git-2" },
+-      { "id": "education", "label": "Formação",    "icon": "graduation-cap" },
+-      { "id": "quote",     "label": "Frase",       "icon": "quote" },
+-      { "id": "contact",   "label": "Contacto",    "icon": "mail" }
+-    ],
+-
+-    "actions": {
+-      "contact": "Entrar em contacto",
+-      "downloadCV": "Baixar CV",
+-      "cvUrl": "https://drive.google.com/file/d/1k19gc77YrECmLnP6qAKEe-o22ovPdIRk/view?usp=drive_link"
+-    },
+-
+-    "hero": {
+-      "name": "Abdul Cadre",
+-      "subtitle": "Programador de aplicações móveis (B4X / Android), docente e formador em TICs em Moçambique.",
+-      "inspector": {
+-        "location": "Moçambique",
+-        "email": "abdullcadre@gmail.com",
+-        "degree": "Licenciatura em Informática",
+-        "stack": ["B4X", "Android", "PHP", "SQLite"],
+-        "university": "UNIVERSIDADE LICUNGO",
+-        "year": "2021"
+-      }
+-    },
+-
+-    "skills": {
+-      "tag": "Competências técnicas",
+-      "title": "Habilidades & Especialidades",
+-      "subtitle": "Conjunto de competências desenvolvidas em contextos académicos e profissionais.",
+-      "list": [
+-        { "icon": "smartphone", "tag": "B4X", "title": "Desenvolvimento mobile", "description": "Aplicações Android com B4X, focadas em usabilidade e desempenho." },
+-        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico, reparação de equipamentos e optimização de TI." },
+-        { "icon": "users", "tag": "Formação", "title": "Docência & Formação em TICs", "description": "Capacitação de alunos e profissionais em tecnologias de informação." },
+-        { "icon": "git-merge", "tag": "Software", "title": "Engenharia de software", "description": "Planeamento, desenvolvimento e manutenção de sistemas informáticos." }
+-      ]
+-    },
+-
+-    "projects": {
+-      "tag": "Portfólio",
+-      "title": "Projectos Desenvolvidos",
+-      "subtitle": "Aplicações mobile e soluções multiplataforma focadas em aplicabilidade real.",
+-      "b4xLink": "Ver todos os trabalhos B4X",
+-      "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
+-      "storeLink": "Ver a minha loja na Google Play",
+-      "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
+-      "list": [
+-        { "icon": "bot", "tag": "ABC Moz", "title": "ABC Moz", "description": "Aplicação educativa para alfabetização em Moçambique, publicada na Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
+-        { "icon": "clock", "tag": "B4XPages", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho, Android com B4XPages.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+-        { "icon": "message-square", "tag": "Quotey", "title": "Quotey", "description": "Aplicação de citações e frases para Android, publicada na Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+-        { "icon": "message-square", "tag": "Realtime Chat", "title": "ChatApp v1.1", "description": "Chat em tempo real com B4A, PHP e MySQL. Ideal para conversas simples.", "tech": "B4A + PHP", "status": "Full-Stack" },
+-        { "icon": "user-check", "tag": "Presenças", "title": "Employee Attendance", "description": "Controlo de presenças com selfie, hora e localização.", "tech": "Cross-platform", "status": "GPS Tracker" },
+-        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transacções com SQLite local.", "tech": "B4X + SQLite", "status": "Offline-First" },
+-        { "icon": "bot", "tag": "IA", "title": "Integrating GPT-3 API", "description": "Integração da API GPT-3 em apps Android via B4X.", "tech": "OpenAI", "status": "AI Engine" },
+-        { "icon": "send", "tag": "SMS", "title": "Bulk SMS in B4A", "description": "Envio de SMS em massa a múltiplos destinatários.", "tech": "B4A", "status": "Telecom" }
+-      ]
+-    },
+-
+-    "education": {
+-      "tag": "Formação académica",
+-      "title": "Histórico Académico",
+-      "subtitle": "Formação académica orientada para as Tecnologias de Informação.",
+-      "list": [
+-        { "year": "2021", "level": "Ensino Superior", "icon": "graduation-cap", "description": "Licenciatura em Informática na Faculdade de Ciência e Tecnologia da Universidade Licungo, nota final 14 valores." },
+-        { "year": "2016", "level": "Nível Médio", "icon": "book-open", "description": "12ª Classe na Escola Pré-universitária Hamdan Bin Rashid." },
+-        { "year": "2014", "level": "Ensino Secundário", "icon": "school", "description": "10ª Classe na Escola Secundária de Chimundo." },
+-        { "year": "2011", "level": "Ensino Primário", "icon": "pencil", "description": "7ª Classe na Escola Primária Completa de Macunene." }
+-      ]
+-    },
+-
+-    "quote": {
+-      "text": "\"Todos têm uma meta. Nunca desistas antes de alcançar a tua. Não me digas que o céu é o limite, porque há pegadas na lua.\""
+-    },
+-
+-    "contact": {
+-      "tag": "Contactos",
+-      "title": "Entrar em Contacto",
+-      "subtitle": "",
+-      "items": [
+-        { "icon": "mail",  "label": "Email",              "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com", "sub": "Resposta em 24h" },
+-        { "icon": "phone", "label": "Chamada / WhatsApp", "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758",  "sub": "Ligar ou enviar mensagem" },
+-        { "icon": "phone", "label": "Chamada",            "value": "+258 86 812 2758",      "url": "tel:+258868122758",           "sub": "Ligar" }
+-      ],
+-      "socials": [
+-        { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
+-        { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
+-        { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
+-        { "icon": "code-2",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+-      ]
+-    },
+-
+-    "footer": {
+-      "rights": "Todos os direitos reservados",
+-      "tag": "B4X · Docente · Help Desk"
+-    }
+-  }
+-};
+\ No newline at end of file
+diff --git a/favicon.svg b/favicon.svg
+new file mode 100644
+index 0000000..82f9921
+--- /dev/null
++++ b/favicon.svg
+@@ -0,0 +1 @@
++<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0B0F14"/><rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#818CF8" stroke-width="3"/><text x="32" y="44" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="34" text-anchor="middle" fill="#818CF8">AC</text></svg>
+diff --git a/index.html b/index.html
+index c7e7be2..5d7ff50 100644
+--- a/index.html
++++ b/index.html
+@@ -4,57 +4,59 @@
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     <meta name="theme-color" content="#0B0F14">
++    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     <meta name="apple-mobile-web-app-title" content="Abdul Cadre">
+ 
+-    <title>Abdul Cadre</title>
+-    <meta name="description" content="Abdul Cadre — Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.">
++    <title>Abdul Cadre — Mobile Developer, Lecturer & ICT Trainer</title>
++    <meta name="description" content="Abdul Cadre — Mobile developer specialized in B4X and Android, lecturer and ICT trainer in Mozambique.">
+     <meta name="author" content="Abdul Cadre">
+     <meta name="robots" content="index, follow, max-image-preview:large">
+ 
+     <link rel="canonical" href="https://abdullcadre.github.io/">
+-    <link rel="alternate" hreflang="en" href="https://abdullcadre.github.io/">
+-    <link rel="alternate" hreflang="pt" href="https://abdullcadre.github.io/?lang=pt">
+-    <link rel="alternate" hreflang="x-default" href="https://abdullcadre.github.io/">
+ 
+     <meta property="og:type" content="profile">
+     <meta property="og:title" content="Abdul Cadre — B4X/Android Developer, Lecturer & ICT Trainer">
+     <meta property="og:description" content="Portfolio of Abdul Cadre — mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.">
+     <meta property="og:url" content="https://abdullcadre.github.io/">
+     <meta property="og:image" content="https://abdullcadre.github.io/og-image.png">
++    <meta property="og:image:width" content="1200">
++    <meta property="og:image:height" content="630">
++    <meta name="twitter:card" content="summary_large_image">
++    <meta name="twitter:title" content="Abdul Cadre — B4X/Android Developer, Lecturer & ICT Trainer">
++    <meta name="twitter:image" content="https://abdullcadre.github.io/og-image.png">
+ 
+-    <script src="https://cdn.tailwindcss.com"></script>
+-    <script>
+-        tailwind.config = {
+-            darkMode: 'class',
+-            theme: { extend: { fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] } } }
+-        }
+-    </script>
++    <link rel="stylesheet" href="css/tailwind.css">
+ 
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
++    <script src="https://unpkg.com/lucide@1.77.0/dist/umd/lucide.min.js"></script>
+ 
+     <link rel="stylesheet" href="css/style.css">
++
++    <script type="application/ld+json">
++    {
++      "@context": "https://schema.org",
++      "@type": "Person",
++      "name": "Abdul Cadre",
++      "url": "https://abdullcadre.github.io/",
++      "email": "mailto:abdullcadre@gmail.com",
++      "jobTitle": ["Mobile Developer", "Lecturer", "ICT Trainer"],
++      "sameAs": [
++        "https://www.linkedin.com/in/abdullcadre/",
++        "https://www.facebook.com/abdulllcadre",
++        "https://www.instagram.com/abdulllcadre/"
++      ],
++      "address": { "@type": "PostalAddress", "addressCountry": "MZ" },
++      "alumniOf": { "@type": "CollegeOrUniversity", "name": "Licungo University" }
++    }
++    </script>
+ </head>
+ <body class="font-sans antialiased">
+ 
+     <div id="noise-overlay" aria-hidden="true"></div>
+ 
+-    <div id="glow-cursor-root" aria-hidden="true">
+-        <canvas id="glow-canvas"></canvas>
+-    </div>
+-    <canvas id="spark-canvas" aria-hidden="true"></canvas>
+-
+-    <div id="crosshair">
+-        <div class="ch-dot" id="ch-dot"></div> 
+-        <div class="ch-target-box" id="ch-target-box">
+-            <span class="ch-corner tl"></span><span class="ch-corner tr"></span>
+-            <span class="ch-corner bl"></span><span class="ch-corner br"></span>
+-            <span class="ch-target-label" id="ch-target-label"></span>
+-        </div>
+-    </div>
+ 
+     <!-- Header (loaded from include/header.html) -->
+     <div id="header-slot"></div>
+@@ -101,7 +103,6 @@
+     <script src="sessions/skills.js"></script>
+     <script src="sessions/projects.js"></script>
+     <script src="sessions/education.js"></script>
+-    <script src="sessions/quote.js"></script>
+     <script src="sessions/contact.js"></script>
+ 
+     <script src="js/data.js"></script>
+diff --git a/js/app.js b/js/app.js
+index 463e7a1..92c014f 100644
+--- a/js/app.js
++++ b/js/app.js
+@@ -31,76 +31,6 @@
+         return true;
+     }
+ 
+-    // ============================================================
+-    // TEXT TYPE (typewriter)
+-    // ============================================================
+-    function createTyper(el, sentences, opts = {}) {
+-        if (!el || !sentences || !sentences.length) return null;
+-        const typingSpeed = opts.typingSpeed ?? 45;
+-        const deletingSpeed = opts.deletingSpeed ?? 22;
+-        const pause = opts.pause ?? 1800;
+-        const initialDelay = opts.initialDelay ?? 300;
+-
+-        let idx = 0, count = 0, deleting = false, timer = null;
+-        let chars = Array.from(sentences[0]);
+-
+-        const cursor = document.createElement('span');
+-        cursor.className = 'text-type__cursor';
+-        cursor.setAttribute('aria-hidden', 'true');
+-
+-        const render = () => {
+-            el.innerHTML = '';
+-            const frag = document.createDocumentFragment();
+-            for (let i = 0; i < count; i++) {
+-                const span = document.createElement('span');
+-                span.className = 'text-type__char';
+-                span.textContent = chars[i];
+-                frag.appendChild(span);
+-            }
+-            el.appendChild(frag);
+-            el.appendChild(cursor);
+-        };
+-
+-        const tick = () => {
+-            if (!deleting) {
+-                if (count < chars.length) {
+-                    count++;
+-                    render();
+-                    const char = chars[count - 1] || '';
+-                    const delay = /[.,;!?]/.test(char) ? typingSpeed * 4 : typingSpeed;
+-                    timer = setTimeout(tick, delay);
+-                } else {
+-                    timer = setTimeout(() => { deleting = true; tick(); }, pause);
+-                }
+-            } else {
+-                if (count > 0) {
+-                    count--;
+-                    render();
+-                    timer = setTimeout(tick, deletingSpeed);
+-                } else {
+-                    deleting = false;
+-                    idx = (idx + 1) % sentences.length;
+-                    chars = Array.from(sentences[idx]);
+-                    timer = setTimeout(tick, 320);
+-                }
+-            }
+-        };
+-
+-        setTimeout(() => { render(); tick(); }, initialDelay);
+-
+-        return {
+-            stop() { if (timer) clearTimeout(timer); },
+-            restart(newSentences) {
+-                if (timer) clearTimeout(timer);
+-                sentences = newSentences;
+-                idx = 0; count = 0; deleting = false;
+-                chars = Array.from(sentences[0]);
+-                render();
+-                tick();
+-            }
+-        };
+-    }
+-
+     // ============================================================
+     // CARROSSEL
+     // ============================================================
+@@ -185,8 +115,6 @@
+     // ============================================================
+     // RENDER
+     // ============================================================
+-    let quoteTyper = null;
+-
+     function render() {
+         const t = state.data[state.currentLang];
+         document.documentElement.lang = state.currentLang;
+@@ -303,20 +231,6 @@
+         `).join('');
+         initCarousel('education-track', 'education-dots', 'education-prev', 'education-next');
+ 
+-        // QUOTE
+-        setText('quote-brand', t.brandName);
+-        const typerEl = document.getElementById('quote-typer');
+-        if (typerEl) {
+-            const sentence = t.quote?.text || '';
+-            if (quoteTyper) quoteTyper.restart([sentence]);
+-            else quoteTyper = createTyper(typerEl, [sentence], {
+-                typingSpeed: 32,
+-                deletingSpeed: 14,
+-                pause: 3200,
+-                initialDelay: 300
+-            });
+-        }
+-
+         setText('contact-tag', t.contact?.tag || 'Contacts');
+         setText('contact-title', t.contact?.title);
+ 
+@@ -493,7 +407,6 @@
+             iconEl.setAttribute('data-lucide', state.theme === 'dark' ? 'sun' : 'moon');
+             if (window.lucide) lucide.createIcons();
+         }
+-        if (window.__glowCursor) window.__glowCursor.setTheme(state.theme);
+     }
+     // Delegated — header is loaded async
+     document.addEventListener('click', (e) => {
+@@ -596,903 +509,6 @@
+         if (e.key === 'Escape' && document.body.classList.contains('modal-open')) closeModal();
+     });
+ 
+-    // ============================================================
+-    // CROSSHAIR
+-    // ============================================================
+-    function initCrosshair() {
+-        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+-        const crosshair = document.getElementById('crosshair');
+-        const dot = document.getElementById('ch-dot');
+-        const coords = document.getElementById('ch-coords');
+-        const box = document.getElementById('ch-target-box');
+-        const label = document.getElementById('ch-target-label');
+-        let mouseX = 0, mouseY = 0, currentTarget = null;
+-        window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; }, { passive: true });
+-        document.addEventListener('mouseover', (e) => {
+-            const target = e.target.closest('a, button, [data-modal-id], .contact-row');
+-            if (target) {
+-                currentTarget = target;
+-                const rect = target.getBoundingClientRect();
+-                box.style.left = rect.left + 'px'; box.style.top = rect.top + 'px';
+-                box.style.width = rect.width + 'px'; box.style.height = rect.height + 'px';
+-                box.classList.add('active');
+-                label.textContent = `${target.tagName.toLowerCase()} • ${Math.round(rect.width)}×${Math.round(rect.height)}`;
+-            } else if (currentTarget) {
+-                currentTarget = null; box.classList.remove('active');
+-            }
+-        });
+-        function frame() {
+-            dot.style.left = mouseX + 'px'; dot.style.top = mouseY + 'px';
+-            coords.textContent = `${mouseX}, ${mouseY}`;
+-            coords.style.left = mouseX + 'px'; coords.style.top = mouseY + 'px';
+-            requestAnimationFrame(frame);
+-        }
+-        requestAnimationFrame(frame);
+-    }
+-
+-    // ============================================================
+-    // CLICK SPARK
+-    // ============================================================
+-    function initClickSpark() {
+-        const canvas = document.getElementById('spark-canvas');
+-        const ctx = canvas.getContext('2d');
+-        if (!ctx) return;
+-        let W = 0, H = 0;
+-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+-        const resize = () => { W = Math.round(window.innerWidth * dpr); H = Math.round(window.innerHeight * dpr); canvas.width = W; canvas.height = H; };
+-        resize();
+-        window.addEventListener('resize', resize);
+-        const sparks = [];
+-        const COLORS = ['#818CF8', '#4F46E5', '#6D28D9', '#A78BFA', '#F59E0B', '#22c55e'];
+-        function createSpark(x, y) {
+-            const count = 10 + Math.floor(Math.random() * 4);
+-            for (let i = 0; i < count; i++) {
+-                const angle = (i / count) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
+-                const speed = 3 + Math.random() * 4;
+-                sparks.push({
+-                    x: x * dpr, y: y * dpr,
+-                    vx: Math.cos(angle) * speed * dpr, vy: Math.sin(angle) * speed * dpr,
+-                    life: 1, decay: 0.025 + Math.random() * 0.012,
+-                    size: (2 + Math.random() * 2) * dpr,
+-                    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+-                    rotation: Math.random() * Math.PI * 2
+-                });
+-            }
+-        }
+-        function frame() {
+-            ctx.clearRect(0, 0, W, H);
+-            for (let i = sparks.length - 1; i >= 0; i--) {
+-                const s = sparks[i];
+-                s.x += s.vx; s.y += s.vy; s.vx *= 0.94; s.vy *= 0.94; s.vy += 0.15 * dpr;
+-                s.life -= s.decay; s.rotation += 0.15;
+-                if (s.life <= 0) { sparks.splice(i, 1); continue; }
+-                ctx.save();
+-                ctx.translate(s.x, s.y); ctx.rotate(s.rotation);
+-                ctx.globalAlpha = s.life; ctx.fillStyle = s.color;
+-                const spikes = 4, outer = s.size, inner = s.size * 0.4;
+-                ctx.beginPath();
+-                for (let k = 0; k < spikes * 2; k++) {
+-                    const r = k % 2 === 0 ? outer : inner;
+-                    const a = (k / (spikes * 2)) * Math.PI * 2;
+-                    if (k === 0) ctx.moveTo(Math.cos(a)*r, Math.sin(a)*r);
+-                    else ctx.lineTo(Math.cos(a)*r, Math.sin(a)*r);
+-                }
+-                ctx.closePath(); ctx.fill(); ctx.restore();
+-            }
+-            ctx.globalAlpha = 1;
+-            requestAnimationFrame(frame);
+-        }
+-        frame();
+-        document.addEventListener('click', (e) => createSpark(e.clientX, e.clientY), { passive: true });
+-        document.addEventListener('touchstart', (e) => { const t = e.touches[0]; if (t) createSpark(t.clientX, t.clientY); }, { passive: true });
+-    }
+-
+-    // ============================================================
+-    // GLOW CURSOR
+-    // ============================================================
+-    const GLOW_VERTEX = `#version 300 es
+-    in vec2 aPosition;
+-    uniform vec2 uTexel;
+-    out vec2 vUv;
+-    out vec2 vL;
+-    out vec2 vR;
+-    out vec2 vT;
+-    out vec2 vB;
+-    void main() {
+-      vUv = aPosition * 0.5 + 0.5;
+-      vL = vUv - vec2(uTexel.x, 0.0);
+-      vR = vUv + vec2(uTexel.x, 0.0);
+-      vT = vUv + vec2(0.0, uTexel.y);
+-      vB = vUv - vec2(0.0, uTexel.y);
+-      gl_Position = vec4(aPosition, 0.0, 1.0);
+-    }`;
+-    const GLOW_HEADER = `#version 300 es
+-    precision highp float;
+-    precision highp sampler2D;
+-    in vec2 vUv;
+-    in vec2 vL;
+-    in vec2 vR;
+-    in vec2 vT;
+-    in vec2 vB;
+-    out vec4 outColor;
+-    `;
+-    const GLOW_SPLAT = `${GLOW_HEADER}
+-    uniform sampler2D uTarget;
+-    uniform float uAspect;
+-    uniform vec2 uA;
+-    uniform vec2 uB;
+-    uniform float uRadius;
+-    uniform float uWide;
+-    uniform vec3 uValue;
+-    uniform float uMode;
+-    uniform float uStrength;
+-    float erf(float x) {
+-      float x2 = x * x;
+-      float a = 0.147;
+-      return sign(x) * sqrt(1.0 - exp(-x2 * (1.2732395 + a * x2) / (1.0 + a * x2)));
+-    }
+-    float sweep(float along, float length, float across, float radius) {
+-      return exp(-across * across / (radius * radius)) * 0.5 * (erf(along / radius) - erf((along - length) / radius));
+-    }
+-    void main() {
+-      vec2 p = vec2(vUv.x * uAspect, vUv.y);
+-      vec2 a = vec2(uA.x * uAspect, uA.y);
+-      vec2 ab = vec2(uB.x * uAspect, uB.y) - a;
+-      float len = length(ab);
+-      vec2 dir = len > 1e-6 ? ab / len : vec2(1.0, 0.0);
+-      vec2 ap = p - a;
+-      vec3 base = texture(uTarget, vUv).xyz;
+-      if (uMode > 1.5) {
+-        float along = dot(ap, dir);
+-        float across = dot(ap, vec2(-dir.y, dir.x));
+-        if (uMode > 2.5) {
+-          outColor = vec4(mix(base, uValue, sweep(along, len, across, uRadius) * uStrength), 1.0);
+-          return;
+-        }
+-        vec3 add = vec3(uValue.xy * sweep(along, len, across, uRadius), uValue.z * sweep(along, len, across, uWide));
+-        outColor = vec4(base + add, 1.0);
+-        return;
+-      }
+-      float h = clamp(dot(ap, ab) / max(dot(ab, ab), 1e-9), 0.0, 1.0);
+-      vec2 d = ap - ab * h;
+-      float r2 = dot(d, d);
+-      float falloff = exp(-r2 / (uRadius * uRadius));
+-      float wide = exp(-r2 / (uWide * uWide));
+-      vec3 result = uMode > 0.5 ? mix(base, uValue, falloff * uStrength) : base + vec3(uValue.xy * falloff, uValue.z * wide);
+-      outColor = vec4(result, 1.0);
+-    }`;
+-    const GLOW_ADVECT = `${GLOW_HEADER}
+-    uniform sampler2D uVelocity;
+-    uniform sampler2D uSource;
+-    uniform vec2 uVelocityTexel;
+-    uniform float uDt;
+-    uniform vec4 uDecay;
+-    void main() {
+-      vec2 coord = vUv - uDt * texture(uVelocity, vUv).xy * uVelocityTexel;
+-      outColor = texture(uSource, coord) * uDecay;
+-    }`;
+-    const GLOW_MACCORMACK = `${GLOW_HEADER}
+-    uniform sampler2D uVelocity;
+-    uniform sampler2D uSource;
+-    uniform sampler2D uForward;
+-    uniform sampler2D uBack;
+-    uniform vec2 uVelocityTexel;
+-    uniform vec2 uSourceTexel;
+-    uniform float uDt;
+-    uniform vec4 uDecay;
+-    void main() {
+-      vec2 coord = vUv - uDt * texture(uVelocity, vUv).xy * uVelocityTexel;
+-      vec4 forward = texture(uForward, vUv);
+-      vec4 corrected = forward + 0.5 * (texture(uSource, vUv) - texture(uBack, vUv));
+-      vec2 base = (floor(coord / uSourceTexel - 0.5) + 0.5) * uSourceTexel;
+-      vec4 a = texture(uSource, base);
+-      vec4 b = texture(uSource, base + vec2(uSourceTexel.x, 0.0));
+-      vec4 c = texture(uSource, base + vec2(0.0, uSourceTexel.y));
+-      vec4 d = texture(uSource, base + uSourceTexel);
+-      vec4 low = min(min(a, b), min(c, d));
+-      vec4 high = max(max(a, b), max(c, d));
+-      outColor = clamp(corrected, low, high) * uDecay;
+-    }`;
+-    const GLOW_DIVERGENCE = `${GLOW_HEADER}
+-    uniform sampler2D uVelocity;
+-    void main() {
+-      float left = texture(uVelocity, vL).x;
+-      float right = texture(uVelocity, vR).x;
+-      float top = texture(uVelocity, vT).y;
+-      float bottom = texture(uVelocity, vB).y;
+-      vec2 center = texture(uVelocity, vUv).xy;
+-      if (vL.x < 0.0) left = -center.x;
+-      if (vR.x > 1.0) right = -center.x;
+-      if (vT.y > 1.0) top = -center.y;
+-      if (vB.y < 0.0) bottom = -center.y;
+-      outColor = vec4(0.5 * (right - left + top - bottom), 0.0, 0.0, 1.0);
+-    }`;
+-    const GLOW_SCALE = `${GLOW_HEADER}
+-    uniform sampler2D uSource;
+-    uniform float uValue;
+-    void main() { outColor = texture(uSource, vUv) * uValue; }`;
+-    const GLOW_PRESSURE = `${GLOW_HEADER}
+-    uniform sampler2D uPressure;
+-    uniform sampler2D uDivergence;
+-    void main() {
+-      float left = texture(uPressure, vL).x;
+-      float right = texture(uPressure, vR).x;
+-      float top = texture(uPressure, vT).x;
+-      float bottom = texture(uPressure, vB).x;
+-      float divergence = texture(uDivergence, vUv).x;
+-      outColor = vec4((left + right + bottom + top - divergence) * 0.25, 0.0, 0.0, 1.0);
+-    }`;
+-    const GLOW_GRADIENT = `${GLOW_HEADER}
+-    uniform sampler2D uPressure;
+-    uniform sampler2D uVelocity;
+-    void main() {
+-      float left = texture(uPressure, vL).x;
+-      float right = texture(uPressure, vR).x;
+-      float top = texture(uPressure, vT).x;
+-      float bottom = texture(uPressure, vB).x;
+-      vec2 velocity = texture(uVelocity, vUv).xy - vec2(right - left, top - bottom);
+-      outColor = vec4(velocity, 0.0, 1.0);
+-    }`;
+-    const GLOW_SHADE = `
+-    uniform vec3 uColor;
+-    uniform vec3 uSecondary;
+-    uniform float uIntensity;
+-    uniform float uHotspot;
+-    vec3 shade(vec3 dye) {
+-      float energy = max(dye.x, 0.0);
+-      float heat = clamp(dye.y, 0.0, energy);
+-      float gas = max(dye.z, 0.0);
+-      float fresh = heat / max(energy, 0.0001);
+-      vec3 tint = mix(uSecondary, uColor, fresh);
+-      return (tint * energy + uSecondary * gas + vec3(heat * heat * 0.3 * uHotspot)) * uIntensity;
+-    }`;
+-    const GLOW_PREFILTER = `${GLOW_HEADER}${GLOW_SHADE}
+-    uniform sampler2D uDye;
+-    uniform vec2 uDyeTexel;
+-    void main() {
+-      vec2 o = uDyeTexel * 0.5;
+-      vec3 light = shade(texture(uDye, vUv + vec2(-o.x, -o.y)).xyz);
+-      light += shade(texture(uDye, vUv + vec2(o.x, -o.y)).xyz);
+-      light += shade(texture(uDye, vUv + vec2(-o.x, o.y)).xyz);
+-      light += shade(texture(uDye, vUv + vec2(o.x, o.y)).xyz);
+-      outColor = vec4(light * 0.25, 1.0);
+-    }`;
+-    const GLOW_DOWN = `${GLOW_HEADER}
+-    uniform sampler2D uSource;
+-    uniform vec2 uSourceTexel;
+-    void main() {
+-      vec2 o = uSourceTexel;
+-      vec3 color = texture(uSource, vUv).rgb * 4.0;
+-      color += texture(uSource, vUv + vec2(-o.x, -o.y)).rgb;
+-      color += texture(uSource, vUv + vec2(o.x, -o.y)).rgb;
+-      color += texture(uSource, vUv + vec2(-o.x, o.y)).rgb;
+-      color += texture(uSource, vUv + vec2(o.x, o.y)).rgb;
+-      outColor = vec4(color / 8.0, 1.0);
+-    }`;
+-    const GLOW_UP = `${GLOW_HEADER}
+-    uniform sampler2D uSource;
+-    uniform vec2 uSourceTexel;
+-    void main() {
+-      vec2 o = uSourceTexel;
+-      vec3 color = texture(uSource, vUv + vec2(-o.x * 2.0, 0.0)).rgb;
+-      color += texture(uSource, vUv + vec2(o.x * 2.0, 0.0)).rgb;
+-      color += texture(uSource, vUv + vec2(0.0, -o.y * 2.0)).rgb;
+-      color += texture(uSource, vUv + vec2(0.0, o.y * 2.0)).rgb;
+-      color += texture(uSource, vUv + vec2(-o.x, -o.y)).rgb * 2.0;
+-      color += texture(uSource, vUv + vec2(o.x, -o.y)).rgb * 2.0;
+-      color += texture(uSource, vUv + vec2(-o.x, o.y)).rgb * 2.0;
+-      color += texture(uSource, vUv + vec2(o.x, o.y)).rgb * 2.0;
+-      outColor = vec4(color / 12.0, 1.0);
+-    }`;
+-    const GLOW_DISPLAY = `${GLOW_HEADER}${GLOW_SHADE}
+-    uniform sampler2D uDye;
+-    uniform sampler2D uBloom;
+-    uniform float uGlow;
+-    uniform float uGrain;
+-    uniform float uTime;
+-    uniform float uLight;
+-    float hash(vec2 p) {
+-      p = fract(p * vec2(123.34, 456.21));
+-      p += dot(p, p + 45.32);
+-      return fract(p.x * p.y);
+-    }
+-    void main() {
+-      vec3 dye = texture(uDye, vUv).xyz;
+-      vec3 light = shade(dye);
+-      vec3 bloom = texture(uBloom, vUv).rgb * uGlow;
+-      float edge = smoothstep(0.0, 0.02, min(min(vUv.x, 1.0 - vUv.x), min(vUv.y, 1.0 - vUv.y)));
+-      float grain = 1.0 + (hash(gl_FragCoord.xy + fract(uTime * 13.7) * 97.0) - 0.5) * uGrain * 2.0;
+-      if (uLight > 0.5) {
+-        float energy = max(dye.x, 0.0);
+-        float heat = clamp(dye.y, 0.0, energy);
+-        float gas = max(dye.z, 0.0);
+-        float fresh = heat / max(energy, 0.0001);
+-        vec3 tint = mix(uSecondary, uColor, fresh);
+-        float halo = dot(bloom, vec3(0.2126, 0.7152, 0.0722));
+-        float density = 1.0 - exp(-((energy * 1.1 + gas * 0.8) * uIntensity + halo * 0.25));
+-        float tone = dot(tint, vec3(0.2126, 0.7152, 0.0722));
+-        vec3 ink = tint * min(1.0, 0.5 / max(tone, 0.001)) * mix(0.95, 0.72, smoothstep(0.5, 3.0, energy));
+-        ink = mix(ink, vec3(1.0), clamp(heat * heat * 0.05 * uHotspot, 0.0, 0.45));
+-        density = clamp(density * grain, 0.0, 1.0) * edge;
+-        outColor = vec4(ink * density, density);
+-      } else {
+-        vec3 color = 1.0 - exp(-(light + bloom) * grain);
+-        color *= edge;
+-        outColor = vec4(color, max(color.r, max(color.g, color.b)));
+-      }
+-    }`;
+-
+-    const GLOW_QUALITY = { low: { sim: 96, dye: 384 }, medium: { sim: 128, dye: 576 }, high: { sim: 160, dye: 768 } };
+-    const GLOW_PRESSURE_STEPS = 20;
+-    const GLOW_FLOW = 0.75;
+-    const GLOW_BLOOM_LEVELS = 5;
+-
+-    function compileShader(gl, type, source) {
+-        const shader = gl.createShader(type);
+-        if (!shader) return null;
+-        gl.shaderSource(shader, source);
+-        gl.compileShader(shader);
+-        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader;
+-        console.error('Shader error:', gl.getShaderInfoLog(shader));
+-        gl.deleteShader(shader);
+-        return null;
+-    }
+-    function toHsv([r, g, b]) {
+-        const max = Math.max(r, g, b), min = Math.min(r, g, b), delta = max - min;
+-        let hue = 0;
+-        if (delta > 0) {
+-            if (max === r) hue = ((g - b) / delta) % 6;
+-            else if (max === g) hue = (b - r) / delta + 2;
+-            else hue = (r - g) / delta + 4;
+-        }
+-        return [(hue * 60 + 360) % 360, max > 0 ? delta / max : 0, max];
+-    }
+-    function fromHsv(hue, saturation, value) {
+-        const h = (((hue % 360) + 360) % 360) / 60;
+-        const c = value * saturation;
+-        const x = c * (1 - Math.abs((h % 2) - 1));
+-        const m = value - c;
+-        const [r, g, b] = h < 1 ? [c, x, 0] : h < 2 ? [x, c, 0] : h < 3 ? [0, c, x] : h < 4 ? [0, x, c] : h < 5 ? [x, 0, c] : [c, 0, x];
+-        return [r + m, g + m, b + m];
+-    }
+-
+-    function initGlowCursor() {
+-        const container = document.getElementById('glow-cursor-root');
+-        const canvas = document.getElementById('glow-canvas');
+-        if (!container || !canvas) return;
+-
+-        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+-        const settings = {
+-            color: '#818CF8', /* Cor do glow a condizer com o acento */
+-            secondaryColor: '',
+-            intensity: 1.3,
+-            trailWidth: 3,
+-            linger: 1.4,
+-            glow: 1.2,
+-            hotspot: 0.8,
+-            followSpeed: 0.6,
+-            grain: 0.015,
+-            clickBurst: true,
+-            quality: isMobile ? 'medium' : 'high',
+-            theme: state.theme,
+-            maxDevicePixelRatio: isMobile ? 1.5 : 2,
+-            enabled: true
+-        };
+-
+-        const gl = canvas.getContext('webgl2', { alpha: true, premultipliedAlpha: true, antialias: false, depth: false, stencil: false });
+-        if (!gl || !gl.getExtension('EXT_color_buffer_float')) {
+-            console.warn('GlowCursor: WebGL2/EXT_color_buffer_float não disponível.');
+-            return;
+-        }
+-
+-        const vertexShader = compileShader(gl, gl.VERTEX_SHADER, GLOW_VERTEX);
+-        if (!vertexShader) return;
+-
+-        function build(source) {
+-            const fragment = compileShader(gl, gl.FRAGMENT_SHADER, source);
+-            const program = gl.createProgram();
+-            if (!fragment || !program) return null;
+-            gl.attachShader(program, vertexShader);
+-            gl.attachShader(program, fragment);
+-            gl.bindAttribLocation(program, 0, 'aPosition');
+-            gl.linkProgram(program);
+-            gl.deleteShader(fragment);
+-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { gl.deleteProgram(program); return null; }
+-            const uniforms = {};
+-            const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+-            for (let i = 0; i < count; i++) {
+-                const info = gl.getActiveUniform(program, i);
+-                if (info) uniforms[info.name] = gl.getUniformLocation(program, info.name);
+-            }
+-            return { program, uniforms };
+-        }
+-
+-        const passes = {
+-            splat: build(GLOW_SPLAT), advect: build(GLOW_ADVECT), maccormack: build(GLOW_MACCORMACK),
+-            divergence: build(GLOW_DIVERGENCE), scale: build(GLOW_SCALE), pressure: build(GLOW_PRESSURE),
+-            gradient: build(GLOW_GRADIENT), prefilter: build(GLOW_PREFILTER), down: build(GLOW_DOWN),
+-            up: build(GLOW_UP), display: build(GLOW_DISPLAY)
+-        };
+-        if (Object.values(passes).some(p => !p)) return;
+-
+-        const vao = gl.createVertexArray();
+-        const buffer = gl.createBuffer();
+-        gl.bindVertexArray(vao);
+-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+-        gl.enableVertexAttribArray(0);
+-        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+-
+-        const probe = document.createElement('canvas');
+-        probe.width = 1; probe.height = 1;
+-        const probeCtx = probe.getContext('2d', { willReadFrequently: true });
+-        const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+-
+-        const S = {
+-            width: 1, height: 1, ratio: 1,
+-            colorKey: '',
+-            color: [0.37, 0.55, 1],
+-            secondary: [0.25, 0.3, 1],
+-            pointer: { x: 0, y: 0, inside: false },
+-            emitter: { x: 0, y: 0, vx: 0, vy: 0, px: 0, py: 0 },
+-            ready: false,
+-            bursts: [],
+-            active: -Infinity,
+-            time: 0,
+-            allocated: '',
+-            targets: null
+-        };
+-        let raf = 0, last = 0, alive = true, visible = true, resizePending = false;
+-
+-        function toRgb(value, fallback) {
+-            if (!probeCtx || !value) return fallback;
+-            const css = /^[0-9a-f]{3,8}$/i.test(value) ? `#${value}` : value;
+-            probeCtx.clearRect(0, 0, 1, 1);
+-            probeCtx.fillStyle = '#000';
+-            probeCtx.fillStyle = css;
+-            probeCtx.fillRect(0, 0, 1, 1);
+-            const [r, g, b] = probeCtx.getImageData(0, 0, 1, 1).data;
+-            return [r / 255, g / 255, b / 255];
+-        }
+-        function resolveColors() {
+-            const key = `${settings.color}|${settings.secondaryColor}`;
+-            if (key === S.colorKey) return;
+-            S.colorKey = key;
+-            S.color = toRgb(settings.color, [0.37, 0.55, 1]);
+-            if (settings.secondaryColor) S.secondary = toRgb(settings.secondaryColor, S.color);
+-            else {
+-                const [h, s, v] = toHsv(S.color);
+-                S.secondary = fromHsv(h + 8, Math.min(1, s * 1.1 + 0.05), v);
+-            }
+-        }
+-        function createTarget(w, h, internalFormat, format, filter) {
+-            const texture = gl.createTexture();
+-            gl.bindTexture(gl.TEXTURE_2D, texture);
+-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filter);
+-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
+-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+-            gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, w, h, 0, format, gl.HALF_FLOAT, null);
+-            const fbo = gl.createFramebuffer();
+-            gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+-            gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+-            gl.viewport(0, 0, w, h);
+-            gl.clearColor(0, 0, 0, 0);
+-            gl.clear(gl.COLOR_BUFFER_BIT);
+-            return { texture, fbo, width: w, height: h, texel: [1 / w, 1 / h] };
+-        }
+-        function createPair(w, h, iF, f, filter) {
+-            let read = createTarget(w, h, iF, f, filter);
+-            let write = createTarget(w, h, iF, f, filter);
+-            return {
+-                get read() { return read; },
+-                get write() { return write; },
+-                swap() { const t = read; read = write; write = t; },
+-                targets() { return [read, write]; }
+-            };
+-        }
+-        function destroyTarget(t) { gl.deleteTexture(t.texture); gl.deleteFramebuffer(t.fbo); }
+-        function release() {
+-            const t = S.targets;
+-            if (!t) return;
+-            [...t.velocity.targets(), ...t.dye.targets(), ...t.pressure.targets(), t.divergence, t.forward, t.back, ...t.bloom].forEach(destroyTarget);
+-            S.targets = null;
+-        }
+-        function clearTargets() {
+-            const t = S.targets;
+-            if (!t) return;
+-            gl.clearColor(0, 0, 0, 0);
+-            [...t.velocity.targets(), ...t.dye.targets(), ...t.pressure.targets()].forEach(target => {
+-                gl.bindFramebuffer(gl.FRAMEBUFFER, target.fbo);
+-                gl.clear(gl.COLOR_BUFFER_BIT);
+-            });
+-        }
+-        function allocate() {
+-            const key = `${settings.quality}|${S.width}|${S.height}|${canvas.width}|${canvas.height}`;
+-            if (key === S.allocated && S.targets) return;
+-            release();
+-            S.allocated = key;
+-            const preset = GLOW_QUALITY[settings.quality];
+-            const aspect = S.width / S.height;
+-            const dims = base => (aspect >= 1 ? [Math.round(base * aspect), base] : [base, Math.round(base / aspect)]);
+-            const [simW, simH] = dims(preset.sim);
+-            let [dyeW, dyeH] = dims(preset.dye);
+-            const shrink = Math.min(1, canvas.width / dyeW, canvas.height / dyeH);
+-            dyeW = Math.max(2, Math.round(dyeW * shrink));
+-            dyeH = Math.max(2, Math.round(dyeH * shrink));
+-            const bloom = [];
+-            let bw = dyeW >> 1, bh = dyeH >> 1;
+-            for (let i = 0; i < GLOW_BLOOM_LEVELS; i++) {
+-                bloom.push(createTarget(Math.max(1, bw), Math.max(1, bh), gl.RGBA16F, gl.RGBA, gl.LINEAR));
+-                bw >>= 1; bh >>= 1;
+-            }
+-            S.targets = {
+-                velocity: createPair(simW, simH, gl.RG16F, gl.RG, gl.LINEAR),
+-                dye: createPair(dyeW, dyeH, gl.RGBA16F, gl.RGBA, gl.LINEAR),
+-                forward: createTarget(dyeW, dyeH, gl.RGBA16F, gl.RGBA, gl.LINEAR),
+-                back: createTarget(dyeW, dyeH, gl.RGBA16F, gl.RGBA, gl.LINEAR),
+-                pressure: createPair(simW, simH, gl.R16F, gl.RED, gl.NEAREST),
+-                divergence: createTarget(simW, simH, gl.R16F, gl.RED, gl.NEAREST),
+-                bloom
+-            };
+-        }
+-        function applyResize() {
+-            const w = Math.max(1, container.clientWidth);
+-            const h = Math.max(1, container.clientHeight);
+-            const ratio = Math.min(window.devicePixelRatio || 1, Math.max(0.5, settings.maxDevicePixelRatio || 2));
+-            const pw = Math.max(1, Math.round(w * ratio));
+-            const ph = Math.max(1, Math.round(h * ratio));
+-            if (canvas.width !== pw || canvas.height !== ph) { canvas.width = pw; canvas.height = ph; }
+-            S.width = w; S.height = h; S.ratio = ratio;
+-            allocate();
+-        }
+-        function resize() { resizePending = true; wake(); }
+-        function draw(target) {
+-            if (target) { gl.bindFramebuffer(gl.FRAMEBUFFER, target.fbo); gl.viewport(0, 0, target.width, target.height); }
+-            else { gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.viewport(0, 0, canvas.width, canvas.height); }
+-            gl.drawArrays(gl.TRIANGLES, 0, 3);
+-        }
+-        function use(pass, texel) {
+-            gl.useProgram(pass.program);
+-            if (pass.uniforms.uTexel) gl.uniform2f(pass.uniforms.uTexel, texel[0], texel[1]);
+-            return pass.uniforms;
+-        }
+-        function bind(unit, target) {
+-            gl.activeTexture(gl.TEXTURE0 + unit);
+-            gl.bindTexture(gl.TEXTURE_2D, target.texture);
+-            return unit;
+-        }
+-        function splat(pair, ax, ay, bx, by, radius, value, mode, strength, wide = radius) {
+-            const u = use(passes.splat, pair.read.texel);
+-            gl.uniform1i(u.uTarget, bind(0, pair.read));
+-            gl.uniform1f(u.uAspect, S.width / S.height);
+-            gl.uniform2f(u.uA, ax / S.width, 1 - ay / S.height);
+-            gl.uniform2f(u.uB, bx / S.width, 1 - by / S.height);
+-            gl.uniform1f(u.uRadius, radius / S.height);
+-            gl.uniform1f(u.uWide, wide / S.height);
+-            gl.uniform3f(u.uValue, value[0], value[1], value[2]);
+-            gl.uniform1f(u.uMode, mode);
+-            gl.uniform1f(u.uStrength, strength);
+-            draw(pair.write);
+-            pair.swap();
+-        }
+-        function toGrid(vx, vy) {
+-            const v = S.targets.velocity;
+-            return [(vx * v.read.width) / S.width, (-vy * v.read.height) / S.height];
+-        }
+-        function lightRadius() {
+-            return Math.max(settings.trailWidth * 0.5, (S.height / S.targets.dye.read.height) * 0.9);
+-        }
+-        function emit(dt, now) {
+-            const e = S.emitter, p = S.pointer;
+-            e.px = e.x; e.py = e.y;
+-            if (reduce || settings.followSpeed >= 1) {
+-                e.x = p.x; e.y = p.y;
+-            } else {
+-                const omega = 10 + settings.followSpeed * 50;
+-                const steps = Math.max(1, Math.ceil(dt / 0.004));
+-                const h = dt / steps;
+-                for (let k = 0; k < steps; k++) {
+-                    e.vx += (omega * omega * (p.x - e.x) - 2 * omega * e.vx) * h;
+-                    e.vy += (omega * omega * (p.y - e.y) - 2 * omega * e.vy) * h;
+-                    e.x += e.vx * h;
+-                    e.y += e.vy * h;
+-                }
+-            }
+-            const dx = e.x - e.px, dy = e.y - e.py;
+-            const length = Math.hypot(dx, dy);
+-            if (length < 0.05 || !settings.enabled) return;
+-            const radius = lightRadius();
+-            if (!reduce) {
+-                const target = toGrid(dx / Math.max(dt, 1e-3), dy / Math.max(dt, 1e-3));
+-                splat(S.targets.velocity, e.px, e.py, e.x, e.y, radius * 4 + 18, [target[0], target[1], 0], 3, GLOW_FLOW * 0.6);
+-            }
+-            splat(S.targets.dye, e.px, e.py, e.x, e.y, radius, [5.6, 5.6, 0.7], 2, 1, radius * 5 + 6);
+-            S.active = now;
+-        }
+-        function burst(x, y, now) {
+-            const radius = lightRadius();
+-            const jets = 6;
+-            const base = Math.random() * Math.PI * 2;
+-            for (let k = 0; k < jets; k++) {
+-                const angle = base + (k / jets) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+-                const cx = Math.cos(angle), cy = Math.sin(angle);
+-                const reach = 20 + Math.random() * 14;
+-                const ax = x + cx * 3, ay = y + cy * 3;
+-                const bx = x + cx * reach, by = y + cy * reach;
+-                if (!reduce) {
+-                    const target = toGrid(Math.cos(angle + 0.6) * 760, Math.sin(angle + 0.6) * 760);
+-                    splat(S.targets.velocity, ax, ay, bx, by, 18, [target[0], target[1], 0], 1, 0.9);
+-                }
+-                splat(S.targets.dye, ax, ay, bx, by, radius * 1.1, [2.4, 2.4, 0.3], 0, 1, radius * 5 + 6);
+-            }
+-            splat(S.targets.dye, x, y, x + 0.01, y, radius * 2.2, [1.8, 1.8, 0.4], 0, 1, radius * 7 + 10);
+-            S.active = now;
+-        }
+-        function step(dt) {
+-            const { velocity, dye, pressure, divergence } = S.targets;
+-            if (!reduce) {
+-                let u = use(passes.divergence, velocity.read.texel);
+-                gl.uniform1i(u.uVelocity, bind(0, velocity.read));
+-                draw(divergence);
+-                u = use(passes.scale, pressure.read.texel);
+-                gl.uniform1i(u.uSource, bind(0, pressure.read));
+-                gl.uniform1f(u.uValue, 0.8);
+-                draw(pressure.write);
+-                pressure.swap();
+-                u = use(passes.pressure, pressure.read.texel);
+-                gl.uniform1i(u.uDivergence, bind(1, divergence));
+-                for (let i = 0; i < GLOW_PRESSURE_STEPS; i++) {
+-                    gl.uniform1i(u.uPressure, bind(0, pressure.read));
+-                    draw(pressure.write);
+-                    pressure.swap();
+-                }
+-                u = use(passes.gradient, velocity.read.texel);
+-                gl.uniform1i(u.uPressure, bind(0, pressure.read));
+-                gl.uniform1i(u.uVelocity, bind(1, velocity.read));
+-                draw(velocity.write);
+-                velocity.swap();
+-                u = use(passes.advect, velocity.read.texel);
+-                gl.uniform2f(u.uVelocityTexel, velocity.read.texel[0], velocity.read.texel[1]);
+-                gl.uniform1i(u.uVelocity, bind(0, velocity.read));
+-                gl.uniform1i(u.uSource, bind(0, velocity.read));
+-                gl.uniform1f(u.uDt, dt);
+-                const calm = Math.exp(-dt * 1.2);
+-                gl.uniform4f(u.uDecay, calm, calm, 1, 1);
+-                draw(velocity.write);
+-                velocity.swap();
+-            }
+-            const decay = [
+-                Math.exp((-dt * 4.6) / (settings.linger * 0.8)),
+-                Math.exp((-dt * 4.6) / (settings.linger * 0.2)),
+-                Math.exp((-dt * 4.6) / (settings.linger * 1.2)),
+-                1
+-            ];
+-            const { forward, back } = S.targets;
+-            if (reduce) {
+-                const u = use(passes.advect, dye.read.texel);
+-                gl.uniform2f(u.uVelocityTexel, velocity.read.texel[0], velocity.read.texel[1]);
+-                gl.uniform1i(u.uVelocity, bind(0, velocity.read));
+-                gl.uniform1i(u.uSource, bind(1, dye.read));
+-                gl.uniform1f(u.uDt, 0);
+-                gl.uniform4f(u.uDecay, decay[0], decay[1], decay[2], decay[3]);
+-                draw(dye.write);
+-                dye.swap();
+-                return;
+-            }
+-            let u = use(passes.advect, dye.read.texel);
+-            gl.uniform2f(u.uVelocityTexel, velocity.read.texel[0], velocity.read.texel[1]);
+-            gl.uniform1i(u.uVelocity, bind(0, velocity.read));
+-            gl.uniform1i(u.uSource, bind(1, dye.read));
+-            gl.uniform1f(u.uDt, dt);
+-            gl.uniform4f(u.uDecay, 1, 1, 1, 1);
+-            draw(forward);
+-            gl.uniform1i(u.uSource, bind(1, forward));
+-            gl.uniform1f(u.uDt, -dt);
+-            draw(back);
+-            u = use(passes.maccormack, dye.read.texel);
+-            gl.uniform2f(u.uVelocityTexel, velocity.read.texel[0], velocity.read.texel[1]);
+-            gl.uniform2f(u.uSourceTexel, dye.read.texel[0], dye.read.texel[1]);
+-            gl.uniform1i(u.uVelocity, bind(0, velocity.read));
+-            gl.uniform1i(u.uSource, bind(1, dye.read));
+-            gl.uniform1i(u.uForward, bind(2, forward));
+-            gl.uniform1i(u.uBack, bind(3, back));
+-            gl.uniform1f(u.uDt, dt);
+-            gl.uniform4f(u.uDecay, decay[0], decay[1], decay[2], decay[3]);
+-            draw(dye.write);
+-            dye.swap();
+-        }
+-        function setShade(u) {
+-            gl.uniform3f(u.uColor, S.color[0], S.color[1], S.color[2]);
+-            gl.uniform3f(u.uSecondary, S.secondary[0], S.secondary[1], S.secondary[2]);
+-            gl.uniform1f(u.uIntensity, settings.intensity);
+-            gl.uniform1f(u.uHotspot, settings.hotspot);
+-        }
+-        function render() {
+-            const { dye, bloom } = S.targets;
+-            if (settings.glow > 0) {
+-                let u = use(passes.prefilter, bloom[0].texel);
+-                gl.uniform1i(u.uDye, bind(0, dye.read));
+-                gl.uniform2f(u.uDyeTexel, dye.read.texel[0], dye.read.texel[1]);
+-                setShade(u);
+-                draw(bloom[0]);
+-                u = use(passes.down, bloom[0].texel);
+-                for (let i = 1; i < bloom.length; i++) {
+-                    gl.uniform1i(u.uSource, bind(0, bloom[i - 1]));
+-                    gl.uniform2f(u.uSourceTexel, bloom[i - 1].texel[0], bloom[i - 1].texel[1]);
+-                    draw(bloom[i]);
+-                }
+-                gl.enable(gl.BLEND);
+-                gl.blendFunc(gl.ONE, gl.ONE);
+-                u = use(passes.up, bloom[0].texel);
+-                for (let i = bloom.length - 1; i > 0; i--) {
+-                    gl.uniform1i(u.uSource, bind(0, bloom[i]));
+-                    gl.uniform2f(u.uSourceTexel, bloom[i].texel[0], bloom[i].texel[1]);
+-                    draw(bloom[i - 1]);
+-                }
+-                gl.disable(gl.BLEND);
+-            }
+-            const u = use(passes.display, [1 / canvas.width, 1 / canvas.height]);
+-            gl.uniform1i(u.uDye, bind(0, dye.read));
+-            gl.uniform1i(u.uBloom, bind(1, bloom[0]));
+-            setShade(u);
+-            gl.uniform1f(u.uGlow, settings.glow > 0 ? (settings.glow * 1.4) / GLOW_BLOOM_LEVELS : 0);
+-            gl.uniform1f(u.uGrain, settings.grain);
+-            gl.uniform1f(u.uTime, S.time);
+-            gl.uniform1f(u.uLight, settings.theme === 'light' ? 1 : 0);
+-            draw(null);
+-        }
+-        function blank() {
+-            gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+-            gl.viewport(0, 0, canvas.width, canvas.height);
+-            gl.clearColor(0, 0, 0, 0);
+-            gl.clear(gl.COLOR_BUFFER_BIT);
+-        }
+-        function frame(now) {
+-            raf = 0;
+-            if (resizePending) { resizePending = false; applyResize(); }
+-            if (!alive || !visible || document.hidden) return;
+-            const dt = last ? Math.min(1 / 30, (now - last) / 1000) : 1 / 60;
+-            last = now;
+-            S.time += dt;
+-            const wanted = Math.min(window.devicePixelRatio || 1, Math.max(0.5, settings.maxDevicePixelRatio || 2));
+-            if (Math.abs(wanted - S.ratio) > 0.01) applyResize();
+-            allocate();
+-            resolveColors();
+-            gl.bindVertexArray(vao);
+-            gl.disable(gl.BLEND);
+-            if (S.ready) emit(dt, now);
+-            while (S.bursts.length) {
+-                const [bx, by] = S.bursts.shift();
+-                burst(bx, by, now);
+-            }
+-            step(dt);
+-            render();
+-            const quiet = now - S.active > settings.linger * 1200 + 900;
+-            const resting = Math.hypot(S.emitter.vx, S.emitter.vy) < 1;
+-            if (quiet && resting) {
+-                clearTargets();
+-                blank();
+-                last = 0;
+-                return;
+-            }
+-            raf = requestAnimationFrame(frame);
+-        }
+-        function wake() { if (!raf && alive && visible && !document.hidden) raf = requestAnimationFrame(frame); }
+-
+-        const updatePointerFromClient = (clientX, clientY) => {
+-            const rect = container.getBoundingClientRect();
+-            const x = clientX - rect.left;
+-            const y = clientY - rect.top;
+-            const inside = x >= 0 && y >= 0 && x <= rect.width && y <= rect.height;
+-            if (!inside) {
+-                if (S.pointer.inside) { S.pointer.inside = false; S.ready = false; wake(); }
+-                return false;
+-            }
+-            if (!S.ready) {
+-                S.emitter.x = x; S.emitter.y = y;
+-                S.emitter.px = x; S.emitter.py = y;
+-                S.emitter.vx = 0; S.emitter.vy = 0;
+-                S.ready = true;
+-            }
+-            S.pointer.x = x; S.pointer.y = y; S.pointer.inside = true;
+-            wake();
+-            return true;
+-        };
+-
+-        const onPointerMove = (event) => {
+-            if (event.pointerType === 'touch') return;
+-            updatePointerFromClient(event.clientX, event.clientY);
+-        };
+-        const onPointerDown = (event) => {
+-            if (!settings.clickBurst || !settings.enabled) return;
+-            if (event.pointerType === 'touch') return;
+-            const rect = container.getBoundingClientRect();
+-            const x = event.clientX - rect.left;
+-            const y = event.clientY - rect.top;
+-            if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+-            S.bursts.push([x, y]);
+-            wake();
+-        };
+-        const onPointerLeave = () => { S.pointer.inside = false; S.ready = false; wake(); };
+-
+-        const onTouchStart = (e) => {
+-            const t = e.touches[0];
+-            if (!t) return;
+-            updatePointerFromClient(t.clientX, t.clientY);
+-            if (settings.clickBurst && settings.enabled) {
+-                const rect = container.getBoundingClientRect();
+-                const x = t.clientX - rect.left;
+-                const y = t.clientY - rect.top;
+-                if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
+-                    S.bursts.push([x, y]);
+-                    wake();
+-                }
+-            }
+-        };
+-        const onTouchMove = (e) => {
+-            const t = e.touches[0];
+-            if (!t) return;
+-            updatePointerFromClient(t.clientX, t.clientY);
+-        };
+-        const onTouchEnd = () => {
+-            S.pointer.inside = false;
+-            S.ready = false;
+-            last = 0;
+-            wake();
+-        };
+-
+-        const onVisibility = () => { last = 0; wake(); };
+-
+-        const resizeObs = new ResizeObserver(() => { resize(); wake(); });
+-        resizeObs.observe(container);
+-        const interObs = new IntersectionObserver(entries => {
+-            visible = entries.some(e => e.isIntersecting);
+-            if (visible) { last = 0; wake(); }
+-        });
+-        interObs.observe(container);
+-
+-        window.addEventListener('pointermove', onPointerMove, { passive: true });
+-        window.addEventListener('pointerdown', onPointerDown, { passive: true });
+-        document.documentElement.addEventListener('pointerleave', onPointerLeave);
+-        document.addEventListener('visibilitychange', onVisibility);
+-        container.addEventListener('touchstart', onTouchStart, { passive: true });
+-        container.addEventListener('touchmove', onTouchMove, { passive: true });
+-        container.addEventListener('touchend', onTouchEnd, { passive: true });
+-        container.addEventListener('touchcancel', onTouchEnd, { passive: true });
+-
+-        resize();
+-        blank();
+-
+-        window.__glowCursor = {
+-            setTheme(theme) {
+-                settings.theme = theme;
+-                canvas.style.mixBlendMode = theme === 'light' ? 'normal' : 'screen';
+-            },
+-            setEnabled(v) { settings.enabled = !!v; },
+-            destroy() {
+-                alive = false;
+-                cancelAnimationFrame(raf);
+-                resizeObs.disconnect();
+-                interObs.disconnect();
+-                window.removeEventListener('pointermove', onPointerMove);
+-                window.removeEventListener('pointerdown', onPointerDown);
+-                document.documentElement.removeEventListener('pointerleave', onPointerLeave);
+-                document.removeEventListener('visibilitychange', onVisibility);
+-                container.removeEventListener('touchstart', onTouchStart);
+-                container.removeEventListener('touchmove', onTouchMove);
+-                container.removeEventListener('touchend', onTouchEnd);
+-                container.removeEventListener('touchcancel', onTouchEnd);
+-                release();
+-                Object.values(passes).forEach(p => gl.deleteProgram(p.program));
+-                gl.deleteShader(vertexShader);
+-                gl.deleteBuffer(buffer);
+-                gl.deleteVertexArray(vao);
+-            }
+-        };
+-        canvas.style.mixBlendMode = settings.theme === 'light' ? 'normal' : 'screen';
+-    }
+-
+     // ============================================================
+     // LOAD INCLUDES + SESSIONS (fail-safe, works on file://)
+     // Templates are loaded as <script> (window.INCLUDE_* / window.SESSION_*)
+@@ -1523,7 +539,7 @@
+         const nav = (state.data[langKey] && state.data[langKey].nav) || [];
+         const ids = nav.map(n => n.id).filter(Boolean);
+ 
+-        const fallback = ['hero','skills','projects','education','quote','contact'];
++        const fallback = ['hero','skills','projects','education','contact'];
+         const order = ids.length ? ids : fallback;
+ 
+         for (const id of order) {
+@@ -1554,13 +570,9 @@
+         render();
+         if (window.lucide) lucide.createIcons();
+ 
+-        initClickSpark();
+-        initCrosshair();
+ 
+         requestAnimationFrame(() => updateActiveNav());
+ 
+-        try { initGlowCursor(); } catch (err) { console.warn('GlowCursor init failed:', err); }
+-
+         const hint = document.getElementById('scroll-hint');
+         if (hint && scroller) {
+             scroller.addEventListener('scroll', () => {
+diff --git a/js/data.js b/js/data.js
+index ef97b07..fa1d016 100644
+--- a/js/data.js
++++ b/js/data.js
+@@ -9,11 +9,10 @@ window.PORTFOLIO_DATA = {
+     "brandLocation": "Mozambique",
+ 
+     "nav": [
+-      { "id": "hero",      "label": "Home",      "icon": "home" },
++      { "id": "hero",      "label": "Home",      "icon": "house" },
+       { "id": "skills",    "label": "Skills",    "icon": "layers" },
+       { "id": "projects",  "label": "Projects",  "icon": "folder-git-2" },
+       { "id": "education", "label": "Education", "icon": "graduation-cap" },
+-      { "id": "quote",     "label": "Quote",     "icon": "quote" },
+       { "id": "contact",   "label": "Contact",   "icon": "mail" }
+     ],
+ 
+@@ -25,13 +24,13 @@ window.PORTFOLIO_DATA = {
+ 
+     "hero": {
+       "name": "Abdul Cadre",
+-      "subtitle": "Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.",
++      "subtitle": "Mobile developer specialized in B4X and Android, with experience in lecturing and ICT training in Mozambique.",
+       "inspector": {
+         "location": "Mozambique",
+         "email": "abdullcadre@gmail.com",
+         "degree": "BSc Computer Science",
+         "stack": ["B4X", "Android", "PHP", "SQLite"],
+-        "university": "LICUNGO UNIVERSITY",
++        "university": "Licungo University",
+         "year": "2021"
+       }
+     },
+@@ -41,37 +40,38 @@ window.PORTFOLIO_DATA = {
+       "title": "Skills & Specialties",
+       "subtitle": "Competencies developed in academic and professional contexts.",
+       "list": [
+-        { "icon": "smartphone", "tag": "B4X", "title": "Mobile development", "description": "Android apps with B4X, focused on usability and performance." },
+-        { "icon": "wrench", "tag": "Hardware", "title": "Systems maintenance", "description": "Equipment diagnostics, repair, and IT optimization." },
++        { "icon": "smartphone", "tag": "B4X", "title": "Mobile development", "description": "Android applications built with B4X, with a focus on usability and performance." },
++        { "icon": "database", "tag": "SQL", "title": "Databases & back-end", "description": "Data storage and server-side logic with SQLite and MySQL, using PHP." },
++        { "icon": "wrench", "tag": "Hardware", "title": "Systems maintenance", "description": "Hardware diagnostics, equipment repair and IT optimization." },
+         { "icon": "users", "tag": "Training", "title": "Teaching & ICT training", "description": "Training students and professionals in information technology." },
+-        { "icon": "git-merge", "tag": "Software", "title": "Software engineering", "description": "Planning, developing, and maintaining software systems." }
++        { "icon": "git-merge", "tag": "Software", "title": "Software engineering", "description": "Planning, developing and maintaining software systems." }
+       ]
+     },
+ 
+     "projects": {
+       "tag": "Portfolio",
+-      "title": "Featured Projects",
+-      "subtitle": "Mobile apps and cross-platform solutions focused on real-world applicability.",
++      "title": "Selected Projects",
++      "subtitle": "Mobile and full-stack applications built for real-world use, including apps published on Google Play.",
+       "b4xLink": "View all B4X work",
+       "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
+-      "storeLink": "View my Google Play store",
++      "storeLink": "View my Google Play developer profile",
+       "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
+       "list": [
+-        { "icon": "bot", "tag": "ABC Moz", "title": "ABC Moz", "description": "Educational app for literacy in Mozambique, published on Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
+-        { "icon": "clock", "tag": "B4XPages", "title": "LaborLog Lite", "description": "Work-hours logging and lookup, Android with B4XPages.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+-        { "icon": "message-square", "tag": "Quotey", "title": "Quotey", "description": "Quotes and phrases app for Android, published on Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+-        { "icon": "message-square", "tag": "Realtime Chat", "title": "ChatApp v1.1", "description": "Real-time chat with B4A, PHP and MySQL. Ideal for simple conversations.", "tech": "B4A + PHP", "status": "Full-Stack" },
+-        { "icon": "user-check", "tag": "Attendance", "title": "Employee Attendance", "description": "Attendance tracking with selfie, time and location.", "tech": "Cross-platform", "status": "GPS Tracker" },
+-        { "icon": "wallet", "tag": "Finance", "title": "Financial Mobile App", "description": "Card and transaction management with local SQLite.", "tech": "B4X + SQLite", "status": "Offline-First" },
+-        { "icon": "bot", "tag": "AI", "title": "Integrating GPT-3 API", "description": "GPT-3 API integration in Android apps via B4X.", "tech": "OpenAI", "status": "AI Engine" },
+-        { "icon": "send", "tag": "SMS", "title": "Bulk SMS in B4A", "description": "Bulk SMS sending to multiple recipients.", "tech": "B4A", "status": "Telecom" }
++        { "icon": "bot", "tag": "Education", "title": "ABC Moz", "description": "Educational literacy app for learners in Mozambique, published on Google Play.", "tech": "Android app", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
++        { "icon": "clock", "tag": "Productivity", "title": "LaborLog Lite", "description": "Work-hours logging and lookup for Android, built with B4XPages.", "tech": "Android · B4XPages", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
++        { "icon": "message-square", "tag": "Lifestyle", "title": "Quotey", "description": "Android app for quotes and everyday phrases, published on Google Play.", "tech": "Android app", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
++        { "icon": "message-square", "tag": "Messaging", "title": "ChatApp v1.1", "description": "Real-time chat built with B4A, PHP and MySQL, suited to simple conversations.", "tech": "B4A + PHP + MySQL", "status": "Full-stack" },
++        { "icon": "user-check", "tag": "HR", "title": "Employee Attendance", "description": "Attendance tracking with selfie capture, timestamp and location.", "tech": "Cross-platform", "status": "GPS tracking" },
++        { "icon": "wallet", "tag": "Finance", "title": "Financial Mobile App", "description": "Card and transaction management with local SQLite storage.", "tech": "B4X + SQLite", "status": "Offline-first" },
++        { "icon": "bot", "tag": "AI", "title": "OpenAI API Integration", "description": "Integration of the GPT-3 API into Android apps built with B4X.", "tech": "B4X · OpenAI", "status": "AI integration" },
++        { "icon": "send", "tag": "Messaging", "title": "Bulk SMS Sender", "description": "Sends SMS messages to multiple recipients at once, built with B4A.", "tech": "B4A", "status": "SMS" }
+       ]
+     },
+ 
+     "education": {
+       "tag": "Academic background",
+       "title": "Education",
+-      "subtitle": "Academic background oriented towards Information Technologies.",
++      "subtitle": "Academic background oriented towards information technology.",
+       "list": [
+         { "year": "2021", "level": "Higher Education", "icon": "graduation-cap", "description": "BSc in Computer Science at Licungo University, final grade 14/20." },
+         { "year": "2016", "level": "High School", "icon": "book-open", "description": "12th grade at Hamdan Bin Rashid Pre-University School." },
+@@ -80,30 +80,26 @@ window.PORTFOLIO_DATA = {
+       ]
+     },
+ 
+-    "quote": {
+-      "text": "\"Everyone has a goal. Never give up before reaching yours. Don't tell me the sky is the limit, because there are footprints on the moon.\""
+-    },
+-
+     "contact": {
+-      "tag": "Contacts",
++      "tag": "Contact",
+       "title": "Get in Touch",
+       "subtitle": "",
+       "items": [
+-        { "icon": "mail",  "label": "Email",           "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com", "sub": "Reply within 24h" },
+-        { "icon": "phone", "label": "Call / WhatsApp", "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758",  "sub": "Call or send a message" },
+-        { "icon": "phone", "label": "Call",            "value": "+258 86 812 2758",      "url": "tel:+258868122758",           "sub": "Call" }
++        { "icon": "mail",  "label": "Email",     "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com" },
++        { "icon": "phone", "label": "WhatsApp",  "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758" },
++        { "icon": "phone", "label": "Phone",     "value": "+258 86 812 2758",      "url": "tel:+258868122758" }
+       ],
+       "socials": [
+         { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
+         { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
+         { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
+-        { "icon": "code-2",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
++        { "icon": "code-xml",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+       ]
+     },
+ 
+     "footer": {
+       "rights": "All rights reserved",
+-      "tag": "B4X · Lecturer · Help Desk"
++      "tag": "Mobile Development · Teaching · ICT"
+     }
+   },
+ 
+@@ -112,101 +108,97 @@ window.PORTFOLIO_DATA = {
+     "brandLocation": "Moçambique",
+ 
+     "nav": [
+-      { "id": "hero",      "label": "Início",      "icon": "home" },
+-      { "id": "skills",    "label": "Habilidades", "icon": "layers" },
+-      { "id": "projects",  "label": "Projectos",   "icon": "folder-git-2" },
+-      { "id": "education", "label": "Formação",    "icon": "graduation-cap" },
+-      { "id": "quote",     "label": "Frase",       "icon": "quote" },
+-      { "id": "contact",   "label": "Contacto",    "icon": "mail" }
++      { "id": "hero",      "label": "Início",       "icon": "house" },
++      { "id": "skills",    "label": "Competências", "icon": "layers" },
++      { "id": "projects",  "label": "Projetos",     "icon": "folder-git-2" },
++      { "id": "education", "label": "Formação",     "icon": "graduation-cap" },
++      { "id": "contact",   "label": "Contacto",     "icon": "mail" }
+     ],
+ 
+     "actions": {
+       "contact": "Entrar em contacto",
+-      "downloadCV": "Baixar CV",
++      "downloadCV": "Descarregar CV",
+       "cvUrl": "https://drive.google.com/file/d/1k19gc77YrECmLnP6qAKEe-o22ovPdIRk/view?usp=drive_link"
+     },
+ 
+     "hero": {
+       "name": "Abdul Cadre",
+-      "subtitle": "Programador de aplicações móveis (B4X / Android), docente e formador em TICs em Moçambique.",
++      "subtitle": "Programador de aplicações móveis especializado em B4X e Android, com experiência em docência e formação em TIC em Moçambique.",
+       "inspector": {
+         "location": "Moçambique",
+         "email": "abdullcadre@gmail.com",
+         "degree": "Licenciatura em Informática",
+         "stack": ["B4X", "Android", "PHP", "SQLite"],
+-        "university": "UNIVERSIDADE LICUNGO",
++        "university": "Universidade Licungo",
+         "year": "2021"
+       }
+     },
+ 
+     "skills": {
+       "tag": "Competências técnicas",
+-      "title": "Habilidades & Especialidades",
+-      "subtitle": "Conjunto de competências desenvolvidas em contextos académicos e profissionais.",
++      "title": "Especialidades",
++      "subtitle": "Competências desenvolvidas em contextos académicos e profissionais.",
+       "list": [
+-        { "icon": "smartphone", "tag": "B4X", "title": "Desenvolvimento mobile", "description": "Aplicações Android com B4X, focadas em usabilidade e desempenho." },
+-        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico, reparação de equipamentos e optimização de TI." },
+-        { "icon": "users", "tag": "Formação", "title": "Docência & Formação em TICs", "description": "Capacitação de alunos e profissionais em tecnologias de informação." },
+-        { "icon": "git-merge", "tag": "Software", "title": "Engenharia de software", "description": "Planeamento, desenvolvimento e manutenção de sistemas informáticos." }
++        { "icon": "smartphone", "tag": "B4X", "title": "Desenvolvimento mobile", "description": "Aplicações Android em B4X, com foco em usabilidade e desempenho." },
++        { "icon": "database", "tag": "SQL", "title": "Bases de dados e back-end", "description": "Armazenamento de dados e lógica do servidor com SQLite e MySQL, usando PHP." },
++        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico e reparação de equipamentos e otimização de TI." },
++        { "icon": "users", "tag": "Formação", "title": "Docência & formação em TIC", "description": "Capacitação de estudantes e profissionais em tecnologias de informação." },
++        { "icon": "git-merge", "tag": "Software", "title": "Engenharia de software", "description": "Planeamento, desenvolvimento e manutenção de sistemas de software." }
+       ]
+     },
+ 
+     "projects": {
+       "tag": "Portfólio",
+-      "title": "Projectos Desenvolvidos",
+-      "subtitle": "Aplicações mobile e soluções multiplataforma focadas em aplicabilidade real.",
++      "title": "Projetos Selecionados",
++      "subtitle": "Aplicações móveis e web desenvolvidas para uso real, incluindo apps publicadas na Google Play.",
+       "b4xLink": "Ver todos os trabalhos B4X",
+       "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
+-      "storeLink": "Ver a minha loja na Google Play",
++      "storeLink": "Ver o meu perfil de programador na Google Play",
+       "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
+       "list": [
+-        { "icon": "bot", "tag": "ABC Moz", "title": "ABC Moz", "description": "Aplicação educativa para alfabetização em Moçambique, publicada na Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
+-        { "icon": "clock", "tag": "B4XPages", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho, Android com B4XPages.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+-        { "icon": "message-square", "tag": "Quotey", "title": "Quotey", "description": "Aplicação de citações e frases para Android, publicada na Google Play.", "tech": "Android App", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+-        { "icon": "message-square", "tag": "Realtime Chat", "title": "ChatApp v1.1", "description": "Chat em tempo real com B4A, PHP e MySQL. Ideal para conversas simples.", "tech": "B4A + PHP", "status": "Full-Stack" },
+-        { "icon": "user-check", "tag": "Presenças", "title": "Employee Attendance", "description": "Controlo de presenças com selfie, hora e localização.", "tech": "Cross-platform", "status": "GPS Tracker" },
+-        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transacções com SQLite local.", "tech": "B4X + SQLite", "status": "Offline-First" },
+-        { "icon": "bot", "tag": "IA", "title": "Integrating GPT-3 API", "description": "Integração da API GPT-3 em apps Android via B4X.", "tech": "OpenAI", "status": "AI Engine" },
+-        { "icon": "send", "tag": "SMS", "title": "Bulk SMS in B4A", "description": "Envio de SMS em massa a múltiplos destinatários.", "tech": "B4A", "status": "Telecom" }
++        { "icon": "bot", "tag": "Educação", "title": "ABC Moz", "description": "Aplicação educativa de alfabetização para estudantes em Moçambique, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
++        { "icon": "clock", "tag": "Produtividade", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho para Android, desenvolvida com B4XPages.", "tech": "Android · B4XPages", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
++        { "icon": "message-square", "tag": "Lazer", "title": "Quotey", "description": "Aplicação Android de citações e frases do dia a dia, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
++        { "icon": "message-square", "tag": "Mensagens", "title": "ChatApp v1.1", "description": "Chat em tempo real desenvolvido com B4A, PHP e MySQL, adequado a conversas simples.", "tech": "B4A + PHP + MySQL", "status": "Full-stack" },
++        { "icon": "user-check", "tag": "Recursos Humanos", "title": "Employee Attendance", "description": "Controlo de presenças com captura de selfie, hora e localização.", "tech": "Multiplataforma", "status": "Rastreio GPS" },
++        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transações com armazenamento local em SQLite.", "tech": "B4X + SQLite", "status": "Offline-first" },
++        { "icon": "bot", "tag": "IA", "title": "Integração da API OpenAI", "description": "Integração da API GPT-3 em aplicações Android desenvolvidas com B4X.", "tech": "B4X · OpenAI", "status": "Integração IA" },
++        { "icon": "send", "tag": "Mensagens", "title": "Envio de SMS em Massa", "description": "Envio de mensagens SMS a vários destinatários em simultâneo, desenvolvido com B4A.", "tech": "B4A", "status": "SMS" }
+       ]
+     },
+ 
+     "education": {
+       "tag": "Formação académica",
+-      "title": "Histórico Académico",
+-      "subtitle": "Formação académica orientada para as Tecnologias de Informação.",
++      "title": "Formação Académica",
++      "subtitle": "Percurso académico orientado para as tecnologias de informação.",
+       "list": [
+-        { "year": "2021", "level": "Ensino Superior", "icon": "graduation-cap", "description": "Licenciatura em Informática na Faculdade de Ciência e Tecnologia da Universidade Licungo, nota final 14 valores." },
+-        { "year": "2016", "level": "Nível Médio", "icon": "book-open", "description": "12ª Classe na Escola Pré-universitária Hamdan Bin Rashid." },
+-        { "year": "2014", "level": "Ensino Secundário", "icon": "school", "description": "10ª Classe na Escola Secundária de Chimundo." },
+-        { "year": "2011", "level": "Ensino Primário", "icon": "pencil", "description": "7ª Classe na Escola Primária Completa de Macunene." }
++        { "year": "2021", "level": "Ensino Superior", "icon": "graduation-cap", "description": "Licenciatura em Informática na Faculdade de Ciência e Tecnologia da Universidade Licungo, com classificação final de 14 valores." },
++        { "year": "2016", "level": "Nível Médio", "icon": "book-open", "description": "12.ª Classe na Escola Pré-universitária Hamdan Bin Rashid." },
++        { "year": "2014", "level": "Ensino Secundário", "icon": "school", "description": "10.ª Classe na Escola Secundária de Chimundo." },
++        { "year": "2011", "level": "Ensino Primário", "icon": "pencil", "description": "7.ª Classe na Escola Primária Completa de Macunene." }
+       ]
+     },
+ 
+-    "quote": {
+-      "text": "\"Todos têm uma meta. Nunca desistas antes de alcançar a tua. Não me digas que o céu é o limite, porque há pegadas na lua.\""
+-    },
+-
+     "contact": {
+       "tag": "Contactos",
+       "title": "Entrar em Contacto",
+       "subtitle": "",
+       "items": [
+-        { "icon": "mail",  "label": "Email",              "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com", "sub": "Resposta em 24h" },
+-        { "icon": "phone", "label": "Chamada / WhatsApp", "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758",  "sub": "Ligar ou enviar mensagem" },
+-        { "icon": "phone", "label": "Chamada",            "value": "+258 86 812 2758",      "url": "tel:+258868122758",           "sub": "Ligar" }
++        { "icon": "mail",  "label": "Email",     "value": "abdullcadre@gmail.com", "url": "mailto:abdullcadre@gmail.com" },
++        { "icon": "phone", "label": "WhatsApp",  "value": "+258 84 012 2758",      "url": "https://wa.me/258840122758" },
++        { "icon": "phone", "label": "Telefone",  "value": "+258 86 812 2758",      "url": "tel:+258868122758" }
+       ],
+       "socials": [
+         { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
+         { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
+         { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
+-        { "icon": "code-2",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
++        { "icon": "code-xml",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+       ]
+     },
+ 
+     "footer": {
+       "rights": "Todos os direitos reservados",
+-      "tag": "B4X · Docente · Help Desk"
++      "tag": "Desenvolvimento Mobile · Docência · TIC"
+     }
+   }
+-};
+\ No newline at end of file
++};
+diff --git a/og-image.png b/og-image.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..1caebd0f23d304a2a5c279d53b4ff74da63ac79b
+GIT binary patch
+literal 33012
+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
+W+s(4iZ-sG}FaKUex)}8L=l==79cCB+
+
+literal 0
+HcmV?d00001
+
+diff --git a/package-lock.json b/package-lock.json
+new file mode 100644
+index 0000000..8a5799f
+--- /dev/null
++++ b/package-lock.json
+@@ -0,0 +1,999 @@
++{
++  "name": "abdullcadre.github.io",
++  "lockfileVersion": 3,
++  "requires": true,
++  "packages": {
++    "": {
++      "name": "abdullcadre.github.io",
++      "devDependencies": {
++        "tailwindcss": "3.4.19"
++      }
++    },
++    "node_modules/@alloc/quick-lru": {
++      "version": "5.3.0",
++      "resolved": "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.3.0.tgz",
++      "integrity": "sha512-U4+70Pc5ZS9osnCBCE5Jha/ciHM+Yp+CNMNC/7HvYbNRk1Ldd+f7qO65W5qfhu/TCv+/ozljlXXe9Nj8419DMA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=10"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/sindresorhus"
++      }
++    },
++    "node_modules/@jridgewell/gen-mapping": {
++      "version": "0.3.13",
++      "resolved": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
++      "integrity": "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/sourcemap-codec": "^1.5.0",
++        "@jridgewell/trace-mapping": "^0.3.24"
++      }
++    },
++    "node_modules/@jridgewell/resolve-uri": {
++      "version": "3.1.3",
++      "resolved": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.3.tgz",
++      "integrity": "sha512-lhTtjtoEArWBjismtfS761S9Hlyn+nIZqOZVYoZ1Xn82PMNMVnk+jj/NhC4fAXGTs7ydONcJiR5vyQBTMDu27g==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=6.0.0"
++      }
++    },
++    "node_modules/@jridgewell/sourcemap-codec": {
++      "version": "1.6.0",
++      "resolved": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.6.0.tgz",
++      "integrity": "sha512-T7jf+5zgsZHwNJ4lvQ7/aezbyk0nNX+zJVWpmHA7VYsEx7a7qr5Rg5IbtJFqkgze5Y2sruq1RUY8Q837Od7iFw==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/@jridgewell/trace-mapping": {
++      "version": "0.3.31",
++      "resolved": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
++      "integrity": "sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/resolve-uri": "^3.1.0",
++        "@jridgewell/sourcemap-codec": "^1.4.14"
++      }
++    },
++    "node_modules/@nodelib/fs.scandir": {
++      "version": "2.1.5",
++      "resolved": "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz",
++      "integrity": "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@nodelib/fs.stat": "2.0.5",
++        "run-parallel": "^1.1.9"
++      },
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/@nodelib/fs.stat": {
++      "version": "2.0.5",
++      "resolved": "https://registry.npmjs.org/@nodelib/fs.stat/-/fs.stat-2.0.5.tgz",
++      "integrity": "sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/@nodelib/fs.walk": {
++      "version": "1.2.8",
++      "resolved": "https://registry.npmjs.org/@nodelib/fs.walk/-/fs.walk-1.2.8.tgz",
++      "integrity": "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@nodelib/fs.scandir": "2.1.5",
++        "fastq": "^1.6.0"
++      },
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/any-promise": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/any-promise/-/any-promise-1.3.0.tgz",
++      "integrity": "sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/anymatch": {
++      "version": "3.1.3",
++      "resolved": "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz",
++      "integrity": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "normalize-path": "^3.0.0",
++        "picomatch": "^2.0.4"
++      },
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/arg": {
++      "version": "5.0.2",
++      "resolved": "https://registry.npmjs.org/arg/-/arg-5.0.2.tgz",
++      "integrity": "sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/binary-extensions": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.3.0.tgz",
++      "integrity": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=8"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/sindresorhus"
++      }
++    },
++    "node_modules/braces": {
++      "version": "3.0.3",
++      "resolved": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
++      "integrity": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "fill-range": "^7.1.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/camelcase-css": {
++      "version": "2.0.1",
++      "resolved": "https://registry.npmjs.org/camelcase-css/-/camelcase-css-2.0.1.tgz",
++      "integrity": "sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/chokidar": {
++      "version": "3.6.0",
++      "resolved": "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz",
++      "integrity": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "anymatch": "~3.1.2",
++        "braces": "~3.0.2",
++        "glob-parent": "~5.1.2",
++        "is-binary-path": "~2.1.0",
++        "is-glob": "~4.0.1",
++        "normalize-path": "~3.0.0",
++        "readdirp": "~3.6.0"
++      },
++      "engines": {
++        "node": ">= 8.10.0"
++      },
++      "funding": {
++        "url": "https://paulmillr.com/funding/"
++      },
++      "optionalDependencies": {
++        "fsevents": "~2.3.2"
++      }
++    },
++    "node_modules/chokidar/node_modules/glob-parent": {
++      "version": "5.1.2",
++      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
++      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "is-glob": "^4.0.1"
++      },
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/commander": {
++      "version": "4.1.1",
++      "resolved": "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz",
++      "integrity": "sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/didyoumean": {
++      "version": "1.2.2",
++      "resolved": "https://registry.npmjs.org/didyoumean/-/didyoumean-1.2.2.tgz",
++      "integrity": "sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==",
++      "dev": true,
++      "license": "Apache-2.0"
++    },
++    "node_modules/dlv": {
++      "version": "1.1.3",
++      "resolved": "https://registry.npmjs.org/dlv/-/dlv-1.1.3.tgz",
++      "integrity": "sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/es-errors": {
++      "version": "1.3.0",
++      "resolved": "https://registry.npmjs.org/es-errors/-/es-errors-1.3.0.tgz",
++      "integrity": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/fast-glob": {
++      "version": "3.3.3",
++      "resolved": "https://registry.npmjs.org/fast-glob/-/fast-glob-3.3.3.tgz",
++      "integrity": "sha512-7MptL8U0cqcFdzIzwOTHoilX9x5BrNqye7Z/LuC7kCMRio1EMSyqRK3BEAUD7sXRq4iT4AzTVuZdhgQ2TCvYLg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@nodelib/fs.stat": "^2.0.2",
++        "@nodelib/fs.walk": "^1.2.3",
++        "glob-parent": "^5.1.2",
++        "merge2": "^1.3.0",
++        "micromatch": "^4.0.8"
++      },
++      "engines": {
++        "node": ">=8.6.0"
++      }
++    },
++    "node_modules/fast-glob/node_modules/glob-parent": {
++      "version": "5.1.2",
++      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
++      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "is-glob": "^4.0.1"
++      },
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/fastq": {
++      "version": "1.20.3",
++      "resolved": "https://registry.npmjs.org/fastq/-/fastq-1.20.3.tgz",
++      "integrity": "sha512-XKv5nnLs6nLF71NgiKJLIZFLkPyIEuOselLG7ujZnGrRfQK8HpvY+WqKhAJUAdLomwVHErVS4LfxFlPq0/FTAw==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "reusify": "^1.0.4"
++      }
++    },
++    "node_modules/fill-range": {
++      "version": "7.1.1",
++      "resolved": "https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz",
++      "integrity": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "to-regex-range": "^5.0.1"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/fsevents": {
++      "version": "2.3.3",
++      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
++      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
++      "dev": true,
++      "hasInstallScript": true,
++      "license": "MIT",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": "^8.16.0 || ^10.6.0 || >=11.0.0"
++      }
++    },
++    "node_modules/function-bind": {
++      "version": "1.1.2",
++      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
++      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
++      "dev": true,
++      "license": "MIT",
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/glob-parent": {
++      "version": "6.0.2",
++      "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-6.0.2.tgz",
++      "integrity": "sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==",
++      "dev": true,
++      "license": "ISC",
++      "dependencies": {
++        "is-glob": "^4.0.3"
++      },
++      "engines": {
++        "node": ">=10.13.0"
++      }
++    },
++    "node_modules/hasown": {
++      "version": "2.0.4",
++      "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
++      "integrity": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "function-bind": "^1.1.2"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      }
++    },
++    "node_modules/is-binary-path": {
++      "version": "2.1.0",
++      "resolved": "https://registry.npmjs.org/is-binary-path/-/is-binary-path-2.1.0.tgz",
++      "integrity": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "binary-extensions": "^2.0.0"
++      },
++      "engines": {
++        "node": ">=8"
++      }
++    },
++    "node_modules/is-core-module": {
++      "version": "2.18.0",
++      "resolved": "https://registry.npmjs.org/is-core-module/-/is-core-module-2.18.0.tgz",
++      "integrity": "sha512-qyax9fgaKOEC4qK8WZn7Q4IcoZC9RC1O1fFxRcRTq/oMMkWT/uXpqpXa12kzWR409zAt1drYN9N9BO26UmBCmw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "hasown": "^2.0.4"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/is-extglob": {
++      "version": "2.1.1",
++      "resolved": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
++      "integrity": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/is-glob": {
++      "version": "4.0.3",
++      "resolved": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
++      "integrity": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "is-extglob": "^2.1.1"
++      },
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/is-number": {
++      "version": "7.0.0",
++      "resolved": "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz",
++      "integrity": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.12.0"
++      }
++    },
++    "node_modules/jiti": {
++      "version": "1.21.7",
++      "resolved": "https://registry.npmjs.org/jiti/-/jiti-1.21.7.tgz",
++      "integrity": "sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==",
++      "dev": true,
++      "license": "MIT",
++      "bin": {
++        "jiti": "bin/jiti.js"
++      }
++    },
++    "node_modules/lilconfig": {
++      "version": "3.1.5",
++      "resolved": "https://registry.npmjs.org/lilconfig/-/lilconfig-3.1.5.tgz",
++      "integrity": "sha512-aRAOI9Ia43ygL4o1EOmC/sc/0OFxrm7qcQngiIyWaqVnSnz932ybJ07zyCcgMNGSDP8Yxaf88Xj1zHEXmvQ4SA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=14"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/antonk52"
++      }
++    },
++    "node_modules/lines-and-columns": {
++      "version": "1.2.4",
++      "resolved": "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz",
++      "integrity": "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/merge2": {
++      "version": "1.4.1",
++      "resolved": "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz",
++      "integrity": "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 8"
++      }
++    },
++    "node_modules/micromatch": {
++      "version": "4.0.8",
++      "resolved": "https://registry.npmjs.org/micromatch/-/micromatch-4.0.8.tgz",
++      "integrity": "sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "braces": "^3.0.3",
++        "picomatch": "^2.3.1"
++      },
++      "engines": {
++        "node": ">=8.6"
++      }
++    },
++    "node_modules/mz": {
++      "version": "2.7.0",
++      "resolved": "https://registry.npmjs.org/mz/-/mz-2.7.0.tgz",
++      "integrity": "sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "any-promise": "^1.0.0",
++        "object-assign": "^4.0.1",
++        "thenify-all": "^1.0.0"
++      }
++    },
++    "node_modules/nanoid": {
++      "version": "3.3.20",
++      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.20.tgz",
++      "integrity": "sha512-uKdg2G3GNCKQn9byYOpxbGqrT2fGO5KRt5J/8b3pok8rT6qxGWF6hxMyJiEYtAf+FVyYuD9hRaDqX5uPFYJ4ZQ==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "bin": {
++        "nanoid": "bin/nanoid.cjs"
++      },
++      "engines": {
++        "node": "^10 || ^12 || ^13.7 || ^14 || >=15.0.1"
++      }
++    },
++    "node_modules/normalize-path": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz",
++      "integrity": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/object-assign": {
++      "version": "4.1.1",
++      "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
++      "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/object-hash": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/object-hash/-/object-hash-3.0.0.tgz",
++      "integrity": "sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/path-parse": {
++      "version": "1.0.7",
++      "resolved": "https://registry.npmjs.org/path-parse/-/path-parse-1.0.7.tgz",
++      "integrity": "sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/picocolors": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
++      "integrity": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
++      "dev": true,
++      "license": "ISC"
++    },
++    "node_modules/picomatch": {
++      "version": "2.3.2",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.2.tgz",
++      "integrity": "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=8.6"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/jonschlinkert"
++      }
++    },
++    "node_modules/pirates": {
++      "version": "4.0.7",
++      "resolved": "https://registry.npmjs.org/pirates/-/pirates-4.0.7.tgz",
++      "integrity": "sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/postcss": {
++      "version": "8.5.33",
++      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.5.33.tgz",
++      "integrity": "sha512-RVHEU9/Pp1Fnjr/MpAJsZoADukCKhfIi15OunEYiGktIkYLkPVvC1sioWolGDS7XByMTx9m/IGbro0Js13zhnQ==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "tidelift",
++          "url": "https://tidelift.com/funding/github/npm/postcss"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "nanoid": "^3.3.20",
++        "picocolors": "^1.1.1",
++        "source-map-js": "^1.2.2"
++      },
++      "engines": {
++        "node": "^10 || ^12 || >=14"
++      }
++    },
++    "node_modules/postcss-import": {
++      "version": "15.1.0",
++      "resolved": "https://registry.npmjs.org/postcss-import/-/postcss-import-15.1.0.tgz",
++      "integrity": "sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "postcss-value-parser": "^4.0.0",
++        "read-cache": "^1.0.0",
++        "resolve": "^1.1.7"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      },
++      "peerDependencies": {
++        "postcss": "^8.0.0"
++      }
++    },
++    "node_modules/postcss-js": {
++      "version": "4.1.0",
++      "resolved": "https://registry.npmjs.org/postcss-js/-/postcss-js-4.1.0.tgz",
++      "integrity": "sha512-oIAOTqgIo7q2EOwbhb8UalYePMvYoIeRY2YKntdpFQXNosSu3vLrniGgmH9OKs/qAkfoj5oB3le/7mINW1LCfw==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "camelcase-css": "^2.0.1"
++      },
++      "engines": {
++        "node": "^12 || ^14 || >= 16"
++      },
++      "peerDependencies": {
++        "postcss": "^8.4.21"
++      }
++    },
++    "node_modules/postcss-load-config": {
++      "version": "6.0.1",
++      "resolved": "https://registry.npmjs.org/postcss-load-config/-/postcss-load-config-6.0.1.tgz",
++      "integrity": "sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "lilconfig": "^3.1.1"
++      },
++      "engines": {
++        "node": ">= 18"
++      },
++      "peerDependencies": {
++        "jiti": ">=1.21.0",
++        "postcss": ">=8.0.9",
++        "tsx": "^4.8.1",
++        "yaml": "^2.4.2"
++      },
++      "peerDependenciesMeta": {
++        "jiti": {
++          "optional": true
++        },
++        "postcss": {
++          "optional": true
++        },
++        "tsx": {
++          "optional": true
++        },
++        "yaml": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/postcss-nested": {
++      "version": "6.2.0",
++      "resolved": "https://registry.npmjs.org/postcss-nested/-/postcss-nested-6.2.0.tgz",
++      "integrity": "sha512-HQbt28KulC5AJzG+cZtj9kvKB93CFCdLvog1WFLf1D+xmMvPGlBstkpTEZfK5+AN9hfJocyBFCNiqyS48bpgzQ==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/postcss/"
++        },
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/ai"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "postcss-selector-parser": "^6.1.1"
++      },
++      "engines": {
++        "node": ">=12.0"
++      },
++      "peerDependencies": {
++        "postcss": "^8.2.14"
++      }
++    },
++    "node_modules/postcss-selector-parser": {
++      "version": "6.1.6",
++      "resolved": "https://registry.npmjs.org/postcss-selector-parser/-/postcss-selector-parser-6.1.6.tgz",
++      "integrity": "sha512-BK87/Qgti3DIcgS2PaCVoteFIkjIFvCJBizZDIVSjdlFNg4Jv+SRqbN2JONb/qQUH4ZFqfXYF+izg15W2HVRvA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "util-deprecate": "^1.0.2"
++      },
++      "engines": {
++        "node": ">=4"
++      }
++    },
++    "node_modules/postcss-value-parser": {
++      "version": "4.2.0",
++      "resolved": "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz",
++      "integrity": "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/queue-microtask": {
++      "version": "1.2.3",
++      "resolved": "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz",
++      "integrity": "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/feross"
++        },
++        {
++          "type": "patreon",
++          "url": "https://www.patreon.com/feross"
++        },
++        {
++          "type": "consulting",
++          "url": "https://feross.org/support"
++        }
++      ],
++      "license": "MIT"
++    },
++    "node_modules/read-cache": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/read-cache/-/read-cache-1.0.2.tgz",
++      "integrity": "sha512-/peqiBB/n07gQGLsWaHho3WfvUyRscw0gYTsEFMhrIe/nWLkYaf5SbKYjGYqtRV3aPwykJgF2VEMo1ac4bnsGA==",
++      "dev": true,
++      "license": "MIT"
++    },
++    "node_modules/readdirp": {
++      "version": "3.6.0",
++      "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz",
++      "integrity": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "picomatch": "^2.2.1"
++      },
++      "engines": {
++        "node": ">=8.10.0"
++      }
++    },
++    "node_modules/resolve": {
++      "version": "1.22.14",
++      "resolved": "https://registry.npmjs.org/resolve/-/resolve-1.22.14.tgz",
++      "integrity": "sha512-1ZjYvR9sbkiwC5+9QHetqW5HmA2pHRMaoupD01t2HlYnV/vydC2zPwLixhsMieSWVZt0JJRg5LVIk0Ow1D/TrA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "es-errors": "^1.3.0",
++        "is-core-module": "^2.18.0",
++        "path-parse": "^1.0.7",
++        "supports-preserve-symlinks-flag": "^1.0.0"
++      },
++      "bin": {
++        "resolve": "bin/resolve"
++      },
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/reusify": {
++      "version": "1.1.0",
++      "resolved": "https://registry.npmjs.org/reusify/-/reusify-1.1.0.tgz",
++      "integrity": "sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "iojs": ">=1.0.0",
++        "node": ">=0.10.0"
++      }
++    },
++    "node_modules/run-parallel": {
++      "version": "1.2.0",
++      "resolved": "https://registry.npmjs.org/run-parallel/-/run-parallel-1.2.0.tgz",
++      "integrity": "sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==",
++      "dev": true,
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/feross"
++        },
++        {
++          "type": "patreon",
++          "url": "https://www.patreon.com/feross"
++        },
++        {
++          "type": "consulting",
++          "url": "https://feross.org/support"
++        }
++      ],
++      "license": "MIT",
++      "dependencies": {
++        "queue-microtask": "^1.2.2"
++      }
++    },
++    "node_modules/source-map-js": {
++      "version": "1.2.4",
++      "resolved": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.4.tgz",
++      "integrity": "sha512-J7ZjMvHd9O1fcT/5V09QWaaSl2BbWx3F6O08spde82Namf9UB0GxRVIPiNbVsdKkoizHiSpTodo3vp2bAy91MA==",
++      "dev": true,
++      "license": "BSD-3-Clause",
++      "engines": {
++        "node": ">=6.0.0"
++      }
++    },
++    "node_modules/sucrase": {
++      "version": "3.35.1",
++      "resolved": "https://registry.npmjs.org/sucrase/-/sucrase-3.35.1.tgz",
++      "integrity": "sha512-DhuTmvZWux4H1UOnWMB3sk0sbaCVOoQZjv8u1rDoTV0HTdGem9hkAZtl4JZy8P2z4Bg0nT+YMeOFyVr4zcG5Tw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@jridgewell/gen-mapping": "^0.3.2",
++        "commander": "^4.0.0",
++        "lines-and-columns": "^1.1.6",
++        "mz": "^2.7.0",
++        "pirates": "^4.0.1",
++        "tinyglobby": "^0.2.11",
++        "ts-interface-checker": "^0.1.9"
++      },
++      "bin": {
++        "sucrase": "bin/sucrase",
++        "sucrase-node": "bin/sucrase-node"
++      },
++      "engines": {
++        "node": ">=16 || 14 >=14.17"
++      }
++    },
++    "node_modules/supports-preserve-symlinks-flag": {
++      "version": "1.0.0",
++      "resolved": "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz",
++      "integrity": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">= 0.4"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
++      }
++    },
++    "node_modules/tailwindcss": {
++      "version": "3.4.19",
++      "resolved": "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.4.19.tgz",
++      "integrity": "sha512-3ofp+LL8E+pK/JuPLPggVAIaEuhvIz4qNcf3nA1Xn2o/7fb7s/TYpHhwGDv1ZU3PkBluUVaF8PyCHcm48cKLWQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "@alloc/quick-lru": "^5.2.0",
++        "arg": "^5.0.2",
++        "chokidar": "^3.6.0",
++        "didyoumean": "^1.2.2",
++        "dlv": "^1.1.3",
++        "fast-glob": "^3.3.2",
++        "glob-parent": "^6.0.2",
++        "is-glob": "^4.0.3",
++        "jiti": "^1.21.7",
++        "lilconfig": "^3.1.3",
++        "micromatch": "^4.0.8",
++        "normalize-path": "^3.0.0",
++        "object-hash": "^3.0.0",
++        "picocolors": "^1.1.1",
++        "postcss": "^8.4.47",
++        "postcss-import": "^15.1.0",
++        "postcss-js": "^4.0.1",
++        "postcss-load-config": "^4.0.2 || ^5.0 || ^6.0",
++        "postcss-nested": "^6.2.0",
++        "postcss-selector-parser": "^6.1.2",
++        "resolve": "^1.22.8",
++        "sucrase": "^3.35.0"
++      },
++      "bin": {
++        "tailwind": "lib/cli.js",
++        "tailwindcss": "lib/cli.js"
++      },
++      "engines": {
++        "node": ">=14.0.0"
++      }
++    },
++    "node_modules/thenify": {
++      "version": "3.3.1",
++      "resolved": "https://registry.npmjs.org/thenify/-/thenify-3.3.1.tgz",
++      "integrity": "sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "any-promise": "^1.0.0"
++      }
++    },
++    "node_modules/thenify-all": {
++      "version": "1.6.0",
++      "resolved": "https://registry.npmjs.org/thenify-all/-/thenify-all-1.6.0.tgz",
++      "integrity": "sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "thenify": ">= 3.1.0 < 4"
++      },
++      "engines": {
++        "node": ">=0.8"
++      }
++    },
++    "node_modules/tinyglobby": {
++      "version": "0.2.17",
++      "resolved": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
++      "integrity": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "fdir": "^6.5.0",
++        "picomatch": "^4.0.4"
++      },
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/SuperchupuDev"
++      }
++    },
++    "node_modules/tinyglobby/node_modules/fdir": {
++      "version": "6.5.0",
++      "resolved": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz",
++      "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12.0.0"
++      },
++      "peerDependencies": {
++        "picomatch": "^3 || ^4"
++      },
++      "peerDependenciesMeta": {
++        "picomatch": {
++          "optional": true
++        }
++      }
++    },
++    "node_modules/tinyglobby/node_modules/picomatch": {
++      "version": "4.0.7",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.7.tgz",
++      "integrity": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
++      "dev": true,
++      "license": "MIT",
++      "engines": {
++        "node": ">=12"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/jonschlinkert"
++      }
++    },
++    "node_modules/to-regex-range": {
++      "version": "5.0.1",
++      "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
++      "integrity": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "is-number": "^7.0.0"
++      },
++      "engines": {
++        "node": ">=8.0"
++      }
++    },
++    "node_modules/ts-interface-checker": {
++      "version": "0.1.13",
++      "resolved": "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz",
++      "integrity": "sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==",
++      "dev": true,
++      "license": "Apache-2.0"
++    },
++    "node_modules/util-deprecate": {
++      "version": "1.0.2",
++      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
++      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
++      "dev": true,
++      "license": "MIT"
++    }
++  }
++}
+diff --git a/package.json b/package.json
+new file mode 100644
+index 0000000..5b7d451
+--- /dev/null
++++ b/package.json
+@@ -0,0 +1,12 @@
++{
++  "name": "abdullcadre.github.io",
++  "private": true,
++  "description": "Portfolio of Abdul Cadre",
++  "scripts": {
++    "build:css": "tailwindcss -i ./css/tailwind.src.css -o ./css/tailwind.css --minify",
++    "watch:css": "tailwindcss -i ./css/tailwind.src.css -o ./css/tailwind.css --watch"
++  },
++  "devDependencies": {
++    "tailwindcss": "3.4.19"
++  }
++}
+diff --git a/sessions/hero.html b/sessions/hero.html
+index 166193b..77fa612 100644
+--- a/sessions/hero.html
++++ b/sessions/hero.html
+@@ -6,7 +6,7 @@
+             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 hero-inner">
+                 <div class="lg:col-span-7 space-y-4 sm:space-y-5">
+                     <h1 class="text-2xl sm:text-5xl font-bold tracking-tight leading-[1.1]" id="hero-name">Abdul Cadre</h1>
+-                    <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.</p>
++                    <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer specialized in B4X and Android, with experience in lecturing and ICT training in Mozambique.</p>
+                     <div class="hero-cta-row pt-1 flex sm:flex-nowrap items-center gap-2 sm:gap-3">
+                         <a href="#contact" data-nav-jump="contact" class="cta-btn px-4 py-2 rounded-lg text-white text-xs font-semibold shadow-lg flex items-center gap-2 star-border" style="background: var(--accent); box-shadow: 0 4px 14px var(--accent-border);">
+                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
+diff --git a/sessions/hero.js b/sessions/hero.js
+index 069580a..dfcf55c 100644
+--- a/sessions/hero.js
++++ b/sessions/hero.js
+@@ -6,7 +6,7 @@ window.SESSION_hero = `<!-- HERO -->
+             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 hero-inner">
+                 <div class="lg:col-span-7 space-y-4 sm:space-y-5">
+                     <h1 class="text-2xl sm:text-5xl font-bold tracking-tight leading-[1.1]" id="hero-name">Abdul Cadre</h1>
+-                    <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer (B4X / Android), lecturer and ICT trainer in Mozambique.</p>
++                    <p class="text-xs sm:text-base leading-relaxed" style="color: var(--text-muted);" id="hero-subtitle">Mobile developer specialized in B4X and Android, with experience in lecturing and ICT training in Mozambique.</p>
+                     <div class="hero-cta-row pt-1 flex sm:flex-nowrap items-center gap-2 sm:gap-3">
+                         <a href="#contact" data-nav-jump="contact" class="cta-btn px-4 py-2 rounded-lg text-white text-xs font-semibold shadow-lg flex items-center gap-2 star-border" style="background: var(--accent); box-shadow: 0 4px 14px var(--accent-border);">
+                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
+diff --git a/sessions/quote.html b/sessions/quote.html
+deleted file mode 100644
+index 74a03af..0000000
+--- a/sessions/quote.html
++++ /dev/null
+@@ -1,16 +0,0 @@
+-<!-- QUOTE -->
+-<section id="quote" class="snap-section" style="border-bottom: 1px solid var(--border);">
+-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
+-        <div class="fade-content panel rounded-xl p-6 sm:p-12" style="background: var(--surface); border: 1px solid var(--border);">
+-            <div class="section-noise" aria-hidden="true"></div>
+-            <div class="relative z-10">
+-                <i class="inline-block mb-3" data-lucide="quote" style="color: var(--accent); width:22px; height:22px;"></i>
+-                <blockquote class="text-base sm:text-xl font-medium leading-relaxed mb-4 min-h-[4em]" id="quote-text">
+-                    <span id="quote-typer"></span>
+-                </blockquote>
+-                <div class="text-xs font-mono" style="color: var(--accent);">— <span id="quote-brand">Abdul Cadre</span></div>
+-            </div>
+-        </div>
+-    </div>
+-</section>
+-
+diff --git a/sessions/quote.js b/sessions/quote.js
+deleted file mode 100644
+index e7c0948..0000000
+--- a/sessions/quote.js
++++ /dev/null
+@@ -1,15 +0,0 @@
+-window.SESSION_quote = `<!-- QUOTE -->
+-<section id="quote" class="snap-section" style="border-bottom: 1px solid var(--border);">
+-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full my-auto fit-content">
+-        <div class="fade-content panel rounded-xl p-6 sm:p-12" style="background: var(--surface); border: 1px solid var(--border);">
+-            <div class="section-noise" aria-hidden="true"></div>
+-            <div class="relative z-10">
+-                <i class="inline-block mb-3" data-lucide="quote" style="color: var(--accent); width:22px; height:22px;"></i>
+-                <blockquote class="text-base sm:text-xl font-medium leading-relaxed mb-4 min-h-[4em]" id="quote-text">
+-                    <span id="quote-typer"></span>
+-                </blockquote>
+-                <div class="text-xs font-mono" style="color: var(--accent);">— <span id="quote-brand">Abdul Cadre</span></div>
+-            </div>
+-        </div>
+-    </div>
+-</section>`;
+diff --git a/tailwind.config.js b/tailwind.config.js
+new file mode 100644
+index 0000000..e86deb1
+--- /dev/null
++++ b/tailwind.config.js
+@@ -0,0 +1,20 @@
++/** @type {import('tailwindcss').Config} */
++module.exports = {
++  content: [
++    './index.html',
++    './include/*.html',
++    './include/*.js',
++    './sessions/*.js',
++    './js/*.js'
++  ],
++  darkMode: 'class',
++  theme: {
++    extend: {
++      fontFamily: {
++        sans: ['Inter', 'system-ui', 'sans-serif'],
++        mono: ['JetBrains Mono', 'monospace']
++      }
++    }
++  },
++  plugins: []
++};
+-- 
+2.43.0
+
