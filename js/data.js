@@ -24,12 +24,11 @@ window.PORTFOLIO_DATA = {
 
     "hero": {
       "name": "Abdul Cadre",
-      "subtitle": "Mobile developer with experience in lecturing and ICT training in Mozambique.",
+      "subtitle": "Front-end and Back-end Developer",
       "inspector": {
-        "location": "Mozambique",
+        "location": "Moçambique",
         "email": "abdullcadre@gmail.com",
-        "degree": "BSc Computer Science",
-        "stack": ["B4X", "Android", "PHP", "SQLite"],
+        "stack": ["Laravel", "Python FastAPI", ".NET", "UI/UX", "Figma", "GitHub"],
         "university": "Licungo University",
         "year": "2021"
       }
@@ -40,11 +39,15 @@ window.PORTFOLIO_DATA = {
       "title": "Skills & Specialties",
       "subtitle": "Competencies developed in academic and professional contexts.",
       "list": [
-        { "icon": "smartphone", "tag": "B4X", "title": "Mobile development", "description": "Android applications built with B4X, with a focus on usability and performance." },
-        { "icon": "database", "tag": "SQL", "title": "Databases & back-end", "description": "Data storage and server-side logic with SQLite and MySQL, using PHP." },
-        { "icon": "wrench", "tag": "Hardware", "title": "Systems maintenance", "description": "Hardware diagnostics, equipment repair and IT optimization." },
-        { "icon": "users", "tag": "Training", "title": "Teaching & ICT training", "description": "Training students and professionals in information technology." },
-        { "icon": "git-merge", "tag": "Software", "title": "Software engineering", "description": "Planning, developing and maintaining software systems." }
+        {"icon": "smartphone", "tag": "Mobile", "title": "Mobile Dev", "description": "Mobile applications focused on usability and performance.", "certificate": {"image": "certificates/google-associate-android-developer-java-2019.jpg", "title": "Associate Android Developer (Java)", "issuer": "Google Developers", "date": "1 Aug 2019 – 1 Aug 2022"}},
+        {"icon": "palette", "tag": "UI/UX", "title": "UI/UX", "description": "Clear, consistent interfaces designed around the user.", "certificate": {"image": "certificates/figma-ui-ux-design-essentials-udemy-2023.jpg", "title": "Figma UI UX Design Essentials", "issuer": "Udemy", "date": "11 Mar 2023"}},
+        {"icon": "github", "tag": "Tools", "title": "GitHub", "description": "Version control with Git and collaboration on projects.", "certificate": {"image": "certificates/git-github-dio-2023.jpg", "title": "Introdução ao Git e ao GitHub", "issuer": "Digital Innovation One (DIO)", "date": "14 Nov 2023"}},
+        {"icon": "square-kanban", "tag": "Scrum", "title": "Agile Projects", "description": "Agile project management with Scrum.", "certificate": {"image": "certificates/scrum-projectos-ageis-dio-2022.jpg", "title": "Projetos ágeis com SCRUM", "issuer": "Digital Innovation One (DIO)", "date": "27 Aug 2022"}},
+        {"icon": "code-xml", "tag": "Code", "title": "C, C# & Java", "description": "Programming knowledge in C, C# and Java."},
+        {"icon": "image", "tag": "Design", "title": "Photoshop", "description": "Image editing and graphic design with Photoshop."},
+        {"icon": "users", "tag": "Training", "title": "ICT Training", "description": "Training in information and communication technologies."},
+        {"icon": "git-merge", "tag": "Software", "title": "Software Engineering", "description": "Planning, developing and maintaining software systems.", "certificate": {"image": "certificates/licenciatura-informatica-unilicungo-2021-pagina-1.jpg", "pages": ["certificates/licenciatura-informatica-unilicungo-2021-pagina-1.jpg", "certificates/licenciatura-informatica-unilicungo-2021-pagina-2.jpg"], "title": "BSc in Computer Science · Systems Development Engineering", "issuer": "Licungo University", "date": "2021"}},
+        {"icon": "wrench", "tag": "Support", "title": "Maintenance", "description": "Diagnostics, repair and optimization of systems and equipment."}
       ]
     },
 
@@ -52,19 +55,19 @@ window.PORTFOLIO_DATA = {
       "tag": "Portfolio",
       "title": "Selected Projects",
       "subtitle": "Mobile and full-stack applications built for real-world use, including apps published on Google Play.",
-      "b4xLink": "View all B4X work",
+      "b4xLink": "View all my work",
       "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
       "storeLink": "View my Google Play developer profile",
       "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
       "list": [
         { "icon": "bot", "tag": "Education", "title": "ABC Moz", "description": "Educational literacy app for learners in Mozambique, published on Google Play.", "tech": "Android app", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
-        { "icon": "clock", "tag": "Productivity", "title": "LaborLog Lite", "description": "Work-hours logging and lookup for Android, built with B4XPages.", "tech": "Android · B4XPages", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+        { "icon": "clock", "tag": "Productivity", "title": "LaborLog Lite", "description": "Work-hours logging and lookup for Android.", "tech": "Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
         { "icon": "message-square", "tag": "Lifestyle", "title": "Quotey", "description": "Android app for quotes and everyday phrases, published on Google Play.", "tech": "Android app", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
-        { "icon": "message-square", "tag": "Messaging", "title": "ChatApp v1.1", "description": "Real-time chat built with B4A, PHP and MySQL, suited to simple conversations.", "tech": "B4A + PHP + MySQL", "status": "Full-stack" },
+        { "icon": "message-square", "tag": "Messaging", "title": "ChatApp v1.1", "description": "Real-time chat built for Android with PHP and MySQL, suited to simple conversations.", "tech": "Android + PHP + MySQL", "status": "Full-stack" },
         { "icon": "user-check", "tag": "HR", "title": "Employee Attendance", "description": "Attendance tracking with selfie capture, timestamp and location.", "tech": "Cross-platform", "status": "GPS tracking" },
-        { "icon": "wallet", "tag": "Finance", "title": "Financial Mobile App", "description": "Card and transaction management with local SQLite storage.", "tech": "B4X + SQLite", "status": "Offline-first" },
-        { "icon": "bot", "tag": "AI", "title": "OpenAI API Integration", "description": "Integration of the GPT-3 API into Android apps built with B4X.", "tech": "B4X · OpenAI", "status": "AI integration" },
-        { "icon": "send", "tag": "Messaging", "title": "Bulk SMS Sender", "description": "Sends SMS messages to multiple recipients at once, built with B4A.", "tech": "B4A", "status": "SMS" }
+        { "icon": "wallet", "tag": "Finance", "title": "Financial Mobile App", "description": "Card and transaction management with local SQLite storage.", "tech": "Android + SQLite", "status": "Offline-first" },
+        { "icon": "bot", "tag": "AI", "title": "OpenAI API Integration", "description": "Integration of the GPT-3 API into Android apps.", "tech": "Android · OpenAI", "status": "AI integration" },
+        { "icon": "send", "tag": "Messaging", "title": "Bulk SMS Sender", "description": "Sends SMS messages to multiple recipients at once, built for Android.", "tech": "Android", "status": "SMS" }
       ]
     },
 
@@ -93,13 +96,13 @@ window.PORTFOLIO_DATA = {
         { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
         { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
         { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
-        { "icon": "code-xml",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+        { "icon": "code-xml",    "label": "Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
       ]
     },
 
     "footer": {
       "rights": "All rights reserved",
-      "tag": "Mobile Development · Teaching · ICT"
+      "tag": "Front-end · Back-end · Mobile"
     }
   },
 
@@ -123,12 +126,11 @@ window.PORTFOLIO_DATA = {
 
     "hero": {
       "name": "Abdul Cadre",
-      "subtitle": "Programador de aplicações móveis com experiência em docência e formação em TIC em Moçambique.",
+      "subtitle": "Programador Front-end e Back-end",
       "inspector": {
         "location": "Moçambique",
         "email": "abdullcadre@gmail.com",
-        "degree": "Licenciatura em Informática",
-        "stack": ["B4X", "Android", "PHP", "SQLite"],
+        "stack": ["Laravel", "Python FastAPI", ".NET", "UI/UX", "Figma", "GitHub"],
         "university": "Universidade Licungo",
         "year": "2021"
       }
@@ -139,11 +141,15 @@ window.PORTFOLIO_DATA = {
       "title": "Especialidades",
       "subtitle": "Competências desenvolvidas em contextos académicos e profissionais.",
       "list": [
-        { "icon": "smartphone", "tag": "B4X", "title": "Desenvolvimento mobile", "description": "Aplicações Android em B4X, com foco em usabilidade e desempenho." },
-        { "icon": "database", "tag": "SQL", "title": "Bases de dados e back-end", "description": "Armazenamento de dados e lógica do servidor com SQLite e MySQL, usando PHP." },
-        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico e reparação de equipamentos e optimização de TI." },
-        { "icon": "users", "tag": "Formação", "title": "Docência & formação em TIC", "description": "Capacitação de estudantes e profissionais em tecnologias de informação." },
-        { "icon": "git-merge", "tag": "Software", "title": "Engenharia de software", "description": "Planeamento, desenvolvimento e manutenção de sistemas de software." }
+        {"icon": "smartphone", "tag": "Mobile", "title": "Mobile Dev", "description": "Aplicações móveis com foco em usabilidade e desempenho.", "certificate": {"image": "certificates/google-associate-android-developer-java-2019.jpg", "title": "Associate Android Developer (Java)", "issuer": "Google Developers", "date": "01/08/2019 – 01/08/2022"}},
+        {"icon": "palette", "tag": "UI/UX", "title": "UI/UX", "description": "Interfaces claras e consistentes, pensadas para o utilizador.", "certificate": {"image": "certificates/figma-ui-ux-design-essentials-udemy-2023.jpg", "title": "Figma UI UX Design Essentials", "issuer": "Udemy", "date": "11/03/2023"}},
+        {"icon": "github", "tag": "Ferramentas", "title": "GitHub", "description": "Controlo de versões com Git e colaboração em projectos.", "certificate": {"image": "certificates/git-github-dio-2023.jpg", "title": "Introdução ao Git e ao GitHub", "issuer": "Digital Innovation One (DIO)", "date": "14/11/2023"}},
+        {"icon": "square-kanban", "tag": "Scrum", "title": "Projectos Ágeis", "description": "Gestão ágil de projectos com Scrum.", "certificate": {"image": "certificates/scrum-projectos-ageis-dio-2022.jpg", "title": "Projetos ágeis com SCRUM", "issuer": "Digital Innovation One (DIO)", "date": "27/08/2022"}},
+        {"icon": "code-xml", "tag": "Código", "title": "C, C# & Java", "description": "Conhecimentos de programação em C, C# e Java."},
+        {"icon": "image", "tag": "Design", "title": "Photoshop", "description": "Edição de imagem e design gráfico com Photoshop."},
+        {"icon": "users", "tag": "Formação", "title": "Formação em TIC", "description": "Formação em tecnologias de informação e comunicação."},
+        {"icon": "git-merge", "tag": "Software", "title": "Engenharia de Software", "description": "Planeamento, desenvolvimento e manutenção de sistemas de software.", "certificate": {"image": "certificates/licenciatura-informatica-unilicungo-2021-pagina-1.jpg", "pages": ["certificates/licenciatura-informatica-unilicungo-2021-pagina-1.jpg", "certificates/licenciatura-informatica-unilicungo-2021-pagina-2.jpg"], "title": "Licenciatura em Informática · Engenharia de Desenvolvimento de Sistemas", "issuer": "Universidade Licungo", "date": "2021"}},
+        {"icon": "wrench", "tag": "Suporte", "title": "Manutenção", "description": "Diagnóstico, reparação e optimização de sistemas e equipamentos."}
       ]
     },
 
@@ -151,19 +157,19 @@ window.PORTFOLIO_DATA = {
       "tag": "Portfólio",
       "title": "Projectos Seleccionados",
       "subtitle": "Aplicações móveis e web desenvolvidas para uso real, incluindo apps publicadas na Google Play.",
-      "b4xLink": "Ver todos os trabalhos B4X",
+      "b4xLink": "Ver todos os trabalhos",
       "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
       "storeLink": "Ver o meu perfil de programador na Google Play",
       "storeUrl": "https://play.google.com/store/apps/dev?id=8265678583658672495&hl=pt",
       "list": [
         { "icon": "bot", "tag": "Educação", "title": "ABC Moz", "description": "Aplicação educativa de alfabetização para estudantes em Moçambique, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
-        { "icon": "clock", "tag": "Produtividade", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho para Android, desenvolvida com B4XPages.", "tech": "Android · B4XPages", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
+        { "icon": "clock", "tag": "Produtividade", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho para Android.", "tech": "Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
         { "icon": "message-square", "tag": "Lazer", "title": "Quotey", "description": "Aplicação Android de citações e frases do dia-a-dia, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
-        { "icon": "message-square", "tag": "Mensagens", "title": "ChatApp v1.1", "description": "Chat em tempo real desenvolvido com B4A, PHP e MySQL, adequado a conversas simples.", "tech": "B4A + PHP + MySQL", "status": "Full-stack" },
+        { "icon": "message-square", "tag": "Mensagens", "title": "ChatApp v1.1", "description": "Chat em tempo real desenvolvido para Android com PHP e MySQL, adequado a conversas simples.", "tech": "Android + PHP + MySQL", "status": "Full-stack" },
         { "icon": "user-check", "tag": "Recursos Humanos", "title": "Employee Attendance", "description": "Controlo de presenças com captura de selfie, hora e localização.", "tech": "Multiplataforma", "status": "Rastreio GPS" },
-        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transacções com armazenamento local em SQLite.", "tech": "B4X + SQLite", "status": "Offline-first" },
-        { "icon": "bot", "tag": "IA", "title": "Integração da API OpenAI", "description": "Integração da API GPT-3 em aplicações Android desenvolvidas com B4X.", "tech": "B4X · OpenAI", "status": "Integração IA" },
-        { "icon": "send", "tag": "Mensagens", "title": "Envio de SMS em Massa", "description": "Envio de mensagens SMS a vários destinatários em simultâneo, desenvolvido com B4A.", "tech": "B4A", "status": "SMS" }
+        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transacções com armazenamento local em SQLite.", "tech": "Android + SQLite", "status": "Offline-first" },
+        { "icon": "bot", "tag": "IA", "title": "Integração da API OpenAI", "description": "Integração da API GPT-3 em aplicações Android.", "tech": "Android · OpenAI", "status": "Integração IA" },
+        { "icon": "send", "tag": "Mensagens", "title": "Envio de SMS em Massa", "description": "Envio de mensagens SMS a vários destinatários em simultâneo, desenvolvido para Android.", "tech": "Android", "status": "SMS" }
       ]
     },
 
@@ -192,13 +198,13 @@ window.PORTFOLIO_DATA = {
         { "icon": "linkedin",  "label": "LinkedIn",  "url": "https://www.linkedin.com/in/abdullcadre/" },
         { "icon": "facebook",  "label": "Facebook",  "url": "https://www.facebook.com/abdulllcadre" },
         { "icon": "instagram", "label": "Instagram", "url": "https://www.instagram.com/abdulllcadre/" },
-        { "icon": "code-xml",    "label": "B4X Forum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
+        { "icon": "code-xml",    "label": "Fórum", "url": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614" }
       ]
     },
 
     "footer": {
       "rights": "Todos os direitos reservados",
-      "tag": "Desenvolvimento Mobile · Docência · TIC"
+      "tag": "Front-end · Back-end · Mobile"
     }
   }
 };

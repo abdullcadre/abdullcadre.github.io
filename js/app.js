@@ -12,6 +12,7 @@
     // BRAND ICONS
     // ============================================================
     const BRAND_ICONS = {
+        github: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.21.7.82.58A12 12 0 0 0 12 .5z"/></svg>`,
         linkedin: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>`,
         facebook: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>`,
         instagram: `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56.79-.31 1.46-.72 2.13-1.38a5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63C19.1.33 18.22.13 16.95.07 15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>`
@@ -113,6 +114,47 @@
     }
 
     // ============================================================
+    // INSPECTOR (Python-style spinner)
+    // ============================================================
+    const SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+    let spinnerTimer = null;
+
+    function resetInspector() {
+        clearInterval(spinnerTimer);
+        const out = document.getElementById('inspector-output');
+        const btn = document.getElementById('inspector-run');
+        if (out) out.textContent = '>>> ';
+        if (btn) btn.disabled = false;
+    }
+
+    function runInspector() {
+        const out = document.getElementById('inspector-output');
+        const btn = document.getElementById('inspector-run');
+        const info = state.data?.[state.currentLang]?.hero?.inspector;
+        if (!out || !btn || !info) return;
+
+        const pt = state.currentLang === 'pt';
+        const head = '>>> python inspector.py\n';
+        let tick = 0;
+        resetInspector();
+        btn.disabled = true;
+
+        spinnerTimer = setInterval(() => {
+            if (tick < 20) {
+                out.textContent = `${head}${SPINNER_FRAMES[tick % SPINNER_FRAMES.length]} ${pt ? 'A executar...' : 'Running...'}`;
+                tick++;
+                return;
+            }
+            clearInterval(spinnerTimer);
+            out.textContent = `${head}✔ ${pt ? 'Concluído' : 'Done'}\nlocation: ${info.location}\nemail: ${info.email}\nstack: ${info.stack.join(', ')}\n>>> `;
+            btn.disabled = false;
+        }, 80);
+    }
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#inspector-run')) runInspector();
+    });
+
+    // ============================================================
     // RENDER
     // ============================================================
     function render() {
@@ -151,9 +193,9 @@
         setText('btn-cv', t.actions?.downloadCV);
         setText('inspector-location', t.hero?.inspector?.location);
         setText('inspector-email', t.hero?.inspector?.email);
-        setText('inspector-degree', t.hero?.inspector?.degree);
         const stackEl = document.getElementById('inspector-stack');
-        if (stackEl) stackEl.textContent = JSON.stringify(t.hero?.inspector?.stack || []);
+        if (stackEl) stackEl.textContent = (t.hero?.inspector?.stack || []).map(v => `"${v}"`).join(', ');
+        resetInspector();
         setText('inspector-university', t.hero?.inspector?.university);
         setText('inspector-year', t.hero?.inspector?.year);
 
@@ -180,6 +222,7 @@
                 </div>
                 <h3 class="text-sm font-semibold mb-1.5">${s.title}</h3>
                 <p class="text-xs leading-relaxed" style="color: var(--text-muted);">${s.description}</p>
+                ${s.certificate ? `<span class="cert-badge">${icon('award', 'w-3 h-3')} ${state.currentLang === 'pt' ? 'Ver certificado' : 'View certificate'}</span>` : ''}
             </div>
         `).join('');
         initCarousel('skills-track', 'skills-dots', 'skills-prev', 'skills-next');
@@ -444,6 +487,40 @@
         document.getElementById('modal-tag').textContent = data.tag || data.level || data.tech || '';
         document.getElementById('modal-title').textContent = data.title || data.level || data.year || '';
         document.getElementById('modal-desc').textContent = data.description || '';
+
+        const descEl = document.getElementById('modal-desc');
+        document.getElementById('modal-cert')?.remove();
+        const cert = data.certificate;
+        if (cert) {
+            const pages = cert.pages || [cert.image];
+            const pageWord = state.currentLang === 'pt' ? 'Página' : 'Page';
+            const box = document.createElement('div');
+            box.id = 'modal-cert';
+            box.className = 'modal-cert';
+            box.innerHTML = '<a target="_blank" rel="noopener"><img></a><span></span><div class="cert-pager"></div>';
+            const link = box.querySelector('a');
+            const img = box.querySelector('img');
+            const pager = box.querySelector('.cert-pager');
+            box.querySelector('span').textContent = `${cert.title} · ${cert.issuer} · ${cert.date}`;
+            const show = (n) => {
+                link.href = img.src = pages[n];
+                img.alt = `${cert.title} (${pageWord} ${n + 1})`;
+                pager.querySelectorAll('button').forEach((btn, i) => btn.setAttribute('aria-pressed', String(i === n)));
+            };
+            if (pages.length > 1) {
+                pages.forEach((_, i) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.textContent = `${pageWord} ${i + 1}`;
+                    btn.addEventListener('click', () => show(i));
+                    pager.appendChild(btn);
+                });
+            }
+            img.addEventListener('load', () => { link.style.aspectRatio = `${img.naturalWidth} / ${img.naturalHeight}`; });
+            show(0);
+            descEl.after(box);
+        }
+        overlay.querySelector('.modal-panel').classList.toggle('has-cert', Boolean(cert));
 
         const metaEl = document.getElementById('modal-meta');
         metaEl.innerHTML = '';
