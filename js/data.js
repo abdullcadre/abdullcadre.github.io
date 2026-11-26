@@ -110,7 +110,7 @@ window.PORTFOLIO_DATA = {
     "nav": [
       { "id": "hero",      "label": "Início",       "icon": "house" },
       { "id": "skills",    "label": "Competências", "icon": "layers" },
-      { "id": "projects",  "label": "Projetos",     "icon": "folder-git-2" },
+      { "id": "projects",  "label": "Projectos",     "icon": "folder-git-2" },
       { "id": "education", "label": "Formação",     "icon": "graduation-cap" },
       { "id": "contact",   "label": "Contacto",     "icon": "mail" }
     ],
@@ -141,7 +141,7 @@ window.PORTFOLIO_DATA = {
       "list": [
         { "icon": "smartphone", "tag": "B4X", "title": "Desenvolvimento mobile", "description": "Aplicações Android em B4X, com foco em usabilidade e desempenho." },
         { "icon": "database", "tag": "SQL", "title": "Bases de dados e back-end", "description": "Armazenamento de dados e lógica do servidor com SQLite e MySQL, usando PHP." },
-        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico e reparação de equipamentos e otimização de TI." },
+        { "icon": "wrench", "tag": "Hardware", "title": "Manutenção de sistemas", "description": "Diagnóstico e reparação de equipamentos e optimização de TI." },
         { "icon": "users", "tag": "Formação", "title": "Docência & formação em TIC", "description": "Capacitação de estudantes e profissionais em tecnologias de informação." },
         { "icon": "git-merge", "tag": "Software", "title": "Engenharia de software", "description": "Planeamento, desenvolvimento e manutenção de sistemas de software." }
       ]
@@ -149,7 +149,7 @@ window.PORTFOLIO_DATA = {
 
     "projects": {
       "tag": "Portfólio",
-      "title": "Projetos Selecionados",
+      "title": "Projectos Seleccionados",
       "subtitle": "Aplicações móveis e web desenvolvidas para uso real, incluindo apps publicadas na Google Play.",
       "b4xLink": "Ver todos os trabalhos B4X",
       "b4xUrl": "https://www.b4x.com/android/forum/forums/share-your-creations.33/?starter_id=115614",
@@ -158,10 +158,10 @@ window.PORTFOLIO_DATA = {
       "list": [
         { "icon": "bot", "tag": "Educação", "title": "ABC Moz", "description": "Aplicação educativa de alfabetização para estudantes em Moçambique, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcadre.abcmoz&hl=pt" },
         { "icon": "clock", "tag": "Produtividade", "title": "LaborLog Lite", "description": "Registo e consulta de horas de trabalho para Android, desenvolvida com B4XPages.", "tech": "Android · B4XPages", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.lobarloglite&hl=pt" },
-        { "icon": "message-square", "tag": "Lazer", "title": "Quotey", "description": "Aplicação Android de citações e frases do dia a dia, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
+        { "icon": "message-square", "tag": "Lazer", "title": "Quotey", "description": "Aplicação Android de citações e frases do dia-a-dia, publicada na Google Play.", "tech": "Aplicação Android", "status": "Google Play", "storeUrl": "https://play.google.com/store/apps/details?id=com.abdullcade.Quotey&hl=pt" },
         { "icon": "message-square", "tag": "Mensagens", "title": "ChatApp v1.1", "description": "Chat em tempo real desenvolvido com B4A, PHP e MySQL, adequado a conversas simples.", "tech": "B4A + PHP + MySQL", "status": "Full-stack" },
         { "icon": "user-check", "tag": "Recursos Humanos", "title": "Employee Attendance", "description": "Controlo de presenças com captura de selfie, hora e localização.", "tech": "Multiplataforma", "status": "Rastreio GPS" },
-        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transações com armazenamento local em SQLite.", "tech": "B4X + SQLite", "status": "Offline-first" },
+        { "icon": "wallet", "tag": "Finanças", "title": "Financial Mobile App", "description": "Gestão de cartões e transacções com armazenamento local em SQLite.", "tech": "B4X + SQLite", "status": "Offline-first" },
         { "icon": "bot", "tag": "IA", "title": "Integração da API OpenAI", "description": "Integração da API GPT-3 em aplicações Android desenvolvidas com B4X.", "tech": "B4X · OpenAI", "status": "Integração IA" },
         { "icon": "send", "tag": "Mensagens", "title": "Envio de SMS em Massa", "description": "Envio de mensagens SMS a vários destinatários em simultâneo, desenvolvido com B4A.", "tech": "B4A", "status": "SMS" }
       ]
