@@ -24,7 +24,7 @@ window.PORTFOLIO_DATA = {
 
     "hero": {
       "name": "Abdul Cadre",
-      "subtitle": "Mobile developer specialized in B4X and Android, with experience in lecturing and ICT training in Mozambique.",
+      "subtitle": "Mobile developer with experience in lecturing and ICT training in Mozambique.",
       "inspector": {
         "location": "Mozambique",
         "email": "abdullcadre@gmail.com",
@@ -123,7 +123,7 @@ window.PORTFOLIO_DATA = {
 
     "hero": {
       "name": "Abdul Cadre",
-      "subtitle": "Programador de aplicações móveis especializado em B4X e Android, com experiência em docência e formação em TIC em Moçambique.",
+      "subtitle": "Programador de aplicações móveis com experiência em docência e formação em TIC em Moçambique.",
       "inspector": {
         "location": "Moçambique",
         "email": "abdullcadre@gmail.com",
