@@ -501,17 +501,18 @@
             const link = box.querySelector('a');
             const img = box.querySelector('img');
             const pager = box.querySelector('.cert-pager');
-            box.querySelector('span').textContent = `${cert.title} · ${cert.issuer} · ${cert.date}`;
+            const caption = box.querySelector('span');
             const show = (n) => {
                 link.href = img.src = pages[n];
-                img.alt = `${cert.title} (${pageWord} ${n + 1})`;
+                caption.textContent = cert.captions?.[n] || `${cert.title} · ${cert.issuer} · ${cert.date}`;
+                img.alt = cert.captions?.[n] || `${cert.title} (${pageWord} ${n + 1})`;
                 pager.querySelectorAll('button').forEach((btn, i) => btn.setAttribute('aria-pressed', String(i === n)));
             };
             if (pages.length > 1) {
                 pages.forEach((_, i) => {
                     const btn = document.createElement('button');
                     btn.type = 'button';
-                    btn.textContent = `${pageWord} ${i + 1}`;
+                    btn.textContent = cert.labels?.[i] || `${pageWord} ${i + 1}`;
                     btn.addEventListener('click', () => show(i));
                     pager.appendChild(btn);
                 });
